@@ -46,4 +46,5 @@
     <dimen name="tag_icon_color_size">5dp</dimen>
     <dimen name="tag_badge_color_size">12dp</dimen>
     <dimen name="tag_height">32dp</dimen>
+    <dimen name="mapview_height">150dp</dimen>
 </resources>
