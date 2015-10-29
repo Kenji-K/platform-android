@@ -19,7 +19,7 @@ package com.ushahidi.android.presentation.view.ui.form.wizard.model;
 
 /**
  * Callback interface connecting {@link Screen}, {@link AbstractScreenModel}, and model container
- * objects (e.g. {@link com.example.android.wizardpager.MainActivity}.
+ * objects.
  */
 public interface ScreenModelCallbacks {
 
