@@ -137,4 +137,17 @@
         <item name="android:maxLines">3</item>
         <item name="android:ellipsize">end</item>
     </style>
+    <style name="MapView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="MapView.Location">
+        <item name="android:layout_height">@dimen/mapview_height</item>
+    </style>
+
+    <string name="location">Location</string>
+    <string name="search_location_hint">Enter a location name to search</string>
+    <string name="latitude_hint">Enter a latitude</string>
+    <string name="longitude_hint">Enter a longitude</string>
 </resources>

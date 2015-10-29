@@ -27,7 +27,7 @@ ext {
     //Android
     androidBuildToolsVersion = "23.0.0"
     androidMinSdkVersion = 14
-    androidTargetSdkVersion = 23
+    androidTargetSdkVersion = 22
     androidCompileSdkVersion = 23
 
     //Libraries
@@ -48,7 +48,6 @@ ext {
     heimdallDroidVersion = '1.0.3'
     dialogplusVersion = '1.10'
     expandableviewVersion = '1.0'
-    rxBindingVersion = '0.2.0'
 
     //Testing
     jUnitVersion = '4.12'
@@ -78,7 +77,6 @@ ext {
             heimdallDroid            : "com.github.rheinfabrik:Heimdall.droid:${heimdallDroidVersion}",
             dialogplus               : "com.orhanobut:dialogplus:${dialogplusVersion}",
             expandableview           : "com.github.nicolasjafelle:expandableview:${expandableviewVersion}",
-            rxBinding                : "com.jakewharton.rxbinding:rxbinding:${rxBindingVersion}",
     ]
 
     appTestDependencies = [
