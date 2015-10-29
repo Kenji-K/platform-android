@@ -21,7 +21,7 @@
 
 <module name="Checker">
     <module name="FileLength">
-        <property name="max" value="700"/>
+        <property name="max" value="1000"/>
         <property name="fileExtensions" value=""/>
     </module>
 
@@ -52,7 +52,7 @@
         <!-- Checks for long methods and constructors. !-->
         <!-- See http://checkstyle.sf.net/config_sizes.html !-->
         <module name="MethodLength">
-            <property name="max" value="80"/>
+            <property name="max" value="200"/>
             <property name="countEmpty" value="true"/>
             <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
         </module>
