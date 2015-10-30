@@ -150,4 +150,5 @@
     <string name="post_steps">This Post\'s Steps</string>
     <string name="categories">Categories</string>
     <string name="location_name">Location name</string>
+    <string name="step_complete">Step complete?</string>
 </resources>

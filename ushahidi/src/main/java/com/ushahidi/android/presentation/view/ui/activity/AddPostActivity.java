@@ -112,7 +112,7 @@ public class AddPostActivity extends BaseAppActivity
             mAddPostFragment = (AddPostFragment) getSupportFragmentManager().findFragmentByTag(
                     FRAG_TAG);
             if (mAddPostFragment == null) {
-                mAddPostFragment = AddPostFragment.newInstance(mFormId, mFormId);
+                mAddPostFragment = AddPostFragment.newInstance("");
                 replaceFragment(R.id.add_post_fragment_container, mAddPostFragment, FRAG_TAG);
             }
 
