@@ -14,7 +14,7 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.view.ui.form.wizard.model;
+package com.ushahidi.android.presentation.view.ui.form.wizard;
 
 
 import java.util.ArrayList;

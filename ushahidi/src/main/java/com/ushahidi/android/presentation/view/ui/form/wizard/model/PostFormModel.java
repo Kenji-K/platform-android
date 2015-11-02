@@ -19,6 +19,7 @@ package com.ushahidi.android.presentation.view.ui.form.wizard.model;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormStageModel;
 import com.ushahidi.android.presentation.view.ui.form.ui.AddPostScreen;
+import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenList;
 
 import android.content.Context;
 

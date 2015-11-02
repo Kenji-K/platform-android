@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.ushahidi.android.presentation.view.ui.form.wizard;
+package com.ushahidi.android.presentation.view.ui.widget;
 
 import android.support.v4.view.ViewPager;
 

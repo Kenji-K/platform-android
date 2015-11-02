@@ -17,9 +17,9 @@
 package com.ushahidi.android.presentation.view.ui.form.ui;
 
 import com.ushahidi.android.presentation.model.FormAttributeModel;
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostItem;
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.Screen;
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.ScreenModelCallbacks;
+import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostItemModel;
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
+import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenModelCallbacks;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
 
 import android.support.v4.app.Fragment;
@@ -41,9 +41,9 @@ public class AddPostScreen extends Screen {
     }
 
     @Override
-    public void getPostItems(ArrayList<PostItem> dest) {
+    public void getPostItems(ArrayList<PostItemModel> dest) {
         for (FormAttributeModel formAttribute : getAttributes()) {
-            dest.add(new PostItem(formAttribute.getLabel(), mData.getString(formAttribute.getKey()),
+            dest.add(new PostItemModel(formAttribute.getLabel(), mData.getString(formAttribute.getKey()),
                     formAttribute.getKey(), getKey(), -1));
         }
     }

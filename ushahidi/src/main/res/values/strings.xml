@@ -151,4 +151,7 @@
     <string name="categories">Categories</string>
     <string name="location_name">Location name</string>
     <string name="step_complete">Step complete?</string>
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="finish">Publish to everyone?</string>
 </resources>

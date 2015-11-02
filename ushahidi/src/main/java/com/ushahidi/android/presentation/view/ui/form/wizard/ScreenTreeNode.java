@@ -14,14 +14,18 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.view.ui.form.wizard.model;
+package com.ushahidi.android.presentation.view.ui.form.wizard;
 
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
+
+import java.util.ArrayList;
 
 /**
- * Callback interface connecting {@link Screen}, {@link AbstractScreenModel}, and model container
- * objects.
+ * Represents a node in the page tree. Can either be a single page, or a page container.
  */
-public interface ScreenModelCallbacks {
+public interface ScreenTreeNode {
 
-    void onScreenDataChanged(Screen screen);
+    public Screen findByKey(String key);
+
+    public void flattenCurrentScreenSequence(ArrayList<Screen> dest);
 }

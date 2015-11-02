@@ -16,6 +16,10 @@
 
 package com.ushahidi.android.presentation.view.ui.form.wizard.model;
 
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
+import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenList;
+import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenModelCallbacks;
+
 import android.content.Context;
 import android.os.Bundle;
 

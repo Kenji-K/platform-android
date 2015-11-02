@@ -19,7 +19,7 @@ package com.ushahidi.android.presentation.view.ui.form.wizard.model;
 /**
  * Represents a single line item on the final review page.
  */
-public class PostItem {
+public class PostItemModel {
 
     /**
      * The default weight
@@ -36,11 +36,11 @@ public class PostItem {
 
     private String mPageKey;
 
-    public PostItem(String title, String displayValue, String fieldKey, String pageKey) {
+    public PostItemModel(String title, String displayValue, String fieldKey, String pageKey) {
         this(title, displayValue, fieldKey, pageKey, DEFAULT_WEIGHT);
     }
 
-    public PostItem(String title, String displayValue, String fieldKey, String pageKey,
+    public PostItemModel(String title, String displayValue, String fieldKey, String pageKey,
             int weight) {
         mTitle = title;
         mDisplayValue = displayValue;

@@ -14,10 +14,11 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.presentation.view.ui.form.wizard.model;
+package com.ushahidi.android.presentation.view.ui.form.wizard;
 
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.view.ui.form.ui.widgets.Widget;
+import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostItemModel;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -93,7 +94,7 @@ public abstract class Screen implements ScreenTreeNode {
         return String.valueOf(mId);
     }
 
-    public abstract void getPostItems(ArrayList<PostItem> dest);
+    public abstract void getPostItems(ArrayList<PostItemModel> dest);
 
     public void setDataBundle(Bundle data) {
         mData = data;

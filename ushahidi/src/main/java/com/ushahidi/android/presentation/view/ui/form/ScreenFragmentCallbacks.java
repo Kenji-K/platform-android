@@ -16,7 +16,7 @@
 
 package com.ushahidi.android.presentation.view.ui.form;
 
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.Screen;
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
 
 public interface ScreenFragmentCallbacks {
 

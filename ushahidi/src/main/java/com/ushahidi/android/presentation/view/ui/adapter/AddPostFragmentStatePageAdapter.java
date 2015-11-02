@@ -1,6 +1,6 @@
 package com.ushahidi.android.presentation.view.ui.adapter;
 
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.Screen;
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

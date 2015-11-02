@@ -14,11 +14,60 @@
   ~ along with this program in the file LICENSE-AGPL. If not, see
   ~ https://www.gnu.org/licenses/agpl-3.0.html
   -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".presentation.ui.AddPostActivity">
 
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/add_post_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".presentation.ui.AddPostActivity"/>
+    <com.ushahidi.android.presentation.view.ui.widget.TitlePageIndicator
+            android:id="@+id/post_step_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@color/default_title_indicator_background_color"
+            android:paddingTop="@dimen/view_spacing_large"/>
+
+    <com.ushahidi.android.presentation.view.ui.widget.ScrollConfigurableViewPager
+            android:id="@+id/add_post_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+
+    <LinearLayout
+            style="?android:buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/previous_post_step_button"
+                style="?android:buttonBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/prev"
+                android:textColor="@color/black_darker"/>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider"/>
+
+        <Button
+                android:id="@+id/next_post_step_button"
+                style="?android:buttonBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black_darker"
+                android:text="@string/next"/>
+    </LinearLayout>
+</LinearLayout>
