@@ -137,8 +137,10 @@ public class AddPostActivity extends BaseAppActivity
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putLong(BUNDLE_STATE_PARAM_FORM_ID, mFormId);
         savedInstanceState.putString(BUNDLE_STATE_PARAM_FORM_TITLE, mFormTitle);
-        savedInstanceState.putParcelableArrayList("formStage", (ArrayList) mFormStages);
-        savedInstanceState.putParcelableArrayList("formAttributes", (ArrayList) mFormAttributes);
+        savedInstanceState
+                .putParcelableArrayList(BUNDLE_STATE_PARAM_FORM_STEPS, (ArrayList) mFormStages);
+        savedInstanceState.putParcelableArrayList(BUNDLE_STATE_PARAM_FORM_ATTRIBUTES,
+                (ArrayList) mFormAttributes);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -153,7 +155,7 @@ public class AddPostActivity extends BaseAppActivity
         if (savedInstanceState == null) {
             mFormId = getIntent().getLongExtra(INTENT_EXTRA_PARAM_FORM_ID, 0l);
             mFormTitle = getIntent().getStringExtra(INTENT_EXTRA_PARAM_FORM_TITLE);
-            // Todo load form
+            // Todo load form api
 
         } else {
             mFormId = savedInstanceState.getLong(BUNDLE_STATE_PARAM_FORM_ID);

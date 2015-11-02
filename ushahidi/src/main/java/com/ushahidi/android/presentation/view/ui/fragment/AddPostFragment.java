@@ -106,6 +106,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     @Override
     public void onStop() {
         super.onStop();
+        // Unsubscribe from the subscriber to prevent memory leaks
         if (mLocationWidget != null) {
             mLocationWidget.unsubscribe();
         }
@@ -158,6 +159,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
                         mScreen.getWidgets().add(mLocationWidget);
                         mFormAttributeViewGroup.addView(mLocationWidget);
                     }
+                    // TODO: Check for other form widgets
                 }
             }
         }
