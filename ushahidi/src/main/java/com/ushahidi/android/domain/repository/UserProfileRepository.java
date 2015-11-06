@@ -59,4 +59,13 @@ public interface UserProfileRepository {
      * @return The user profile
      */
     Observable<UserProfile> fetchUserProfile(Long deploymentId);
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True if successfully deleted otherwise false
+     */
+    Observable<Boolean> deleteUserProfiles(Long deploymentId);
+
 }

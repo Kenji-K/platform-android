@@ -35,7 +35,6 @@ public interface UserProfileDataSource {
      */
     Observable<UserEntity> getUserEntity(Long deploymentId, Long userEntityId);
 
-
     /**
      * Add / Update an {@link UserEntity} to/in a storage.
      *
@@ -67,4 +66,13 @@ public interface UserProfileDataSource {
      * @return The user entity
      */
     Observable<UserEntity> fetchUserProfile(Long deploymentId);
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    Observable<Boolean> deleteUserEntityList(Long deploymentId);
+
 }
