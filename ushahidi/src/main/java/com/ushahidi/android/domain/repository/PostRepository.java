@@ -76,4 +76,13 @@ public interface PostRepository {
      * @return True if successfully deleted otherwise false
      */
     Observable<Boolean> deletePost(Post post);
+
+    /**
+     * Deletes all posts with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True if successfully deleted otherwise false
+     */
+    Observable<Boolean> deleteDeploymentPosts(Long deploymentId);
+
 }

@@ -103,6 +103,12 @@ public class PostApiDataSource implements PostDataSource {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Observable<Boolean> deleteDeploymentPosts(Long deploymentId) {
+        // Do nothing. Not deleting via the API ATM
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Set the deployment ID for the TagModel since it's not set by the
      * API

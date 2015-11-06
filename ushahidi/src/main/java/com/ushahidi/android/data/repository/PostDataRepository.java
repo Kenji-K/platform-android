@@ -94,6 +94,12 @@ public class PostDataRepository implements PostRepository {
     }
 
     @Override
+    public Observable<Boolean> deleteDeploymentPosts(Long deploymentId) {
+        final PostDataSource postDataSource = mPostDataSourceFactory.createPostDatabaseDataSource();
+        return postDataSource.deleteDeploymentPosts(deploymentId);
+    }
+
+    @Override
     public Observable<Post> getPost(Long deploymentId, Long postEntityId) {
         final PostDataSource postDataSource = mPostDataSourceFactory.createPostDatabaseDataSource();
         return postDataSource.getPostEntityById(deploymentId, postEntityId)
