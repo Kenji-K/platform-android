@@ -4,6 +4,11 @@ import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.FormRepository;
+import com.ushahidi.android.domain.repository.GeoJsonRepository;
+import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.TagRepository;
+import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import javax.inject.Inject;
 
@@ -18,6 +23,16 @@ public class DeleteDeploymentUsecase extends Usecase {
 
     private final DeploymentRepository mDeploymentRepository;
 
+    private final PostRepository mPostRepository;
+
+    private final GeoJsonRepository mGeoJsonRepository;
+
+    private final FormRepository mFormRepository;
+
+    private final UserProfileRepository mUserProfileRepository;
+
+    private final TagRepository mTagRepository;
+
     private Long mDeploymentId;
 
     /**
@@ -29,9 +44,19 @@ public class DeleteDeploymentUsecase extends Usecase {
      */
     @Inject
     protected DeleteDeploymentUsecase(DeploymentRepository deploymentRepository,
+                                      PostRepository postRepository,
+                                      GeoJsonRepository geoJsonRepository,
+                                      FormRepository formRepository,
+                                      UserProfileRepository userProfileRepository,
+                                      TagRepository tagRepository,
             ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mDeploymentRepository = deploymentRepository;
+        mPostRepository = postRepository;
+        mGeoJsonRepository = geoJsonRepository;
+        mFormRepository = formRepository;
+        mUserProfileRepository = userProfileRepository;
+        mTagRepository = tagRepository;
     }
 
     /**
@@ -48,6 +73,11 @@ public class DeleteDeploymentUsecase extends Usecase {
         if (mDeploymentId == null) {
             throw new RuntimeException("Deployment ID is null. You must call setDeployment(...)");
         }
+        mPostRepository.deleteDeploymentPosts(mDeploymentId);
+        mGeoJsonRepository.deleteGeoJsonList(mDeploymentId);
+        mFormRepository.deleteForms(mDeploymentId);
+        mUserProfileRepository.deleteUserProfiles(mDeploymentId);
+        mTagRepository.deleteTagList(mDeploymentId);
         return mDeploymentRepository.deleteEntity(mDeploymentId);
     }
 }
