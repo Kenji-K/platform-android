@@ -74,4 +74,12 @@ public class GeoJsonDataRepository implements GeoJsonRepository {
                 .createGeoJsonDatabaseDataSource();
         return geoJsonDataSource.putGeoJson(mGeoJsonEntityDataMapper.map(geoJson));
     }
+
+    @Override
+    public Observable<Boolean> deleteGeoJsonList(Long deploymentId) {
+        final GeoJsonDataSource geoJsonDataSource = mGeoJsonDataSourceFactory
+                .createGeoJsonDatabaseDataSource();
+        return geoJsonDataSource.deleteGeoJsonList(deploymentId);
+    }
+
 }

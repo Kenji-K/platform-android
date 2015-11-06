@@ -63,4 +63,10 @@ public class GeoJsonApiDataSource implements GeoJsonDataSource {
         geoJsonEntity.setDeploymentId(deploymentId);
         return geoJsonEntity;
     }
+
+    @Override
+    public Observable<Boolean> deleteGeoJsonList(Long deploymentId) {
+        throw new UnsupportedOperationException();
+    }
+
 }

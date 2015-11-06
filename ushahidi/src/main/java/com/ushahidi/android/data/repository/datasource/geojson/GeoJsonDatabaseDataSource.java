@@ -50,4 +50,9 @@ public class GeoJsonDatabaseDataSource implements GeoJsonDataSource {
     public Observable<Long> putGeoJson(GeoJsonEntity geoJsonEntity) {
         return mGeoJsonDatabaseHelper.putGeoJson(geoJsonEntity);
     }
+
+    @Override
+    public Observable<Boolean> deleteGeoJsonList(Long deploymentId) {
+        return mGeoJsonDatabaseHelper.deleteGeoJsonList(deploymentId);
+    }
 }
