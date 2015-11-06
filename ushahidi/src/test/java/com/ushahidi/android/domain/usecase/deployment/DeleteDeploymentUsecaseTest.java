@@ -5,6 +5,11 @@ import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.repository.DeploymentRepository;
+import com.ushahidi.android.domain.repository.FormRepository;
+import com.ushahidi.android.domain.repository.GeoJsonRepository;
+import com.ushahidi.android.domain.repository.PostRepository;
+import com.ushahidi.android.domain.repository.TagRepository;
+import com.ushahidi.android.domain.repository.UserProfileRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,19 +45,41 @@ public class DeleteDeploymentUsecaseTest {
     @Mock
     private DeploymentRepository mockDeploymentRepository;
 
+    @Mock
+    private PostRepository mockPostRepository;
+
+    @Mock
+    private GeoJsonRepository mockGeoJsonRepository;
+
+    @Mock
+    private FormRepository mockFormRepository;
+
+    @Mock
+    private UserProfileRepository mockUserProfileRepository;
+
+    @Mock
+    private TagRepository mockTagRepository;
+
     private DeleteDeploymentUsecase mDeleteDeploymentUsecase;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mDeleteDeploymentUsecase = new DeleteDeploymentUsecase(mockDeploymentRepository,
-                mockThreadExecutor, mockPostExecutionThread);
+                mockPostRepository, mockGeoJsonRepository, mockFormRepository,
+                mockUserProfileRepository, mockTagRepository, mockThreadExecutor,
+                mockPostExecutionThread);
     }
 
     @Test
     public void shouldSuccessfullyDeleteDeployment() {
         mDeleteDeploymentUsecase.setDeploymentId(DUMMY_DEPLOYMENT_ID);
         mDeleteDeploymentUsecase.buildUseCaseObservable();
+        verify(mockPostRepository).deleteDeploymentPosts(DUMMY_DEPLOYMENT_ID);
+        verify(mockGeoJsonRepository).deleteGeoJsonList(DUMMY_DEPLOYMENT_ID);
+        verify(mockFormRepository).deleteForms(DUMMY_DEPLOYMENT_ID);
+        verify(mockUserProfileRepository).deleteUserProfiles(DUMMY_DEPLOYMENT_ID);
+        verify(mockTagRepository).deleteTagList(DUMMY_DEPLOYMENT_ID);
         verify(mockDeploymentRepository).deleteEntity(DUMMY_DEPLOYMENT_ID);
 
         verifyNoMoreInteractions(mockDeploymentRepository);
