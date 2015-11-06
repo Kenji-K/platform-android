@@ -79,4 +79,10 @@ public class TagDataRepository implements TagRepository {
         final TagDataSource tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
         return tagDataSource.deleteTag(mTagEntityDataMapper.map(tag));
     }
+
+    @Override
+    public Observable<Boolean> deleteTagList(Long deploymentId) {
+        final TagDataSource tagDataSource = mTagDataSourceFactory.createTagDatabaseDataSource();
+        return tagDataSource.deleteTagList(deploymentId);
+    }
 }
