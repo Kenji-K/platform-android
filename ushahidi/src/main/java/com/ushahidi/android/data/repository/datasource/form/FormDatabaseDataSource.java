@@ -34,4 +34,10 @@ public class FormDatabaseDataSource implements FormDataSource {
     public Observable<Long> putForm(FormEntity formEntity) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Observable<Boolean> deleteForms(Long deploymentId) {
+        return mFormDatabaseHelper.deleteForms(deploymentId);
+    }
+
 }
