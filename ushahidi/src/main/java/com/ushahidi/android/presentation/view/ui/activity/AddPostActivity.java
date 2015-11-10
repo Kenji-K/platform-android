@@ -22,6 +22,14 @@ import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormStageModel;
+import com.ushahidi.android.presentation.model.TagModel;
+import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
+import com.ushahidi.android.presentation.presenter.formstage.ListFormStagePresenter;
+import com.ushahidi.android.presentation.presenter.tags.ListTagPresenter;
+import com.ushahidi.android.presentation.util.Utility;
+import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
+import com.ushahidi.android.presentation.view.formstage.ListFormStageView;
+import com.ushahidi.android.presentation.view.tags.ListTagsView;
 import com.ushahidi.android.presentation.view.ui.adapter.AddPostFragmentStatePageAdapter;
 import com.ushahidi.android.presentation.view.ui.form.ScreenFragmentCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.ui.widgets.Widget;
@@ -43,6 +51,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 
@@ -83,8 +93,17 @@ public class AddPostActivity extends BaseAppActivity
     @Bind(R.id.previous_post_step_button)
     Button mPrevButton;
 
+    @Inject
+    ListTagPresenter mListTagPresenter;
+
     @Bind(R.id.post_step_title_strip)
     TitlePageIndicator mStepPagerStrip;
+
+    @Inject
+    ListFormAttributePresenter mListFormAttributePresenter;
+
+    @Inject
+    ListFormStagePresenter mListFormStagePresenter;
 
     private AddPostComponent mAddPostComponent;
 
@@ -104,7 +123,7 @@ public class AddPostActivity extends BaseAppActivity
 
     private List<FormStageModel> mFormStages = new ArrayList<>();
 
-    private List<FormAttributeModel> mFormAttributes = new ArrayList<>();
+    private List<FormAttributeModel> mFormAttributeModels = new ArrayList<>();
 
     /**
      * Default constructor
@@ -134,13 +153,35 @@ public class AddPostActivity extends BaseAppActivity
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mListFormAttributePresenter.pause();
+        mListFormStagePresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListFormStagePresenter.destroy();
+        mListFormAttributePresenter.destroy();
+        if (mScreenModel != null) {
+            mScreenModel.unregisterListener(this);
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putLong(BUNDLE_STATE_PARAM_FORM_ID, mFormId);
         savedInstanceState.putString(BUNDLE_STATE_PARAM_FORM_TITLE, mFormTitle);
         savedInstanceState
                 .putParcelableArrayList(BUNDLE_STATE_PARAM_FORM_STEPS, (ArrayList) mFormStages);
         savedInstanceState.putParcelableArrayList(BUNDLE_STATE_PARAM_FORM_ATTRIBUTES,
-                (ArrayList) mFormAttributes);
+                (ArrayList) mFormAttributeModels);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -149,20 +190,22 @@ public class AddPostActivity extends BaseAppActivity
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
+        getComponent().inject(this);
     }
 
     private void initialize(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             mFormId = getIntent().getLongExtra(INTENT_EXTRA_PARAM_FORM_ID, 0l);
             mFormTitle = getIntent().getStringExtra(INTENT_EXTRA_PARAM_FORM_TITLE);
-            // Todo load form api
+            initializeTagsView();
+            initializeFormAttributeView();
 
         } else {
             mFormId = savedInstanceState.getLong(BUNDLE_STATE_PARAM_FORM_ID);
             mFormTitle = savedInstanceState.getString(BUNDLE_STATE_PARAM_FORM_TITLE);
             mFormStages = (ArrayList) savedInstanceState
                     .getParcelableArrayList(BUNDLE_STATE_PARAM_FORM_STEPS);
-            mFormAttributes = (ArrayList) savedInstanceState
+            mFormAttributeModels = (ArrayList) savedInstanceState
                     .getParcelableArrayList(BUNDLE_STATE_PARAM_FORM_ATTRIBUTES);
         }
 
@@ -239,12 +282,140 @@ public class AddPostActivity extends BaseAppActivity
                 .setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mScreenModel.unregisterListener(this);
+    private void initializeFormAttributeView() {
+        mListFormAttributePresenter.setView(new ListFormAttributeView() {
+            @Override
+            public void renderFormAttribute(List<FormAttributeModel> formModel) {
+                mFormAttributeModels = formModel;
+                initListFormStageView();
+            }
+
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showRetry() {
+
+            }
+
+            @Override
+            public void hideRetry() {
+
+            }
+
+            @Override
+            public void showError(String s) {
+                showSnackbar(mAddPostViewPager, s);
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getApplicationContext();
+            }
+        });
+        mListFormAttributePresenter.getFormOnline(mFormId);
     }
 
+    private void initListFormStageView() {
+        mListFormStagePresenter.setView(new ListFormStageView() {
+            @Override
+            public void showError(String message) {
+
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getApplicationContext();
+            }
+
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showRetry() {
+
+            }
+
+            @Override
+            public void hideRetry() {
+
+            }
+
+            @Override
+            public void renderFormStage(List<FormStageModel> formModels) {
+                setupPageView(formModels);
+            }
+        });
+        mListFormStagePresenter.getFormOnline(mFormId);
+    }
+
+
+    private void initializeTagsView() {
+        mListTagPresenter.setView(new ListTagsView() {
+            @Override
+            public void renderTagList(List<TagModel> tagModels) {
+                if (!Utility.isCollectionEmpty(tagModels)) {
+                    /*mCategories.setVisibility(View.VISIBLE);
+                    for (TagModel tag : tagModels) {
+                        Timber.i("RenderTags", "Tag: " + tag.getTag());
+                        CheckBox checkBox = new CheckBox(getAppContext());
+                        int id = Resources.getSystem()
+                                .getIdentifier("btn_check_holo_light", "drawable", "android");
+                        checkBox.setButtonDrawable(id);
+                        checkBox.setTag(tag._id);
+                        checkBox.setText(tag.getTag());
+                        checkBox.setTextColor(getResources().getColor(R.color.black_dark));
+                        mCategories.addView(checkBox);
+                    }*/
+                }
+            }
+
+            @Override
+            public void showLoading() {
+                // Do nothing
+            }
+
+            @Override
+            public void hideLoading() {
+                // Do nothing
+            }
+
+            @Override
+            public void showRetry() {
+                // Do nothing
+            }
+
+            @Override
+            public void hideRetry() {
+                // Do nothing
+            }
+
+            @Override
+            public void showError(String s) {
+                // Do nothing
+            }
+
+            @Override
+            public Context getAppContext() {
+                return getApplicationContext();
+            }
+        });
+        mListTagPresenter.loadTags();
+    }
 
     @Override
     public AddPostComponent getComponent() {
@@ -278,7 +449,7 @@ public class AddPostActivity extends BaseAppActivity
 
     private void setupPageView(List<FormStageModel> result) {
         mFormStages = result;
-        mScreenModel = new PostFormModel(this, mFormStages, mFormAttributes);
+        mScreenModel = new PostFormModel(this, mFormStages, mFormAttributeModels);
         mScreenModel.registerListener(this);
         List<String> titles = new ArrayList<>();
         for (FormStageModel stage : mFormStages) {

@@ -50,6 +50,7 @@ public abstract class Screen implements ScreenTreeNode {
 
     protected boolean mRequired = false;
 
+    protected boolean mFirstScreen = false;
 
     protected Screen(ScreenModelCallbacks callbacks, String title, Long id, Long formId) {
         mCallbacks = callbacks;
@@ -68,6 +69,10 @@ public abstract class Screen implements ScreenTreeNode {
 
     public boolean isRequired() {
         return mRequired;
+    }
+
+    public boolean isFirstScreen() {
+        return mFirstScreen;
     }
 
     @Override
@@ -119,6 +124,11 @@ public abstract class Screen implements ScreenTreeNode {
 
     public Screen setRequired(boolean required) {
         mRequired = required;
+        return this;
+    }
+
+    public Screen setFirstScreen(boolean firstScreen) {
+        mFirstScreen = firstScreen;
         return this;
     }
 

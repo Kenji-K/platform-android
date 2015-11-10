@@ -29,6 +29,8 @@ import com.ushahidi.android.presentation.view.ui.form.ui.widgets.Widget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Collections;
@@ -52,6 +54,12 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
 
     @Bind(R.id.categories)
     ViewGroup mCategories;
+
+    @Bind(R.id.post_title)
+    AppCompatEditText mPostTitle;
+
+    @Bind(R.id.add_post_description)
+    AppCompatEditText mAppCompatEditText;
 
     private ScreenFragmentCallbacks mCallbacks;
 
@@ -133,6 +141,15 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     private void initializeFormAttributeView(Bundle savedInstanceState) {
         mScreen = (AddPostScreen) mCallbacks.onGetScreen(mKey);
         if (mScreen != null) {
+            if (mScreen.isFirstScreen()) {
+                mPostTitle.setVisibility(View.VISIBLE);
+                mAppCompatEditText.setVisibility(View.VISIBLE);
+                mCategories.setVisibility(View.VISIBLE);
+            } else {
+                mPostTitle.setVisibility(View.GONE);
+                mAppCompatEditText.setVisibility(View.GONE);
+                mCategories.setVisibility(View.GONE);
+            }
             mFormAttributeModelList = mScreen.getAttributes();
             mFormAttributeViewGroup.removeAllViews();
             if ((mFormAttributeModelList != null) && (!mFormAttributeModelList.isEmpty())) {

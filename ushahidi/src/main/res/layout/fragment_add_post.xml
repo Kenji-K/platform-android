@@ -17,18 +17,19 @@
                 android:text="@string/step_complete"
                 android:layout_gravity="left"
                 android:layout_margin="@dimen/view_spacing_large"
-                android:id="@+id/checkBox"/>
+                android:id="@+id/step_complete_check_box"/>
         <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/view_spacing_normal">
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/add_post_title"
                     style="@style/EditText.Name"
                     android:hint="@string/post_title"
                     android:textAllCaps="true"
                     android:imeOptions="actionNext"
+                    android:visibility="gone"
                     android:nextFocusDown="@+id/add_post_description"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -38,11 +39,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/view_spacing_normal">
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/add_post_description"
                     style="@style/EditText.Multiline"
                     android:hint="@string/post_description"
                     android:textAllCaps="true"
+                    android:visibility="gone"
                     android:imeOptions="actionDone"/>
         </android.support.design.widget.TextInputLayout>
         <LinearLayout
@@ -52,12 +54,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/view_spacing_large">
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/post_categories_label"
-                      android:text="@string/categories"
-                      android:paddingBottom="@dimen/view_spacing_large"
-                      android:textAllCaps="true"/>
+            <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
+                                                         android:layout_height="wrap_content"
+                                                         android:id="@+id/post_categories_label"
+                                                         android:text="@string/categories"
+                                                         android:paddingBottom="@dimen/view_spacing_large"
+                                                         android:textAllCaps="true"/>
         </LinearLayout>
 
         <LinearLayout

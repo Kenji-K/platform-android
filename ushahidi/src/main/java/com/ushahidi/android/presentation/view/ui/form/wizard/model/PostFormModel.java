@@ -47,6 +47,7 @@ public class PostFormModel extends AbstractScreenModel {
     protected ScreenList onNewRootScreenList() {
         ScreenList screenList = new ScreenList();
         if (mPages != null) {
+            int firstItem = 0;
             for (FormStageModel formStage : mPages) {
                 AddPostScreen addPostScreen = new AddPostScreen(this, formStage.getLabel(),
                         formStage._id, formStage.getFormId());
@@ -54,6 +55,10 @@ public class PostFormModel extends AbstractScreenModel {
                     if (formStage._id == formAttribute.getFormStageId()) {
                         addPostScreen.getAttributes().add(formAttribute);
                     }
+                }
+                if (firstItem == 0) {
+                    addPostScreen.setFirstScreen(true);
+                    firstItem++;
                 }
                 addPostScreen.setRequired(formStage.getRequired());
                 screenList.add(addPostScreen);
