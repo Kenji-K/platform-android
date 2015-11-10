@@ -40,7 +40,7 @@ public class UshRefreshAuthTokenGrant extends OAuth2RefreshAccessTokenGrant<OAut
     @Override
     public Observable<OAuth2AccessToken> grantNewAccessToken() {
         RefreshTokenRequestBody body = new RefreshTokenRequestBody(refreshToken, GRANT_TYPE,
-                clientId, clientSecret, scope);
+                clientId, clientSecret);
         return mRestfulService.refreshAccessToken(body);
     }
 

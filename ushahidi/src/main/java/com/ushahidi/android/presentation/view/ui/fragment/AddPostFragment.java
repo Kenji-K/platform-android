@@ -55,7 +55,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     @Bind(R.id.categories)
     ViewGroup mCategories;
 
-    @Bind(R.id.post_title)
+    @Bind(R.id.add_post_title)
     AppCompatEditText mPostTitle;
 
     @Bind(R.id.add_post_description)

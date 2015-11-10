@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 import com.ushahidi.android.data.api.qualifier.ClientId;
 import com.ushahidi.android.data.api.qualifier.ClientSecret;
 import com.ushahidi.android.data.api.qualifier.GrantType;
-import com.ushahidi.android.data.api.qualifier.Scope;
 
 import java.io.Serializable;
 
@@ -42,7 +41,7 @@ public class RefreshTokenRequestBody implements Serializable {
     @SerializedName("client_secret")
     private final String clientSecret;
 
-    private final String scope;
+    //private final String scope;
 
     @SerializedName("refresh_token")
     private String refreshToken;
@@ -54,15 +53,14 @@ public class RefreshTokenRequestBody implements Serializable {
      * @param grantType    The grant type
      * @param clientId     The client ID
      * @param clientSecret The client secret
-     * @param scope        The scope
      */
     public RefreshTokenRequestBody(String refreshToken, @GrantType String grantType,
-            @ClientId String clientId, @ClientSecret String clientSecret, @Scope String scope) {
+            @ClientId String clientId, @ClientSecret String clientSecret) {
         this.refreshToken = refreshToken;
         this.grantType = grantType;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.scope = scope;
+        //this.scope = scope;
     }
 
     public String getGrantType() {
@@ -77,9 +75,9 @@ public class RefreshTokenRequestBody implements Serializable {
         return clientSecret;
     }
 
-    public String getScope() {
+    /*public String getScope() {
         return scope;
-    }
+    }*/
 
 
     public String getRefreshToken() {
@@ -96,7 +94,7 @@ public class RefreshTokenRequestBody implements Serializable {
                 + "grantType='" + grantType + '\''
                 + ", clientId='" + clientId + '\''
                 + ", clientSecret='" + clientSecret + '\''
-                + ", scope='" + scope + '\''
+                //+ ", scope='" + scope + '\''
                 + ", refreshToken='" + refreshToken + '\''
                 + '}';
     }
