@@ -16,13 +16,6 @@
 
 package com.ushahidi.android.presentation.view.ui.form.ui.widgets;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.location.AppLocationManager;
 import com.ushahidi.android.presentation.view.ui.form.FormModelCallbacks;
@@ -66,10 +59,6 @@ public class LocationWidget extends Widget {
 
     private AppCompatImageButton mImageButton;
 
-    private MapView mMapView;
-
-    private GoogleMap mMap;
-
     private ProgressBar mProgressBar;
 
     private Bundle mSavedBundle;
@@ -91,13 +80,6 @@ public class LocationWidget extends Widget {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rootView = inflater.inflate(R.layout.widget_location, this);
-        mMapView = (MapView) rootView.findViewById(R.id.location_map);
-        mMapView.onCreate(mSavedBundle);
-        mMap = mMapView.getMap();
-        if (mMap != null) {
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            mMap.setMyLocationEnabled(true);
-        }
 
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.search_location_progress);
         mLabel = (AppCompatTextView) rootView.findViewById(R.id.location_name_label);
@@ -162,14 +144,11 @@ public class LocationWidget extends Widget {
                 if (address != null) {
                     mLocationLatitude.setText(String.valueOf(address.getLatitude()));
                     mLocationLongitude.setText(String.valueOf(address.getLongitude()));
-                    mLocationName.setText(String.format("%s, %s, %s, %s", address.getThoroughfare(),
+                    final String locationName = String.format("%s, %s, %s, %s",
+                            address.getThoroughfare(),
                             address.getSubLocality(),
-                            address.getLocality(), address.getCountryName()));
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    CameraUpdate cameraUpdate = CameraUpdateFactory
-                            .newLatLngZoom(latLng, 10);
-                    mMap.animateCamera(cameraUpdate);
-                    mMap.addMarker(new MarkerOptions().position(latLng));
+                            address.getLocality(), address.getCountryName());
+                    mLocationName.setText(locationName);
                 }
                 mProgressBar.setVisibility(GONE);
             }
