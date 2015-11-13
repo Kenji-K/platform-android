@@ -153,5 +153,6 @@
     <string name="step_complete">Step complete?</string>
     <string name="next">Next</string>
     <string name="prev">Previous</string>
-    <string name="finish">Publish to everyone?</string>
+    <string name="finish">Publish ></string>
+    <string name="who_can_see">Who can see this?</string>
 </resources>

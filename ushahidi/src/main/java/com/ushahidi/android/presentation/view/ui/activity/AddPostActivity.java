@@ -269,7 +269,7 @@ public class AddPostActivity extends BaseAppActivity
 
     private void updateBottomBar() {
         int position = mAddPostViewPager.getCurrentItem();
-        if (position == mCurrentScreenSequence.size()) {
+        if (position == mCurrentScreenSequence.size() -1) {
             mNextButton.setText(R.string.finish);
         } else {
             TypedValue v = new TypedValue();
@@ -277,9 +277,11 @@ public class AddPostActivity extends BaseAppActivity
                     true);
             mNextButton.setTextAppearance(this, v.resourceId);
         }
-
-        mPrevButton
-                .setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+        if (position <= 0) {
+            mPrevButton.setText(R.string.who_can_see);
+        } else {
+            mPrevButton.setText(R.string.prev);
+        }
     }
 
     private void initializeFormAttributeView() {
