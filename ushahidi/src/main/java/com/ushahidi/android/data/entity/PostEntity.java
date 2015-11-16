@@ -70,6 +70,13 @@ public class PostEntity extends Data {
     @SerializedName("values")
     private PostValueEntity mValues;
 
+    @SerializedName("form")
+    @Ignore
+    private FormEntity mFormEntity;
+
+    @SerializedName("completed_stages")
+    private List<Integer> mCompletedStages;
+
     @SerializedName("tags")
     @Ignore
     private List<PostTagEntity> mPostTagEntityList;
@@ -77,6 +84,46 @@ public class PostEntity extends Data {
     private long mDeploymentId;
 
     private transient List<TagEntity> mTags;
+
+    public FormEntity getFormEntity() {
+        return mFormEntity;
+    }
+
+    public void setFormEntity(FormEntity formEntity) {
+        mFormEntity = formEntity;
+    }
+
+    public List<Integer> getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(List<Integer> completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    @Override
+    public String toString() {
+        return "PostEntity{" +
+                "parent=" + parent +
+                ", mParent=" + mParent +
+                ", mUser=" + mUser +
+                ", mType=" + mType +
+                ", mTitle='" + mTitle + '\'' +
+                ", mSlug='" + mSlug + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mAuthorEmail='" + mAuthorEmail + '\'' +
+                ", mAuthorRealname='" + mAuthorRealname + '\'' +
+                ", mStatus=" + mStatus +
+                ", mCreated=" + mCreated +
+                ", mUpdated=" + mUpdated +
+                ", mValues=" + mValues +
+                ", mForm=" + mFormEntity +
+                ", mCompletedStages=" + mCompletedStages +
+                ", mPostTagEntityList=" + mPostTagEntityList +
+                ", mDeploymentId=" + mDeploymentId +
+                ", mTags=" + mTags +
+                '}';
+    }
 
     public Long getParent() {
         return mParent;
@@ -188,29 +235,6 @@ public class PostEntity extends Data {
 
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
-    }
-
-    @Override
-    public String toString() {
-        return "PostEntity{"
-                + "id=" + _id
-                + "parent=" + parent
-                + ", mParent=" + mParent
-                + ", mUser=" + mUser
-                + ", mType=" + mType
-                + ", mTitle='" + mTitle + '\''
-                + ", mSlug='" + mSlug + '\''
-                + ", mContent='" + mContent + '\''
-                + ", mAuthorEmail='" + mAuthorEmail + '\''
-                + ", mAuthorRealname='" + mAuthorRealname + '\''
-                + ", mStatus=" + mStatus
-                + ", mCreated=" + mCreated
-                + ", mUpdated=" + mUpdated
-                + ", mValues=" + mValues
-                + ", mPostTagEntityList=" + mPostTagEntityList
-                + ", mDeploymentId=" + mDeploymentId
-                + ", mTags=" + mTags
-                + '}';
     }
 
     public UserEntity getUser() {

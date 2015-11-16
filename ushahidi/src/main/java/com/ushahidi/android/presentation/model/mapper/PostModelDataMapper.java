@@ -38,17 +38,22 @@ public class PostModelDataMapper {
 
     private PostValueModelDataMapper mValueModelDataMapper;
 
+    private FormModelDataMapper mFormModelDataMapper;
+
     /**
      * Default constructor
      *
      * @param tagModelDataMapper       The tag model data mapper to use for initialization
      * @param postValueModelDataMapper The post value model data mapper to use for initialization
+     * @param formModelDataMapper      The form model data mapper
      */
     @Inject
     public PostModelDataMapper(TagModelDataMapper tagModelDataMapper,
-            PostValueModelDataMapper postValueModelDataMapper) {
+            PostValueModelDataMapper postValueModelDataMapper,
+            FormModelDataMapper formModelDataMapper) {
         mTagModelDataMapper = tagModelDataMapper;
         mValueModelDataMapper = postValueModelDataMapper;
+        mFormModelDataMapper = formModelDataMapper;
     }
 
     /**
@@ -74,7 +79,8 @@ public class PostModelDataMapper {
         postModel.setDeploymentId(post.getDeploymentId());
         postModel.setParent(post.getParent());
         postModel.setValues(mValueModelDataMapper.map(post.getValues()));
-
+        postModel.setCompletedStages(post.getCompletedStages());
+        postModel.setFormModel(mFormModelDataMapper.map(post.getForm()));
         return postModel;
     }
 
@@ -100,7 +106,8 @@ public class PostModelDataMapper {
         post.setDeploymentId(postModel.getDeploymentId());
         post.setParent(postModel.getParent());
         post.setValues(mValueModelDataMapper.map(postModel.getValues()));
-
+        post.setCompletedStages(postModel.getCompletedStages());
+        post.setForm(mFormModelDataMapper.map(postModel.getFormModel()));
         return post;
     }
 
@@ -119,7 +126,6 @@ public class PostModelDataMapper {
                 postModelList.add(postModel);
             }
         }
-
         return postModelList;
     }
 }

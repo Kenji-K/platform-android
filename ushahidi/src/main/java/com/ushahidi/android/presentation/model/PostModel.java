@@ -84,6 +84,10 @@ public class PostModel extends Model implements Parcelable {
 
     private transient List<TagModel> mTags;
 
+    private FormModel mFormModel;
+
+    private List<Integer> mCompletedStages;
+
     /**
      * Default constructor
      */
@@ -126,6 +130,69 @@ public class PostModel extends Model implements Parcelable {
         } else {
             mTags = null;
         }
+        mFormModel = (FormModel) in.readValue(FormModel.class.getClassLoader());
+        if (in.readByte() == 0x01) {
+            mCompletedStages = new ArrayList<>();
+            in.readList(mCompletedStages, Integer.class.getClassLoader());
+        } else {
+            mCompletedStages = null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "PostModel{" +
+                "parent=" + parent +
+                ", mParent=" + mParent +
+                ", mUser=" + mUser +
+                ", mType=" + mType +
+                ", mTitle='" + mTitle + '\'' +
+                ", mSlug='" + mSlug + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mAuthorEmail='" + mAuthorEmail + '\'' +
+                ", mAuthorRealname='" + mAuthorRealname + '\'' +
+                ", mStatus=" + mStatus +
+                ", mCreated=" + mCreated +
+                ", mUpdated=" + mUpdated +
+                ", mValues=" + mValues +
+                ", mPostTagEntityList=" + mPostTagEntityList +
+                ", mDeploymentId=" + mDeploymentId +
+                ", mTags=" + mTags +
+                ", mFormModel=" + mFormModel +
+                ", mCompletedStages=" + mCompletedStages +
+                '}';
+    }
+
+    public List<Integer> getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(List<Integer> completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
+
+    public UserProfileModel getUser() {
+        return mUser;
+    }
+
+    public void setUser(UserProfileModel user) {
+        mUser = user;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public FormModel getFormModel() {
+        return mFormModel;
+    }
+
+    public void setFormModel(FormModel formModel) {
+        mFormModel = formModel;
     }
 
     public Long getParent() {
@@ -238,25 +305,6 @@ public class PostModel extends Model implements Parcelable {
 
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{"
-                + "mParent=" + mParent
-                + ", mType=" + mType
-                + ", mTitle='" + mTitle + '\''
-                + ", mSlug='" + mSlug + '\''
-                + ", mContent='" + mContent + '\''
-                + ", mAuthorEmail='" + mAuthorEmail + '\''
-                + ", mAuthorRealname='" + mAuthorRealname + '\''
-                + ", mStatus=" + mStatus
-                + ", mCreated=" + mCreated
-                + ", mUpdated=" + mUpdated
-                + ", mDeploymentId=" + mDeploymentId
-                + ", mValues=" + mValues
-                + ", mTags=" + mTags
-                + '}';
     }
 
     public enum Status {
@@ -376,6 +424,14 @@ public class PostModel extends Model implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(mTags);
+        }
+
+        dest.writeValue(mFormModel);
+        if (mCompletedStages == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mCompletedStages);
         }
     }
 

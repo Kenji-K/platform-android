@@ -18,17 +18,22 @@ package com.ushahidi.android.presentation.view.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
 import com.ushahidi.android.R;
+import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormStageModel;
+import com.ushahidi.android.presentation.model.PostModel;
+import com.ushahidi.android.presentation.model.PostValueModel;
 import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
 import com.ushahidi.android.presentation.presenter.formstage.ListFormStagePresenter;
+import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.presenter.tags.ListTagPresenter;
 import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 import com.ushahidi.android.presentation.view.formstage.ListFormStageView;
+import com.ushahidi.android.presentation.view.post.AddPostView;
 import com.ushahidi.android.presentation.view.tags.ListTagsView;
 import com.ushahidi.android.presentation.view.ui.adapter.AddPostFragmentStatePageAdapter;
 import com.ushahidi.android.presentation.view.ui.form.ScreenFragmentCallbacks;
@@ -37,6 +42,7 @@ import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
 import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenModelCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.wizard.model.AbstractScreenModel;
 import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostFormModel;
+import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostItemModel;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
 import com.ushahidi.android.presentation.view.ui.widget.ScrollConfigurableViewPager;
 import com.ushahidi.android.presentation.view.ui.widget.TitlePageIndicator;
@@ -50,6 +56,8 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -104,6 +112,12 @@ public class AddPostActivity extends BaseAppActivity
 
     @Inject
     ListFormStagePresenter mListFormStagePresenter;
+
+    @Inject
+    AddPostPresenter mAddPostPresenter;
+
+    @Inject
+    PrefsFactory mPrefsFactory;
 
     private AddPostComponent mAddPostComponent;
 
@@ -162,6 +176,7 @@ public class AddPostActivity extends BaseAppActivity
         super.onPause();
         mListFormAttributePresenter.pause();
         mListFormStagePresenter.pause();
+        mAddPostPresenter.pause();
     }
 
     @Override
@@ -169,6 +184,7 @@ public class AddPostActivity extends BaseAppActivity
         super.onDestroy();
         mListFormStagePresenter.destroy();
         mListFormAttributePresenter.destroy();
+        mAddPostPresenter.destroy();
         if (mScreenModel != null) {
             mScreenModel.unregisterListener(this);
         }
@@ -241,19 +257,39 @@ public class AddPostActivity extends BaseAppActivity
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isValid = true;
-                for (int i = 0; i < mCurrentScreenSequence.size(); i++) {
-                    Screen screen = mCurrentScreenSequence.get(i);
-                    for (Widget widget : screen.getWidgets()) {
-                        if (!widget.validate()) {
-                            isValid = false;
-                            break;
-                        }
-                    }
-                }
 
-                if (isValid) {
-                    // TODO: Post item to the API
+                if (mAddPostViewPager.getCurrentItem() == mCurrentScreenSequence.size() - 1) {
+                    ArrayList<PostItemModel> postItems = new ArrayList<PostItemModel>();
+                    boolean isValid = true;
+                    PostValueModel postValueModel = new PostValueModel();
+                    postValueModel.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
+                    for (int i = 0; i < mCurrentScreenSequence.size(); i++) {
+                        Screen screen = mCurrentScreenSequence.get(i);
+                        for (Widget widget : screen.getWidgets()) {
+                            if (!widget.validate()) {
+                                isValid = false;
+                                break;
+                            }
+
+                        }
+                        screen.getPostItems(postItems);
+                    }
+                    Collections.sort(postItems, new Comparator<PostItemModel>() {
+                        @Override
+                        public int compare(PostItemModel a, PostItemModel b) {
+                            return a.getWeight() > b.getWeight() ? +1
+                                    : a.getWeight() < b.getWeight() ? -1 : 0;
+                        }
+                    });
+                    if (isValid) {
+                        // TODO: Post item to the API
+                        PostModel postModel = new PostModel();
+                        postModel.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
+                        postModel.setValues(postValueModel);
+                        postModel.setStatus(PostModel.Status.DRAFT);
+                    }
+                } else {
+                    mAddPostViewPager.setCurrentItem(mAddPostViewPager.getCurrentItem() + 1);
                 }
             }
         });
@@ -269,7 +305,7 @@ public class AddPostActivity extends BaseAppActivity
 
     private void updateBottomBar() {
         int position = mAddPostViewPager.getCurrentItem();
-        if (position == mCurrentScreenSequence.size() -1) {
+        if (position == mCurrentScreenSequence.size() - 1) {
             mNextButton.setText(R.string.finish);
         } else {
             TypedValue v = new TypedValue();
@@ -365,6 +401,45 @@ public class AddPostActivity extends BaseAppActivity
         mListFormStagePresenter.getFormOnline(mFormId);
     }
 
+
+    private void addPost(PostModel postModel) {
+        mAddPostPresenter.setView(new AddPostView() {
+            @Override
+            public void onPostSuccessfullyAdded(Long row) {
+
+            }
+
+            @Override
+            public void showLoading() {
+
+            }
+
+            @Override
+            public void hideLoading() {
+
+            }
+
+            @Override
+            public void showRetry() {
+
+            }
+
+            @Override
+            public void hideRetry() {
+
+            }
+
+            @Override
+            public void showError(String message) {
+            }
+
+            @Override
+            public Context getAppContext() {
+                return AddPostActivity.this;
+            }
+        });
+        mAddPostPresenter.addPost(postModel);
+    }
 
     private void initializeTagsView() {
         mListTagPresenter.setView(new ListTagsView() {

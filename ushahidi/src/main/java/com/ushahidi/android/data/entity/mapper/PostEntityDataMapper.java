@@ -36,13 +36,18 @@ public class PostEntityDataMapper {
 
     private PostValueEntityDataMapper mPostValueEntityMapper;
 
+    private FormEntityDataMapper mFormEntityDataMapper;
+
     /**
      * Default constructor
      */
     @Inject
-    public PostEntityDataMapper() {
-        mTagEntityMapper = new TagEntityDataMapper();
-        mPostValueEntityMapper = new PostValueEntityDataMapper();
+    public PostEntityDataMapper(TagEntityDataMapper tagEntityDataMapper,
+            PostValueEntityDataMapper postValueEntityDataMapper,
+            FormEntityDataMapper formEntityDataMapper) {
+        mTagEntityMapper = tagEntityDataMapper;
+        mPostValueEntityMapper = postValueEntityDataMapper;
+        mFormEntityDataMapper = formEntityDataMapper;
     }
 
     /**
@@ -77,7 +82,9 @@ public class PostEntityDataMapper {
             post.setContent(postEntity.getContent());
             post.setDeploymentId(postEntity.getDeploymentId());
             post.setParent(postEntity.getParent());
+            post.setCompletedStages(postEntity.getCompletedStages());
             post.setValues(mPostValueEntityMapper.map(postEntity.getValues()));
+            post.setForm(mFormEntityDataMapper.map(postEntity.getFormEntity()));
         }
         return post;
     }
@@ -113,7 +120,9 @@ public class PostEntityDataMapper {
             postEntity.setContent(post.getContent());
             postEntity.setDeploymentId(post.getDeploymentId());
             postEntity.setParent(post.getParent());
+            postEntity.setFormEntity(mFormEntityDataMapper.map(post.getForm()));
             postEntity.setValues(mPostValueEntityMapper.map(post.getValues()));
+            postEntity.setCompletedStages(post.getCompletedStages());
         }
         return postEntity;
     }

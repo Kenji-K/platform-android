@@ -28,7 +28,6 @@ public class FormEntity extends Data {
 
     private Long mDeploymentId;
 
-
     public Long getDeploymentId() {
         return mDeploymentId;
     }
