@@ -203,25 +203,25 @@ public class Post extends Entity {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "mParent=" + mParent +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mFormEntity=" + mPostForm +
-                ", mCompletedStages=" + mCompletedStages +
-                ", mAllowedPrivileges=" + mAllowedPrivileges +
-                ", mPostUser=" + mPostUser +
-                ", mValues=" + mValues +
-                ", mTags=" + mTags +
-                '}';
+        return "Post{"
+                + "mParent=" + mParent
+                + ", mType=" + mType
+                + ", mTitle='" + mTitle + '\''
+                + ", mSlug='" + mSlug + '\''
+                + ", mContent='" + mContent + '\''
+                + ", mAuthorEmail='" + mAuthorEmail + '\''
+                + ", mAuthorRealname='" + mAuthorRealname + '\''
+                + ", mStatus=" + mStatus
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mDeploymentId=" + mDeploymentId
+                + ", mPostForm=" + mPostForm
+                + ", mCompletedStages=" + mCompletedStages
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mPostUser=" + mPostUser
+                + ", mValues=" + mValues
+                + ", mTags=" + mTags
+                + '}';
     }
 
 

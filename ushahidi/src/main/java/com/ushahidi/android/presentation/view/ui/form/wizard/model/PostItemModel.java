@@ -91,12 +91,12 @@ public class PostItemModel {
 
     @Override
     public String toString() {
-        return "PostItemModel{" +
-                "mWeight=" + mWeight +
-                ", mTitle='" + mTitle + '\'' +
-                ", mDisplayValue='" + mDisplayValue + '\'' +
-                ", mFieldKey='" + mFieldKey + '\'' +
-                ", mPageKey='" + mPageKey + '\'' +
-                '}';
+        return "PostItemModel{"
+                + "mWeight=" + mWeight
+                + ", mTitle='" + mTitle + '\''
+                + ", mDisplayValue='" + mDisplayValue + '\''
+                + ", mFieldKey='" + mFieldKey + '\''
+                + ", mPageKey='" + mPageKey + '\''
+                + '}';
     }
 }

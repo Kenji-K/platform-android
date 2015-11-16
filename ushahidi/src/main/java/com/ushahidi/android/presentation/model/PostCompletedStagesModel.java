@@ -35,8 +35,8 @@ public class PostCompletedStagesModel {
 
     @Override
     public String toString() {
-        return "PostCompletedStagesEntity{" +
-                ", mCompletedStep='" + mCompletedStep + '\'' +
-                '}';
+        return "PostCompletedStagesModel{"
+                + "mCompletedStep='" + mCompletedStep + '\''
+                + '}';
     }
 }

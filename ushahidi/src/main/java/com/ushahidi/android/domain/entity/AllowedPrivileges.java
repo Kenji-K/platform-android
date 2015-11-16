@@ -33,8 +33,8 @@ public class AllowedPrivileges {
 
     @Override
     public String toString() {
-        return "AllowedPrivilegesEntity{" +
-                "mAllowedPrivileges='" + mAllowedPrivileges + '\'' +
-                '}';
+        return "AllowedPrivileges{"
+                + "mAllowedPrivileges='" + mAllowedPrivileges + '\''
+                + '}';
     }
 }

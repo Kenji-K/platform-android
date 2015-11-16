@@ -91,7 +91,6 @@ public class PostTagModel extends Model implements Parcelable {
         return "PostTagModel{"
                 + "mPostId=" + mPostId
                 + ", mTagId=" + mTagId
-                + ", _id=" + _id
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
     }

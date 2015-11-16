@@ -243,30 +243,29 @@ public class PostEntity extends Data {
         this.parent = parent;
     }
 
-
     @Override
     public String toString() {
-        return "PostEntity{" +
-                "mDeploymentId=" + mDeploymentId +
-                ", parent=" + parent +
-                ", mParent=" + mParent +
-                ", mUser=" + mUser +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mValues=" + mValues +
-                ", mPostFormEntity=" + mPostFormEntity +
-                ", mCompletedStages=" + mCompletedStages +
-                ", mPostTagEntityList=" + mPostTagEntityList +
-                ", mTags=" + mTags +
-                ", mAllowedPrivilegesEntity=" + mAllowedPrivilegesEntity +
-                '}';
+        return "PostEntity{"
+                + "mDeploymentId=" + mDeploymentId
+                + ", parent=" + parent
+                + ", mParent=" + mParent
+                + ", mUser=" + mUser
+                + ", mType=" + mType
+                + ", mTitle='" + mTitle + '\''
+                + ", mSlug='" + mSlug + '\''
+                + ", mContent='" + mContent + '\''
+                + ", mAuthorEmail='" + mAuthorEmail + '\''
+                + ", mAuthorRealname='" + mAuthorRealname + '\''
+                + ", mStatus=" + mStatus
+                + ", mCreated=" + mCreated
+                + ", mUpdated=" + mUpdated
+                + ", mValues=" + mValues
+                + ", mPostFormEntity=" + mPostFormEntity
+                + ", mCompletedStages=" + mCompletedStages
+                + ", mPostTagEntityList=" + mPostTagEntityList
+                + ", mTags=" + mTags
+                + ", mAllowedPrivilegesEntity=" + mAllowedPrivilegesEntity
+                + '}';
     }
 
     public enum Status {

@@ -55,10 +55,10 @@ public class PostUser {
 
     @Override
     public String toString() {
-        return "PostUserEntity{" +
-                "mPostId=" + mPostId +
-                ", mUserId=" + mUserId +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostUser{"
+                + "mPostId=" + mPostId
+                + ", mUserId=" + mUserId
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

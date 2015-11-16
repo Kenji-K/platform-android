@@ -16,7 +16,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.PostUserEntity;
 import com.ushahidi.android.domain.entity.PostUser;
 import com.ushahidi.android.presentation.model.PostUserModel;
 
@@ -41,7 +40,7 @@ public class PostUserModelDataMapper {
     }
 
     /**
-     * Maps {@link PostUserEntity} onto {@link PostUser}
+     * Maps {@link PostUserModel} onto {@link PostUser}
      *
      * @param postUserModel The post entity to be mapped
      * @return The post value
@@ -58,7 +57,7 @@ public class PostUserModelDataMapper {
     }
 
     /**
-     * Maps {@link PostUser} onto {@link PostUserEntity}
+     * Maps {@link PostUser} onto {@link PostUserModel}
      *
      * @param postUser The post form entity
      * @return The post form
@@ -75,7 +74,7 @@ public class PostUserModelDataMapper {
     }
 
     /**
-     * Maps a list {@link PostUserEntity} into a list of {@link PostUser}.
+     * Maps a list {@link PostUserModel} into a list of {@link PostUser}.
      *
      * @param postModelList List to be mapped.
      * @return {@link PostUser}

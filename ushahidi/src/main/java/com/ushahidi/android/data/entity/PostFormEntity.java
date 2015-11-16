@@ -58,10 +58,10 @@ public class PostFormEntity {
 
     @Override
     public String toString() {
-        return "PostFormEntity{" +
-                "mPostId=" + mPostId +
-                ", mFormId=" + mFormId +
-                ", mDeploymentId=" + mDeploymentId +
-                '}';
+        return "PostFormEntity{"
+                + "mPostId=" + mPostId
+                + ", mFormId=" + mFormId
+                + ", mDeploymentId=" + mDeploymentId
+                + '}';
     }
 }

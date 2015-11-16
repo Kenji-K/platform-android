@@ -16,7 +16,6 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.PostFormEntity;
 import com.ushahidi.android.domain.entity.PostForm;
 import com.ushahidi.android.presentation.model.PostFormModel;
 
@@ -39,7 +38,7 @@ public class PostFormModelDataMapper {
     }
 
     /**
-     * Maps {@link PostFormEntity} onto {@link PostForm}
+     * Maps {@link PostFormModel} onto {@link PostForm}
      *
      * @param postFormModel The post entity to be mapped
      * @return The post value
@@ -56,7 +55,7 @@ public class PostFormModelDataMapper {
     }
 
     /**
-     * Maps {@link PostForm} onto {@link PostFormEntity}
+     * Maps {@link PostForm} onto {@link PostFormModel}
      *
      * @param postForm The post form entity
      * @return The post form
@@ -73,7 +72,7 @@ public class PostFormModelDataMapper {
     }
 
     /**
-     * Maps a list {@link PostFormEntity} into a list of {@link PostForm}.
+     * Maps a list {@link PostFormModel} into a list of {@link PostForm}.
      *
      * @param postModelList List to be mapped.
      * @return {@link PostForm}
