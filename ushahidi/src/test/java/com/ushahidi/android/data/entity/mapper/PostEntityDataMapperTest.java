@@ -87,7 +87,11 @@ public class PostEntityDataMapperTest {
 
     @Before
     public void setUp() throws Exception {
-        mPostEntityMapper = new PostEntityDataMapper();
+        mPostEntityMapper = new PostEntityDataMapper(new TagEntityDataMapper(),
+                new PostValueEntityDataMapper(), new PostFormEntityDataMapper(),
+                new PostCompletedStagesDataEntityDataMapper(),
+                new AllowedPrivilegesEntityDataMapper(),
+                new PostUserEntityDataMapper());
         mPostValueEntityDataMapper = new PostValueEntityDataMapper();
         POST_VALUE_ENTITY.setDeploymentId(1l);
         POST_VALUE_ENTITY.setValues("values");

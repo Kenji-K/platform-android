@@ -20,16 +20,16 @@ import com.ushahidi.android.data.entity.PostUserEntity;
 import com.ushahidi.android.domain.entity.PostUser;
 import com.ushahidi.android.presentation.model.PostUserModel;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class PostUserModelDataMapper {
 
     /**
@@ -46,7 +46,7 @@ public class PostUserModelDataMapper {
      * @param postUserModel The post entity to be mapped
      * @return The post value
      */
-    public PostUser map(PostUserModel postUserModel) {
+    public PostUser map(@NonNull PostUserModel postUserModel) {
         PostUser postUser = null;
         if (postUserModel != null) {
             postUser = new PostUser();
@@ -63,7 +63,7 @@ public class PostUserModelDataMapper {
      * @param postUser The post form entity
      * @return The post form
      */
-    public PostUserModel map(PostUser postUser) {
+    public PostUserModel map(@NonNull PostUser postUser) {
         PostUserModel postUserModel = null;
         if (postUser != null) {
             postUserModel = new PostUserModel();

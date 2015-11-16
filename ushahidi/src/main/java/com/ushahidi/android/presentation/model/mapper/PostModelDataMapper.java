@@ -36,24 +36,36 @@ public class PostModelDataMapper {
 
     private TagModelDataMapper mTagModelDataMapper;
 
-    private PostValueModelDataMapper mValueModelDataMapper;
+    private PostValueModelDataMapper mPostValueModelDataMapper;
 
-    private FormModelDataMapper mFormModelDataMapper;
+    private PostFormModelDataMapper mPostFormModelDataMapper;
+
+    private PostCompletedStagesDataModelDataMapper mPostCompletedStagesDataModelDataMapper;
+
+    private AllowedPrivilegesModelDataMapper mAllowedPrivilegesModelDataMapper;
+
+    private PostUserModelDataMapper mPostUserModelDataMapper;
 
     /**
      * Default constructor
      *
      * @param tagModelDataMapper       The tag model data mapper to use for initialization
      * @param postValueModelDataMapper The post value model data mapper to use for initialization
-     * @param formModelDataMapper      The form model data mapper
+     * @param postFormModelDataMapper  The form model data mapper
      */
     @Inject
     public PostModelDataMapper(TagModelDataMapper tagModelDataMapper,
             PostValueModelDataMapper postValueModelDataMapper,
-            FormModelDataMapper formModelDataMapper) {
+            PostFormModelDataMapper postFormModelDataMapper,
+            PostCompletedStagesDataModelDataMapper postCompletedStagesDataModelDataMapper,
+            AllowedPrivilegesModelDataMapper allowedPrivilegesModelDataMapper,
+            PostUserModelDataMapper postUserModelDataMapper) {
         mTagModelDataMapper = tagModelDataMapper;
-        mValueModelDataMapper = postValueModelDataMapper;
-        mFormModelDataMapper = formModelDataMapper;
+        mPostValueModelDataMapper = postValueModelDataMapper;
+        mPostFormModelDataMapper = postFormModelDataMapper;
+        mPostCompletedStagesDataModelDataMapper = postCompletedStagesDataModelDataMapper;
+        mAllowedPrivilegesModelDataMapper = allowedPrivilegesModelDataMapper;
+        mPostUserModelDataMapper = postUserModelDataMapper;
     }
 
     /**
@@ -78,9 +90,11 @@ public class PostModelDataMapper {
         postModel.setContent(post.getContent());
         postModel.setDeploymentId(post.getDeploymentId());
         postModel.setParent(post.getParent());
-        postModel.setValues(mValueModelDataMapper.map(post.getValues()));
+        postModel.setValues(mPostValueModelDataMapper.map(post.getValues()));
         postModel.setCompletedStages(post.getCompletedStages());
-        postModel.setFormModel(mFormModelDataMapper.map(post.getForm()));
+        postModel.setFormModel(mPostFormModelDataMapper.map(post.getPostForm()));
+        postModel.setPostUserModel(mPostUserModelDataMapper.map(post.getPostUser()));
+
         return postModel;
     }
 
@@ -104,10 +118,9 @@ public class PostModelDataMapper {
         post.setAuthorRealname(postModel.getAuthorRealname());
         post.setContent(postModel.getContent());
         post.setDeploymentId(postModel.getDeploymentId());
-        post.setParent(postModel.getParent());
-        post.setValues(mValueModelDataMapper.map(postModel.getValues()));
+        post.setValues(mPostValueModelDataMapper.map(postModel.getValues()));
         post.setCompletedStages(postModel.getCompletedStages());
-        post.setForm(mFormModelDataMapper.map(postModel.getFormModel()));
+        post.setPostForm(mPostFormModelDataMapper.map(postModel.getPostFormModel()));
         return post;
     }
 

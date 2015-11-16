@@ -20,6 +20,9 @@ package com.ushahidi.android.presentation.model;
 import com.google.gson.annotations.SerializedName;
 
 import com.addhen.android.raiburari.presentation.model.Model;
+import com.ushahidi.android.domain.entity.AllowedPrivileges;
+import com.ushahidi.android.domain.entity.PostCompletedStages;
+import com.ushahidi.android.domain.entity.PostForm;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -56,8 +59,6 @@ public class PostModel extends Model implements Parcelable {
 
     private transient Long mParent;
 
-    private UserProfileModel mUser;
-
     private Type mType;
 
     private String mTitle;
@@ -84,9 +85,13 @@ public class PostModel extends Model implements Parcelable {
 
     private transient List<TagModel> mTags;
 
-    private FormModel mFormModel;
+    private PostFormModel mPostForm;
 
-    private List<Integer> mCompletedStages;
+    private PostCompletedStages mCompletedStages;
+
+    private AllowedPrivileges mAllowedPrivileges;
+
+    private PostUserModel mPostUser;
 
     /**
      * Default constructor
@@ -95,16 +100,10 @@ public class PostModel extends Model implements Parcelable {
 
     }
 
-    /**
-     * Constructs a {@link PostModel} with initialized value retried from the passed {@link
-     * Parcel}
-     *
-     * @param in The parcel
-     */
     protected PostModel(Parcel in) {
         parent = (Parent) in.readValue(Parent.class.getClassLoader());
         mParent = in.readByte() == 0x00 ? null : in.readLong();
-        mUser = (UserProfileModel) in.readValue(UserProfileModel.class.getClassLoader());
+        mPostUser = (PostUserModel) in.readValue(UserProfileModel.class.getClassLoader());
         mType = (Type) in.readValue(Type.class.getClassLoader());
         mTitle = in.readString();
         mSlug = in.readString();
@@ -118,97 +117,76 @@ public class PostModel extends Model implements Parcelable {
         mUpdated = tmpMUpdated != -1 ? new Date(tmpMUpdated) : null;
         mValues = (PostValueModel) in.readValue(PostValueModel.class.getClassLoader());
         if (in.readByte() == 0x01) {
-            mPostTagEntityList = new ArrayList<>();
+            mPostTagEntityList = new ArrayList<PostTagModel>();
             in.readList(mPostTagEntityList, PostTagModel.class.getClassLoader());
         } else {
             mPostTagEntityList = null;
         }
         mDeploymentId = in.readLong();
         if (in.readByte() == 0x01) {
-            mTags = new ArrayList<>();
+            mTags = new ArrayList<TagModel>();
             in.readList(mTags, TagModel.class.getClassLoader());
         } else {
             mTags = null;
         }
-        mFormModel = (FormModel) in.readValue(FormModel.class.getClassLoader());
-        if (in.readByte() == 0x01) {
-            mCompletedStages = new ArrayList<>();
-            in.readList(mCompletedStages, Integer.class.getClassLoader());
-        } else {
-            mCompletedStages = null;
-        }
+        mPostForm = (PostFormModel) in.readValue(PostForm.class.getClassLoader());
+        mCompletedStages = (PostCompletedStages) in
+                .readValue(PostCompletedStages.class.getClassLoader());
+        mAllowedPrivileges = (AllowedPrivileges) in
+                .readValue(AllowedPrivileges.class.getClassLoader());
+        mPostUser = (PostUserModel) in.readValue(PostUserModel.class.getClassLoader());
     }
 
     @Override
-    public String toString() {
-        return "PostModel{" +
-                "parent=" + parent +
-                ", mParent=" + mParent +
-                ", mUser=" + mUser +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mValues=" + mValues +
-                ", mPostTagEntityList=" + mPostTagEntityList +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mTags=" + mTags +
-                ", mFormModel=" + mFormModel +
-                ", mCompletedStages=" + mCompletedStages +
-                '}';
+    public int describeContents() {
+        return 0;
     }
 
-    public List<Integer> getCompletedStages() {
-        return mCompletedStages;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(parent);
+        if (mParent == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mParent);
+        }
+        dest.writeValue(mPostUser);
+        dest.writeValue(mType);
+        dest.writeString(mTitle);
+        dest.writeString(mSlug);
+        dest.writeString(mContent);
+        dest.writeString(mAuthorEmail);
+        dest.writeString(mAuthorRealname);
+        dest.writeValue(mStatus);
+        dest.writeLong(mCreated != null ? mCreated.getTime() : -1L);
+        dest.writeLong(mUpdated != null ? mUpdated.getTime() : -1L);
+        dest.writeValue(mValues);
+        if (mPostTagEntityList == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mPostTagEntityList);
+        }
+        dest.writeLong(mDeploymentId);
+        if (mTags == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mTags);
+        }
+        dest.writeValue(mPostForm);
+        dest.writeValue(mCompletedStages);
+        dest.writeValue(mAllowedPrivileges);
+        dest.writeValue(mPostUser);
     }
 
-    public void setCompletedStages(List<Integer> completedStages) {
-        mCompletedStages = completedStages;
-    }
-
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
-
-    public UserProfileModel getUser() {
-        return mUser;
-    }
-
-    public void setUser(UserProfileModel user) {
-        mUser = user;
-    }
-
-    public void setDeploymentId(long deploymentId) {
-        mDeploymentId = deploymentId;
-    }
-
-    public FormModel getFormModel() {
-        return mFormModel;
-    }
-
-    public void setFormModel(FormModel formModel) {
-        mFormModel = formModel;
-    }
-
-    public Long getParent() {
-        return mParent;
+    public Parent getParent() {
+        return parent;
     }
 
     public void setParent(Long parent) {
         mParent = parent;
-    }
-
-    public List<PostTagModel> getPostTagEntityList() {
-        return mPostTagEntityList;
-    }
-
-    public void setPostTagEntityList(List<PostTagModel> postTagEntityList) {
-        mPostTagEntityList = postTagEntityList;
     }
 
     public Type getType() {
@@ -243,20 +221,20 @@ public class PostModel extends Model implements Parcelable {
         mContent = content;
     }
 
-    public String getAuthorRealname() {
-        return mAuthorRealname;
-    }
-
-    public void setAuthorRealname(String authorRealname) {
-        mAuthorRealname = authorRealname;
-    }
-
     public String getAuthorEmail() {
         return mAuthorEmail;
     }
 
     public void setAuthorEmail(String authorEmail) {
         mAuthorEmail = authorEmail;
+    }
+
+    public String getAuthorRealname() {
+        return mAuthorRealname;
+    }
+
+    public void setAuthorRealname(String authorRealname) {
+        mAuthorRealname = authorRealname;
     }
 
     public Status getStatus() {
@@ -291,6 +269,23 @@ public class PostModel extends Model implements Parcelable {
         mValues = values;
     }
 
+    public List<PostTagModel> getPostTagEntityList() {
+        return mPostTagEntityList;
+    }
+
+    public void setPostTagEntityList(
+            List<PostTagModel> postTagEntityList) {
+        mPostTagEntityList = postTagEntityList;
+    }
+
+    public long getDeploymentId() {
+        return mDeploymentId;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
     public List<TagModel> getTags() {
         return mTags;
     }
@@ -299,12 +294,42 @@ public class PostModel extends Model implements Parcelable {
         mTags = tags;
     }
 
-    public Long getDeploymentId() {
-        return mDeploymentId;
+    public PostCompletedStages getCompletedStages() {
+        return mCompletedStages;
     }
 
-    public void setDeploymentId(Long deploymentId) {
-        mDeploymentId = deploymentId;
+    public void setCompletedStages(
+            PostCompletedStages completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public PostFormModel getPostFormModel() {
+        return mPostForm;
+    }
+
+    public void setFormModel(PostFormModel postForm) {
+        mPostForm = postForm;
+    }
+
+    public AllowedPrivileges getAllowedPrivileges() {
+        return mAllowedPrivileges;
+    }
+
+    public void setAllowedPrivileges(
+            AllowedPrivileges allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public PostUserModel getPostUser() {
+        return mPostUser;
+    }
+
+    public void setPostUserModel(PostUserModel postUser) {
+        mPostUser = postUser;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public enum Status {
@@ -387,53 +412,6 @@ public class PostModel extends Model implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(parent);
-        if (mParent == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeLong(mParent);
-        }
-        dest.writeValue(mUser);
-        dest.writeValue(mType);
-        dest.writeString(mTitle);
-        dest.writeString(mSlug);
-        dest.writeString(mContent);
-        dest.writeString(mAuthorEmail);
-        dest.writeString(mAuthorRealname);
-        dest.writeValue(mStatus);
-        dest.writeLong(mCreated != null ? mCreated.getTime() : -1L);
-        dest.writeLong(mUpdated != null ? mUpdated.getTime() : -1L);
-        dest.writeValue(mValues);
-        if (mPostTagEntityList == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(mPostTagEntityList);
-        }
-        dest.writeLong(mDeploymentId);
-        if (mTags == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(mTags);
-        }
-
-        dest.writeValue(mFormModel);
-        if (mCompletedStages == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(mCompletedStages);
-        }
-    }
 
     /**
      * Represents the parent property of the a post

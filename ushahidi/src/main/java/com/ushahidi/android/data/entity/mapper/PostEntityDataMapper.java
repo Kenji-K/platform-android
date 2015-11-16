@@ -98,7 +98,7 @@ public class PostEntityDataMapper {
             post.setCompletedStages(
                     mPostCompletedStagesDataEntityDataMapper.map(postEntity.getCompletedStages()));
             post.setValues(mPostValueEntityMapper.map(postEntity.getValues()));
-            post.setFormEntity(mPostFormEntityDataMapper.map(postEntity.getPostFormEntity()));
+            post.setPostForm(mPostFormEntityDataMapper.map(postEntity.getPostFormEntity()));
             post.setAllowedPrivileges(mAllowedPrivilegesEntityDataMapper
                     .map(postEntity.getAllowedPrivileges()));
         }
@@ -136,7 +136,7 @@ public class PostEntityDataMapper {
             postEntity.setContent(post.getContent());
             postEntity.setDeploymentId(post.getDeploymentId());
             postEntity.setParent(post.getParent());
-            postEntity.setPostForm(mPostFormEntityDataMapper.map(post.getFormEntity()));
+            postEntity.setPostForm(mPostFormEntityDataMapper.map(post.getPostForm()));
             postEntity.setValues(mPostValueEntityMapper.map(post.getValues()));
             postEntity.setCompletedStages(mPostCompletedStagesDataEntityDataMapper.map(
                     post.getCompletedStages()));

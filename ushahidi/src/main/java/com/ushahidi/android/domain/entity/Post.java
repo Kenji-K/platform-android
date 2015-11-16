@@ -51,7 +51,7 @@ public class Post extends Entity {
 
     private Long mDeploymentId;
 
-    private PostForm mFormEntity;
+    private PostForm mPostForm;
 
     private PostCompletedStages mCompletedStages;
 
@@ -169,20 +169,19 @@ public class Post extends Entity {
         mDeploymentId = deploymentId;
     }
 
-    public PostForm getFormEntity() {
-        return mFormEntity;
+    public PostForm getPostForm() {
+        return mPostForm;
     }
 
-    public void setFormEntity(PostForm formEntity) {
-        mFormEntity = formEntity;
+    public void setPostForm(PostForm postForm) {
+        mPostForm = postForm;
     }
 
     public PostCompletedStages getCompletedStages() {
         return mCompletedStages;
     }
 
-    public void setCompletedStages(
-            PostCompletedStages completedStages) {
+    public void setCompletedStages(PostCompletedStages completedStages) {
         mCompletedStages = completedStages;
     }
 
@@ -190,8 +189,7 @@ public class Post extends Entity {
         return mAllowedPrivileges;
     }
 
-    public void setAllowedPrivileges(
-            AllowedPrivileges allowedPrivileges) {
+    public void setAllowedPrivileges(AllowedPrivileges allowedPrivileges) {
         mAllowedPrivileges = allowedPrivileges;
     }
 
@@ -217,7 +215,7 @@ public class Post extends Entity {
                 ", mCreated=" + mCreated +
                 ", mUpdated=" + mUpdated +
                 ", mDeploymentId=" + mDeploymentId +
-                ", mFormEntity=" + mFormEntity +
+                ", mFormEntity=" + mPostForm +
                 ", mCompletedStages=" + mCompletedStages +
                 ", mAllowedPrivileges=" + mAllowedPrivileges +
                 ", mPostUser=" + mPostUser +

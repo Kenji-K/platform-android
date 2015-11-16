@@ -16,19 +16,19 @@
 
 package com.ushahidi.android.presentation.model.mapper;
 
-import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
 import com.ushahidi.android.domain.entity.AllowedPrivileges;
+import com.ushahidi.android.presentation.model.AllowedPrivilegesModel;
+
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class AllowedPrivilegesModelDataMapper {
 
     /**
@@ -40,50 +40,50 @@ public class AllowedPrivilegesModelDataMapper {
     }
 
     /**
-     * Maps {@link AllowedPrivilegesEntity} onto {@link AllowedPrivileges}
+     * Maps {@link AllowedPrivilegesModel} onto {@link AllowedPrivileges}
      *
-     * @param postEntity The post entity to be mapped
+     * @param postModel The post entity to be mapped
      * @return The post value
      */
-    public AllowedPrivileges map(AllowedPrivilegesEntity postEntity) {
-        AllowedPrivileges allowPrivilegesEntity = null;
-        if (postEntity != null) {
-            allowPrivilegesEntity = new AllowedPrivileges();
-            allowPrivilegesEntity.setAllowedPrivileges(postEntity.getAllowedPrivileges());
+    public AllowedPrivileges map(@NonNull AllowedPrivilegesModel postModel) {
+        AllowedPrivileges allowPrivilegesModel = null;
+        if (postModel != null) {
+            allowPrivilegesModel = new AllowedPrivileges();
+            allowPrivilegesModel.setAllowedPrivileges(postModel.getAllowedPrivileges());
         }
-        return allowPrivilegesEntity;
+        return allowPrivilegesModel;
     }
 
     /**
-     * Maps {@link AllowedPrivileges} onto {@link AllowedPrivilegesEntity}
+     * Maps {@link AllowedPrivileges} onto {@link AllowedPrivilegesModel}
      *
      * @param allowPrivileges The post allowed privileges entity
      * @return The post value
      */
-    public AllowedPrivilegesEntity map(AllowedPrivileges allowPrivileges) {
-        AllowedPrivilegesEntity allowPrivilegesEntity = null;
+    public AllowedPrivilegesModel map(@NonNull AllowedPrivileges allowPrivileges) {
+        AllowedPrivilegesModel allowPrivilegesModel = null;
         if (allowPrivileges != null) {
-            allowPrivilegesEntity = new AllowedPrivilegesEntity();
-            allowPrivilegesEntity.setAllowedPrivileges(allowPrivileges.getAllowedPrivileges());
+            allowPrivilegesModel = new AllowedPrivilegesModel();
+            allowPrivilegesModel.setAllowedPrivileges(allowPrivileges.getAllowedPrivileges());
         }
-        return allowPrivilegesEntity;
+        return allowPrivilegesModel;
     }
 
     /**
-     * Maps a list {@link AllowedPrivilegesEntity} into a list of {@link AllowedPrivileges}.
+     * Maps a list {@link AllowedPrivilegesModel} into a list of {@link AllowedPrivileges}.
      *
-     * @param postEntityList List to be mapped.
+     * @param postModelList List to be mapped.
      * @return {@link AllowedPrivileges}
      */
-    public List<AllowedPrivileges> map(List<AllowedPrivilegesEntity> postEntityList) {
-        List<AllowedPrivileges> allowPrivilegesEntityList = new ArrayList<>();
+    public List<AllowedPrivileges> map(List<AllowedPrivilegesModel> postModelList) {
+        List<AllowedPrivileges> allowPrivilegesModelList = new ArrayList<>();
         AllowedPrivileges post;
-        for (AllowedPrivilegesEntity allowPrivilegesEntityEntity : postEntityList) {
-            post = map(allowPrivilegesEntityEntity);
+        for (AllowedPrivilegesModel allowPrivilegesModelModel : postModelList) {
+            post = map(allowPrivilegesModelModel);
             if (post != null) {
-                allowPrivilegesEntityList.add(post);
+                allowPrivilegesModelList.add(post);
             }
         }
-        return allowPrivilegesEntityList;
+        return allowPrivilegesModelList;
     }
 }

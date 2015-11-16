@@ -16,6 +16,8 @@
 
 package com.ushahidi.android.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Holds the User attached to a post
  *
@@ -25,6 +27,7 @@ public class PostUserEntity {
 
     private Long mPostId;
 
+    @SerializedName("id")
     private Long mUserId;
 
     private long mDeploymentId;

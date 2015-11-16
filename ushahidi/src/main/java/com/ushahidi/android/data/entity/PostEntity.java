@@ -209,11 +209,11 @@ public class PostEntity extends Data {
         mDeploymentId = deploymentId;
     }
 
-    public PostUserEntity getUser() {
+    public PostUserEntity getPostUser() {
         return mUser;
     }
 
-    public void setUser(PostUserEntity user) {
+    public void setPostUser(PostUserEntity user) {
         mUser = user;
     }
 

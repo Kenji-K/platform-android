@@ -60,7 +60,7 @@ public class PostDatabaseHelperTest extends BaseTestCase {
         assertThat(postEntity.getDeploymentId()).isEqualTo(TestEntityFixtures.DEPLOYMENT_ID);
         assertThat(postEntity.getCreated()).isNotNull();
         assertThat(postEntity._id).isEqualTo(10681);
-        assertThat(postEntity.getUser()._id).isEqualTo(5);
+        assertThat(postEntity.getPostUser().getUserId()).isEqualTo(5);
         assertThat(postEntity.getContent()).isEqualTo("want 5 people, comment below");
         assertThat(postEntity.getAuthorEmail()).isNull();
         assertThat(postEntity.getAuthorRealname()).isNull();

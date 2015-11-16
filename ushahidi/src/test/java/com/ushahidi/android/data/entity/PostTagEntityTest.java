@@ -41,7 +41,6 @@ public class PostTagEntityTest {
 
     private Long TAG_ID = 2l;
 
-    private Long ID = 1l;
 
     private PostTagEntity mPostTagEntity;
 
@@ -52,14 +51,12 @@ public class PostTagEntityTest {
 
     @Test
     public void shouldSetPostTagEntity() {
-        mPostTagEntity.setId(ID);
         mPostTagEntity.setPostId(POST_ID);
         mPostTagEntity.setTagId(TAG_ID);
 
         assertThat(mPostTagEntity).isNotNull();
         assertThat(mPostTagEntity).isInstanceOf(PostTagEntity.class);
         assertThat(mPostTagEntity).isNotNull();
-        assertThat(mPostTagEntity.getId()).isEqualTo(ID);
         assertThat(mPostTagEntity.getPostId()).isNotNull();
         assertThat(mPostTagEntity.getPostId()).isEqualTo(POST_ID);
         assertThat(mPostTagEntity.getTagId()).isNotNull();

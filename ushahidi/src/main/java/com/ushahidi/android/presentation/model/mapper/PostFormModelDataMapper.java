@@ -18,17 +18,16 @@ package com.ushahidi.android.presentation.model.mapper;
 
 import com.ushahidi.android.data.entity.PostFormEntity;
 import com.ushahidi.android.domain.entity.PostForm;
+import com.ushahidi.android.presentation.model.PostFormModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class PostFormModelDataMapper {
 
     /**
@@ -42,16 +41,16 @@ public class PostFormModelDataMapper {
     /**
      * Maps {@link PostFormEntity} onto {@link PostForm}
      *
-     * @param postFormEntity The post entity to be mapped
+     * @param postFormModel The post entity to be mapped
      * @return The post value
      */
-    public PostForm map(PostFormEntity postFormEntity) {
+    public PostForm map(PostFormModel postFormModel) {
         PostForm postForm = null;
-        if (postForm != null) {
+        if (postFormModel != null) {
             postForm = new PostForm();
-            postForm.setDeploymentId(postFormEntity.getDeploymentId());
-            postForm.setPostId(postFormEntity.getPostId());
-            postForm.setFormId(postFormEntity.getFormId());
+            postForm.setDeploymentId(postFormModel.getDeploymentId());
+            postForm.setPostId(postFormModel.getPostId());
+            postForm.setFormId(postFormModel.getFormId());
         }
         return postForm;
     }
@@ -62,28 +61,28 @@ public class PostFormModelDataMapper {
      * @param postForm The post form entity
      * @return The post form
      */
-    public PostFormEntity map(PostForm postForm) {
-        PostFormEntity postFormEntity = null;
+    public PostFormModel map(PostForm postForm) {
+        PostFormModel postFormModel = null;
         if (postForm != null) {
-            postFormEntity = new PostFormEntity();
-            postFormEntity.setDeploymentId(postForm.getDeploymentId());
-            postFormEntity.setPostId(postForm.getPostId());
-            postFormEntity.setFormId(postForm.getFormId());
+            postFormModel = new PostFormModel();
+            postFormModel.setDeploymentId(postForm.getDeploymentId());
+            postFormModel.setPostId(postForm.getPostId());
+            postFormModel.setFormId(postForm.getFormId());
         }
-        return postFormEntity;
+        return postFormModel;
     }
 
     /**
      * Maps a list {@link PostFormEntity} into a list of {@link PostForm}.
      *
-     * @param postEntityList List to be mapped.
+     * @param postModelList List to be mapped.
      * @return {@link PostForm}
      */
-    public List<PostForm> map(List<PostFormEntity> postEntityList) {
+    public List<PostForm> map(List<PostFormModel> postModelList) {
         List<PostForm> postFormList = new ArrayList<>();
         PostForm post;
-        for (PostFormEntity postFormEntity : postEntityList) {
-            post = map(postFormEntity);
+        for (PostFormModel postFormModel : postModelList) {
+            post = map(postFormModel);
             if (post != null) {
                 postFormList.add(post);
             }
