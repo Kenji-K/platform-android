@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2015 Ushahidi Inc
- *
+ * Copyright (c) 2015 Ushahidi.
  * This program is free software: you can redistribute it and/or modify it under
- *  the terms of the GNU Affero General Public License as published by the Free
- *  Software Foundation, either version 3 of the License, or (at your option)
- *  any later version.
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
@@ -20,14 +19,16 @@ package com.ushahidi.android.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Holds the User attached to a post
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostTagEntity {
+public class PostUserEntity {
 
     private Long mPostId;
 
     @SerializedName("id")
-    private Long mTagId;
+    private Long mUserId;
 
     private long mDeploymentId;
 
@@ -39,12 +40,12 @@ public class PostTagEntity {
         mPostId = postId;
     }
 
-    public Long getTagId() {
-        return mTagId;
+    public Long getUserId() {
+        return mUserId;
     }
 
-    public void setTagId(Long tagId) {
-        mTagId = tagId;
+    public void setUserId(Long userId) {
+        mUserId = userId;
     }
 
     public long getDeploymentId() {
@@ -57,10 +58,10 @@ public class PostTagEntity {
 
     @Override
     public String toString() {
-        return "PostTagModel{"
-                + "mPostId=" + mPostId
-                + ", mTagId=" + mTagId
-                + ", mDeploymentId=" + mDeploymentId
-                + '}';
+        return "PostUserEntity{" +
+                "mPostId=" + mPostId +
+                ", mUserId=" + mUserId +
+                ", mDeploymentId=" + mDeploymentId +
+                '}';
     }
 }

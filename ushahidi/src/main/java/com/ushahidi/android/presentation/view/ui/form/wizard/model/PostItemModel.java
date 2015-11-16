@@ -17,7 +17,7 @@
 package com.ushahidi.android.presentation.view.ui.form.wizard.model;
 
 /**
- * Represents a single line item on the final review page.
+ * Represents an input value.
  */
 public class PostItemModel {
 
@@ -83,5 +83,20 @@ public class PostItemModel {
 
     public void setWeight(int weight) {
         mWeight = weight;
+    }
+
+    public String getFieldKey() {
+        return mFieldKey;
+    }
+
+    @Override
+    public String toString() {
+        return "PostItemModel{" +
+                "mWeight=" + mWeight +
+                ", mTitle='" + mTitle + '\'' +
+                ", mDisplayValue='" + mDisplayValue + '\'' +
+                ", mFieldKey='" + mFieldKey + '\'' +
+                ", mPageKey='" + mPageKey + '\'' +
+                '}';
     }
 }

@@ -22,6 +22,8 @@ import com.google.gson.GsonBuilder;
 
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.service.RestfulService;
+import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
+import com.ushahidi.android.data.entity.PostCompletedStagesEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
@@ -71,7 +73,11 @@ public class PlatformService {
         GsonBuilder builder = new GsonBuilder();
         builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         builder.registerTypeAdapter(Date.class, new DateDeserializer());
-        builder.registerTypeAdapter(PostValueEntity.class, new ValueDeserializer());
+        builder.registerTypeAdapter(PostValueEntity.class, new PostValueDeserializer());
+        builder.registerTypeAdapter(AllowedPrivilegesEntity.class,
+                new AllowedPrivilegesDeserializer());
+        builder.registerTypeAdapter(PostCompletedStagesEntity.class,
+                new PostCompletedStagesDeserializer());
         Gson gson = builder.create();
         mGsonConverter = new GsonConverter(gson);
     }

@@ -31,6 +31,8 @@ import nl.qbusict.cupboard.annotation.Ignore;
  */
 public class PostEntity extends Data {
 
+    private long mDeploymentId;
+
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
     private Parent parent;
@@ -38,7 +40,7 @@ public class PostEntity extends Data {
     private transient Long mParent;
 
     @SerializedName("user")
-    private UserEntity mUser;
+    private PostUserEntity mUser;
 
     @SerializedName("type")
     private Type mType;
@@ -75,15 +77,16 @@ public class PostEntity extends Data {
     private FormEntity mFormEntity;
 
     @SerializedName("completed_stages")
-    private List<Integer> mCompletedStages;
+    private PostCompletedStagesEntity mCompletedStages;
 
     @SerializedName("tags")
     @Ignore
     private List<PostTagEntity> mPostTagEntityList;
 
-    private long mDeploymentId;
-
     private transient List<TagEntity> mTags;
+
+    @SerializedName("allowed_privileges")
+    private AllowedPrivilegesEntity mAllowedPrivilegesEntity;
 
     public FormEntity getFormEntity() {
         return mFormEntity;
@@ -93,37 +96,6 @@ public class PostEntity extends Data {
         mFormEntity = formEntity;
     }
 
-    public List<Integer> getCompletedStages() {
-        return mCompletedStages;
-    }
-
-    public void setCompletedStages(List<Integer> completedStages) {
-        mCompletedStages = completedStages;
-    }
-
-    @Override
-    public String toString() {
-        return "PostEntity{" +
-                "parent=" + parent +
-                ", mParent=" + mParent +
-                ", mUser=" + mUser +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mValues=" + mValues +
-                ", mForm=" + mFormEntity +
-                ", mCompletedStages=" + mCompletedStages +
-                ", mPostTagEntityList=" + mPostTagEntityList +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mTags=" + mTags +
-                '}';
-    }
 
     public Long getParent() {
         return mParent;
@@ -237,12 +209,30 @@ public class PostEntity extends Data {
         mDeploymentId = deploymentId;
     }
 
-    public UserEntity getUser() {
+    public PostUserEntity getUser() {
         return mUser;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(PostUserEntity user) {
         mUser = user;
+    }
+
+    public PostCompletedStagesEntity getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(
+            PostCompletedStagesEntity completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public AllowedPrivilegesEntity getAllowedPrivilegesEntity() {
+        return mAllowedPrivilegesEntity;
+    }
+
+    public void setAllowedPrivilegesEntity(
+            AllowedPrivilegesEntity allowedPrivilegesEntity) {
+        mAllowedPrivilegesEntity = allowedPrivilegesEntity;
     }
 
     public void setDeploymentId(long deploymentId) {
@@ -251,6 +241,32 @@ public class PostEntity extends Data {
 
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+
+
+    @Override
+    public String toString() {
+        return "PostEntity{" +
+                "mDeploymentId=" + mDeploymentId +
+                ", parent=" + parent +
+                ", mParent=" + mParent +
+                ", mUser=" + mUser +
+                ", mType=" + mType +
+                ", mTitle='" + mTitle + '\'' +
+                ", mSlug='" + mSlug + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mAuthorEmail='" + mAuthorEmail + '\'' +
+                ", mAuthorRealname='" + mAuthorRealname + '\'' +
+                ", mStatus=" + mStatus +
+                ", mCreated=" + mCreated +
+                ", mUpdated=" + mUpdated +
+                ", mValues=" + mValues +
+                ", mFormEntity=" + mFormEntity +
+                ", mCompletedStages=" + mCompletedStages +
+                ", mPostTagEntityList=" + mPostTagEntityList +
+                ", mTags=" + mTags +
+                ", mAllowedPrivileges=" + mAllowedPrivilegesEntity +
+                '}';
     }
 
     public enum Status {

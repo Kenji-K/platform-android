@@ -20,6 +20,8 @@ package com.ushahidi.android.data.database.converter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
+import com.ushahidi.android.data.entity.PostCompletedStagesEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 
@@ -51,6 +53,18 @@ public class PostEntityConverter extends ReflectiveEntityConverter<PostEntity> {
     protected FieldConverter<?> getFieldConverter(Field field) {
         if ("mValues".equals(field.getName())) {
             return new PostValueEntityFieldConverter(new TypeToken<PostValueEntity>() {
+
+            }.getType(), new Gson());
+        }
+        if ("mCompletedStages".equals(field.getName())) {
+            return new PostCompletedStagesEntityFieldConverter(
+                    new TypeToken<PostCompletedStagesEntity>() {
+
+                    }.getType(), new Gson());
+        }
+
+        if ("mAllowedPrivileges".equals(field.getName())) {
+            return new AllowedPermissionEntityFieldConverter<>(new TypeToken<AllowedPrivilegesEntity>() {
 
             }.getType(), new Gson());
         }
