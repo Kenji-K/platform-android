@@ -51,52 +51,19 @@ public class Post extends Entity {
 
     private Long mDeploymentId;
 
-    private Form mForm;
+    private PostForm mFormEntity;
 
-    private List<Integer> mCompletedStages;
+    private PostCompletedStages mCompletedStages;
+
+    private AllowedPrivileges mAllowedPrivileges;
+
+    private PostUser mPostUser;
 
     // Store the raw JSON for this field. This is a dynamic field
     // and can't predict its keys.
     private PostValue mValues;
 
     private List<Tag> mTags;
-
-    public Form getForm() {
-        return mForm;
-    }
-
-    public void setForm(Form form) {
-        mForm = form;
-    }
-
-    public List<Integer> getCompletedStages() {
-        return mCompletedStages;
-    }
-
-    public void setCompletedStages(List<Integer> completedStages) {
-        mCompletedStages = completedStages;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "mParent=" + mParent +
-                ", mType=" + mType +
-                ", mTitle='" + mTitle + '\'' +
-                ", mSlug='" + mSlug + '\'' +
-                ", mContent='" + mContent + '\'' +
-                ", mAuthorEmail='" + mAuthorEmail + '\'' +
-                ", mAuthorRealname='" + mAuthorRealname + '\'' +
-                ", mStatus=" + mStatus +
-                ", mCreated=" + mCreated +
-                ", mUpdated=" + mUpdated +
-                ", mDeploymentId=" + mDeploymentId +
-                ", mForm=" + mForm +
-                ", mCompletedStages=" + mCompletedStages +
-                ", mValues=" + mValues +
-                ", mTags=" + mTags +
-                '}';
-    }
 
     public Long getParent() {
         return mParent;
@@ -201,6 +168,64 @@ public class Post extends Entity {
     public void setDeploymentId(Long deploymentId) {
         mDeploymentId = deploymentId;
     }
+
+    public PostForm getFormEntity() {
+        return mFormEntity;
+    }
+
+    public void setFormEntity(PostForm formEntity) {
+        mFormEntity = formEntity;
+    }
+
+    public PostCompletedStages getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(
+            PostCompletedStages completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public AllowedPrivileges getAllowedPrivileges() {
+        return mAllowedPrivileges;
+    }
+
+    public void setAllowedPrivileges(
+            AllowedPrivileges allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public PostUser getPostUser() {
+        return mPostUser;
+    }
+
+    public void setPostUser(PostUser postUser) {
+        mPostUser = postUser;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "mParent=" + mParent +
+                ", mType=" + mType +
+                ", mTitle='" + mTitle + '\'' +
+                ", mSlug='" + mSlug + '\'' +
+                ", mContent='" + mContent + '\'' +
+                ", mAuthorEmail='" + mAuthorEmail + '\'' +
+                ", mAuthorRealname='" + mAuthorRealname + '\'' +
+                ", mStatus=" + mStatus +
+                ", mCreated=" + mCreated +
+                ", mUpdated=" + mUpdated +
+                ", mDeploymentId=" + mDeploymentId +
+                ", mFormEntity=" + mFormEntity +
+                ", mCompletedStages=" + mCompletedStages +
+                ", mAllowedPrivileges=" + mAllowedPrivileges +
+                ", mPostUser=" + mPostUser +
+                ", mValues=" + mValues +
+                ", mTags=" + mTags +
+                '}';
+    }
+
 
     public enum Status {
         /**

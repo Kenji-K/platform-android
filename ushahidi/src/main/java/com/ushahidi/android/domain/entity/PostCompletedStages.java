@@ -14,51 +14,29 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.domain.entity;
 
 /**
- * Holds the User attached to a post
+ * The post completed stages entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostUserEntity {
+public class PostCompletedStages {
 
-    private Long mPostId;
+    private String mCompletedStep;
 
-    private Long mUserId;
-
-    private long mDeploymentId;
-
-    public Long getPostId() {
-        return mPostId;
+    public String getCompletedStep() {
+        return mCompletedStep;
     }
 
-    public void setPostId(Long postId) {
-        mPostId = postId;
-    }
-
-    public Long getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(Long userId) {
-        mUserId = userId;
-    }
-
-    public long getDeploymentId() {
-        return mDeploymentId;
-    }
-
-    public void setDeploymentId(long deploymentId) {
-        mDeploymentId = deploymentId;
+    public void setCompletedStep(String completedStep) {
+        mCompletedStep = completedStep;
     }
 
     @Override
     public String toString() {
-        return "PostUserEntity{" +
-                "mPostId=" + mPostId +
-                ", mUserId=" + mUserId +
-                ", mDeploymentId=" + mDeploymentId +
+        return "PostCompletedStagesEntity{" +
+                ", mCompletedStep='" + mCompletedStep + '\'' +
                 '}';
     }
 }

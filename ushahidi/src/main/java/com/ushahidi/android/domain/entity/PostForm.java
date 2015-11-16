@@ -14,18 +14,18 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.domain.entity;
 
 /**
- * Holds the User attached to a post
+ * This is to hold form ID
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostUserEntity {
+public class PostForm {
 
     private Long mPostId;
 
-    private Long mUserId;
+    private Long mFormId;
 
     private long mDeploymentId;
 
@@ -37,12 +37,12 @@ public class PostUserEntity {
         mPostId = postId;
     }
 
-    public Long getUserId() {
-        return mUserId;
+    public Long getFormId() {
+        return mFormId;
     }
 
-    public void setUserId(Long userId) {
-        mUserId = userId;
+    public void setFormId(Long formId) {
+        mFormId = formId;
     }
 
     public long getDeploymentId() {
@@ -55,9 +55,9 @@ public class PostUserEntity {
 
     @Override
     public String toString() {
-        return "PostUserEntity{" +
+        return "PostFormEntity{" +
                 "mPostId=" + mPostId +
-                ", mUserId=" + mUserId +
+                ", mFormId=" + mFormId +
                 ", mDeploymentId=" + mDeploymentId +
                 '}';
     }

@@ -14,51 +14,27 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.presentation.model;
 
 /**
- * Holds the User attached to a post
- *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostUserEntity {
+public class AllowedPrivilegesModel {
 
-    private Long mPostId;
+    private String mAllowedPrivileges;
 
-    private Long mUserId;
-
-    private long mDeploymentId;
-
-    public Long getPostId() {
-        return mPostId;
+    public String getAllowedPrivileges() {
+        return mAllowedPrivileges;
     }
 
-    public void setPostId(Long postId) {
-        mPostId = postId;
-    }
-
-    public Long getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(Long userId) {
-        mUserId = userId;
-    }
-
-    public long getDeploymentId() {
-        return mDeploymentId;
-    }
-
-    public void setDeploymentId(long deploymentId) {
-        mDeploymentId = deploymentId;
+    public void setAllowedPrivileges(String allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
     }
 
     @Override
     public String toString() {
-        return "PostUserEntity{" +
-                "mPostId=" + mPostId +
-                ", mUserId=" + mUserId +
-                ", mDeploymentId=" + mDeploymentId +
+        return "AllowedPrivilegesEntity{" +
+                "mAllowedPrivileges='" + mAllowedPrivileges + '\'' +
                 '}';
     }
 }

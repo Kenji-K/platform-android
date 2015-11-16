@@ -14,14 +14,14 @@
  *  https://www.gnu.org/licenses/agpl-3.0.html
  */
 
-package com.ushahidi.android.data.entity;
+package com.ushahidi.android.domain.entity;
 
 /**
  * Holds the User attached to a post
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostUserEntity {
+public class PostUser {
 
     private Long mPostId;
 
