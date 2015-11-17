@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostValue {
+public final class PostValue {
 
     private JSONObject mJSONObject = new JSONObject();
 
