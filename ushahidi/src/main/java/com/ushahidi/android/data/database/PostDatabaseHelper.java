@@ -22,6 +22,7 @@ import com.ushahidi.android.data.entity.FormEntity;
 import com.ushahidi.android.data.entity.GeoJsonEntity;
 import com.ushahidi.android.data.entity.PostEntity;
 import com.ushahidi.android.data.entity.PostTagEntity;
+import com.ushahidi.android.data.entity.PostUserEntity;
 import com.ushahidi.android.data.entity.TagEntity;
 import com.ushahidi.android.data.exception.AddPostException;
 import com.ushahidi.android.data.exception.PostNotFoundException;
@@ -89,6 +90,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             final PostEntity postEntity = get(postId, deploymentId);
             if (postEntity != null) {
                 List<TagEntity> tags = getTagEntity(postEntity);
+                postEntity.setPostUser(getPostUserEntity(postEntity));
                 postEntity.setTags(tags);
                 subscriber.onNext(postEntity);
                 subscriber.onCompleted();
@@ -162,6 +164,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion
                 // and we wouldn't know by then to replace them.
                 deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                deletePostUserEntity(postEntity.getDeploymentId(), postEntity._id);
                 puts(postEntity);
             }
         }
@@ -191,6 +194,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                         // Delete tags associated with the post to keep them from being
                         // orphaned
                         deletePostTagEntity(postEntity.getDeploymentId(), postEntity._id);
+                        deletePostUserEntity(postEntity.getDeploymentId(), postEntity._id);
                     }
                 } catch (Exception e) {
                     subscriber.onError(e);
@@ -270,6 +274,15 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
         return tagEntityList;
     }
 
+    private PostUserEntity getPostUserEntity(PostEntity postEntity) {
+        String selection = "mDeploymentId = ? AND mPostId = ?";
+        String args[] = {String.valueOf(postEntity.getDeploymentId()),
+                String.valueOf(postEntity._id)};
+
+        return cupboard().withDatabase(getReadableDatabase()).query(PostUserEntity.class)
+                .withSelection(selection, args).get();
+    }
+
     private void puts(final PostEntity postEntity, Subscriber subscribers) {
         Long rows = puts(postEntity);
         if (rows != null) {
@@ -295,6 +308,14 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                     cupboard().withDatabase(db).put(postTagEntity);
                 }
                 // Put post user entity
+                PostUserEntity postUser = postEntity.getPostUser();
+                System.out.println("postUSERS " + postUser.toString());
+                if (postUser != null) {
+                    postUser.setDeploymentId(postEntity.getDeploymentId());
+                    postUser.setPostId(rows);
+                    System.out.println("withRow " + postUser.toString());
+                    cupboard().withDatabase(db).put(postUser);
+                }
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -314,10 +335,18 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
                 .delete(PostTagEntity.class, selection, selectionArgs);
     }
 
+    private void deletePostUserEntity(Long deploymentId, Long postId) {
+        final String[] selectionArgs = {String.valueOf(deploymentId), String.valueOf(postId)};
+        final String selection = "mDeploymentId = ? AND mPostId = ?";
+        cupboard().withDatabase(getWritableDatabase())
+                .delete(PostUserEntity.class, selection, selectionArgs);
+    }
+
     private List<PostEntity> setPostEntityList(List<PostEntity> postEntities) {
         final List<PostEntity> postEntityList = new ArrayList<>();
         for (PostEntity postEntity : postEntities) {
             List<TagEntity> tags = getTagEntity(postEntity);
+            postEntity.setPostUser(getPostUserEntity(postEntity));
             postEntity.setTags(tags);
             postEntityList.add(postEntity);
         }
