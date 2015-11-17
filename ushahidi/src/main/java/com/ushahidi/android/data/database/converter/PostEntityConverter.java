@@ -55,18 +55,16 @@ public class PostEntityConverter extends ReflectiveEntityConverter<PostEntity> {
             return new PostValueEntityFieldConverter(new TypeToken<PostValueEntity>() {
 
             }.getType(), new Gson());
-        }
-        if ("mCompletedStages".equals(field.getName())) {
+        } else if ("mCompletedStages".equals(field.getName())) {
             return new PostCompletedStagesEntityFieldConverter(
                     new TypeToken<PostCompletedStagesEntity>() {
 
                     }.getType(), new Gson());
-        }
+        } else if ("mAllowedPrivileges".equals(field.getName())) {
+            return new AllowedPrivilegesEntityFieldConverter<>(
+                    new TypeToken<AllowedPrivilegesEntity>() {
 
-        if ("mAllowedPrivileges".equals(field.getName())) {
-            return new AllowedPermissionEntityFieldConverter<>(new TypeToken<AllowedPrivilegesEntity>() {
-
-            }.getType(), new Gson());
+                    }.getType(), new Gson());
         }
         return super.getFieldConverter(field);
     }

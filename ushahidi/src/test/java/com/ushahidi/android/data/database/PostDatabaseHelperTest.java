@@ -79,7 +79,7 @@ public class PostDatabaseHelperTest extends BaseTestCase {
         assertThat(postEntity.getTags().get(0).getIcon()).isEqualTo("tag");
         assertThat(postEntity.getTags().get(0).getPriority()).isEqualTo(99);
         assertThat(postEntity.getTags().get(0).getType()).isEqualTo(TagEntity.Type.CATEGORY);
-
+        assertThat(postEntity.getPostFormEntity().getFormId()).isEqualTo(141);
     }
 
     @After

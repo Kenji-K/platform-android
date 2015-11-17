@@ -73,8 +73,7 @@ public class PostEntity extends Data {
     private PostValueEntity mValues;
 
     @SerializedName("form")
-    @Ignore
-    private PostFormEntity mPostFormEntity;
+    private PostFormEntity mPostForm;
 
     @SerializedName("completed_stages")
     private PostCompletedStagesEntity mCompletedStages;
@@ -86,14 +85,14 @@ public class PostEntity extends Data {
     private transient List<TagEntity> mTags;
 
     @SerializedName("allowed_privileges")
-    private AllowedPrivilegesEntity mAllowedPrivilegesEntity;
+    private AllowedPrivilegesEntity mAllowedPrivileges;
 
     public PostFormEntity getPostFormEntity() {
-        return mPostFormEntity;
+        return mPostForm;
     }
 
     public void setPostForm(PostFormEntity postFormEntity) {
-        mPostFormEntity = postFormEntity;
+        mPostForm = postFormEntity;
     }
 
 
@@ -227,12 +226,12 @@ public class PostEntity extends Data {
     }
 
     public AllowedPrivilegesEntity getAllowedPrivileges() {
-        return mAllowedPrivilegesEntity;
+        return mAllowedPrivileges;
     }
 
     public void setAllowedPrivilegesEntity(
             AllowedPrivilegesEntity allowedPrivilegesEntity) {
-        mAllowedPrivilegesEntity = allowedPrivilegesEntity;
+        mAllowedPrivileges = allowedPrivilegesEntity;
     }
 
     public void setDeploymentId(long deploymentId) {
@@ -260,11 +259,11 @@ public class PostEntity extends Data {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mValues=" + mValues
-                + ", mPostFormEntity=" + mPostFormEntity
+                + ", mPostFormEntity=" + mPostForm
                 + ", mCompletedStages=" + mCompletedStages
                 + ", mPostTagEntityList=" + mPostTagEntityList
                 + ", mTags=" + mTags
-                + ", mAllowedPrivilegesEntity=" + mAllowedPrivilegesEntity
+                + ", mAllowedPrivilegesEntity=" + mAllowedPrivileges
                 + '}';
     }
 

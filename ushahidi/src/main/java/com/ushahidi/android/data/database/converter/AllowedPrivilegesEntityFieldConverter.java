@@ -33,7 +33,7 @@ import nl.qbusict.cupboard.convert.FieldConverter;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AllowedPermissionEntityFieldConverter<T> implements FieldConverter<T> {
+public class AllowedPrivilegesEntityFieldConverter<T> implements FieldConverter<T> {
 
     private final Gson mGson;
 
@@ -45,7 +45,7 @@ public class AllowedPermissionEntityFieldConverter<T> implements FieldConverter<
      * @param type The type
      * @param gson The gson
      */
-    public AllowedPermissionEntityFieldConverter(Type type, Gson gson) {
+    public AllowedPrivilegesEntityFieldConverter(Type type, Gson gson) {
         mType = type;
         mGson = gson;
     }

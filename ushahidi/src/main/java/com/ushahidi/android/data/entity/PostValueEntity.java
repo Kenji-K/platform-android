@@ -28,6 +28,8 @@ public class PostValueEntity extends Data {
 
     private long mDeploymentId;
 
+    private Long mPostId;
+
     public String getValues() {
         return mValues;
     }

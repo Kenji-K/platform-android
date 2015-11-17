@@ -288,11 +288,13 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             rows = cupboard().withDatabase(db).put(postEntity);
             if ((rows > 0) && (postEntity.getPostTagEntityList() != null) && (
                     postEntity.getPostTagEntityList().size() > 0)) {
+                // Put post tag entity
                 for (PostTagEntity postTagEntity : postEntity.getPostTagEntityList()) {
                     postTagEntity.setPostId(postEntity._id);
                     postTagEntity.setDeploymentId(postEntity.getDeploymentId());
                     cupboard().withDatabase(db).put(postTagEntity);
                 }
+                // Put post user entity
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -306,8 +308,7 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     }
 
     private void deletePostTagEntity(Long deploymentId, Long postId) {
-        final String[] selectionArgs = {String.valueOf(deploymentId),
-                String.valueOf(postId)};
+        final String[] selectionArgs = {String.valueOf(deploymentId), String.valueOf(postId)};
         final String selection = "mDeploymentId = ? AND mPostId = ?";
         cupboard().withDatabase(getWritableDatabase())
                 .delete(PostTagEntity.class, selection, selectionArgs);
