@@ -49,6 +49,38 @@ public class PostUserModel implements Parcelable {
 
     private long mDeploymentId;
 
+    public PostUserModel() {
+        
+    }
+
+    protected PostUserModel(Parcel in) {
+        mPostId = in.readByte() == 0x00 ? null : in.readLong();
+        mUserId = in.readByte() == 0x00 ? null : in.readLong();
+        mDeploymentId = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mPostId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mPostId);
+        }
+        if (mUserId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mUserId);
+        }
+        dest.writeLong(mDeploymentId);
+    }
+
     public Long getPostId() {
         return mPostId;
     }
@@ -80,33 +112,5 @@ public class PostUserModel implements Parcelable {
                 + ", mUserId=" + mUserId
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
-    }
-
-    protected PostUserModel(Parcel in) {
-        mPostId = in.readByte() == 0x00 ? null : in.readLong();
-        mUserId = in.readByte() == 0x00 ? null : in.readLong();
-        mDeploymentId = in.readLong();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (mPostId == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeLong(mPostId);
-        }
-        if (mUserId == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeLong(mUserId);
-        }
-        dest.writeLong(mDeploymentId);
     }
 }

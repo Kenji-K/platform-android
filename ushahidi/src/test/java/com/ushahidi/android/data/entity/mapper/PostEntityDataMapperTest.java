@@ -91,7 +91,8 @@ public class PostEntityDataMapperTest {
                 new PostValueEntityDataMapper(), new PostFormEntityDataMapper(),
                 new PostCompletedStagesDataEntityDataMapper(),
                 new AllowedPrivilegesEntityDataMapper(),
-                new PostUserEntityDataMapper());
+                new PostUserEntityDataMapper(),
+                new PostPublishedToEntityDataMapper());
         mPostValueEntityDataMapper = new PostValueEntityDataMapper();
         POST_VALUE_ENTITY.setDeploymentId(1l);
         POST_VALUE_ENTITY.setValues("values");

@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
 import com.ushahidi.android.data.entity.PostCompletedStagesEntity;
 import com.ushahidi.android.data.entity.PostEntity;
+import com.ushahidi.android.data.entity.PostPublishedToEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 
 import java.lang.reflect.Field;
@@ -53,17 +54,18 @@ public class PostEntityConverter extends ReflectiveEntityConverter<PostEntity> {
     protected FieldConverter<?> getFieldConverter(Field field) {
         if ("mValues".equals(field.getName())) {
             return new PostValueEntityFieldConverter(new TypeToken<PostValueEntity>() {
-
             }.getType(), new Gson());
         } else if ("mCompletedStages".equals(field.getName())) {
             return new PostCompletedStagesEntityFieldConverter(
                     new TypeToken<PostCompletedStagesEntity>() {
-
                     }.getType(), new Gson());
         } else if ("mAllowedPrivileges".equals(field.getName())) {
             return new AllowedPrivilegesEntityFieldConverter<>(
                     new TypeToken<AllowedPrivilegesEntity>() {
-
+                    }.getType(), new Gson());
+        } else if ("mPublishedTo".equals(field.getName())) {
+            return new PostPublishToEntityFieldConverter<>(
+                    new TypeToken<PostPublishedToEntity>() {
                     }.getType(), new Gson());
         }
         return super.getFieldConverter(field);

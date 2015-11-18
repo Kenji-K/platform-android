@@ -88,19 +88,19 @@ public class PostEntity extends Data {
     private AllowedPrivilegesEntity mAllowedPrivileges;
 
     @SerializedName("published_to")
-    private PostPublishedToEntity mPublishedToEntity;
+    private PostPublishedToEntity mPublishedTo;
 
     public void setAllowedPrivileges(
             AllowedPrivilegesEntity allowedPrivileges) {
         mAllowedPrivileges = allowedPrivileges;
     }
 
-    public PostPublishedToEntity getPublishedToEntity() {
-        return mPublishedToEntity;
+    public PostPublishedToEntity getPublishedTo() {
+        return mPublishedTo;
     }
 
-    public void setPublishedToEntity(PostPublishedToEntity publishedToEntity) {
-        mPublishedToEntity = publishedToEntity;
+    public void setPublishedTo(PostPublishedToEntity publishedTo) {
+        mPublishedTo = publishedTo;
     }
 
     public PostFormEntity getPostForm() {
@@ -292,7 +292,7 @@ public class PostEntity extends Data {
                 + ", mPostTagEntityList=" + mPostTagEntityList
                 + ", mTags=" + mTags
                 + ", mAllowedPrivileges=" + mAllowedPrivileges
-                + ", mPublishedToEntity=" + mPublishedToEntity
+                + ", mPublishedTo=" + mPublishedTo
                 + '}';
     }
 

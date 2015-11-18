@@ -9,9 +9,11 @@ import com.ushahidi.android.data.api.AllowedPrivilegesDeserializer;
 import com.ushahidi.android.data.api.Date;
 import com.ushahidi.android.data.api.DateDeserializer;
 import com.ushahidi.android.data.api.PostCompletedStagesDeserializer;
+import com.ushahidi.android.data.api.PostPublishToDeserializer;
 import com.ushahidi.android.data.api.PostValueDeserializer;
 import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
 import com.ushahidi.android.data.entity.PostCompletedStagesEntity;
+import com.ushahidi.android.data.entity.PostPublishedToEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 
 import org.junit.Before;
@@ -40,6 +42,7 @@ public abstract class BaseTestCase {
                 new AllowedPrivilegesDeserializer());
         builder.registerTypeAdapter(PostCompletedStagesEntity.class,
                 new PostCompletedStagesDeserializer());
+        builder.registerTypeAdapter(PostPublishedToEntity.class, new PostPublishToDeserializer());
         gson = builder.create();
 
     }

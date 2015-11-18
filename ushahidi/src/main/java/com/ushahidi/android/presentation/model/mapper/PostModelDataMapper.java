@@ -46,6 +46,8 @@ public class PostModelDataMapper {
 
     private PostUserModelDataMapper mPostUserModelDataMapper;
 
+    private PostPublishedToModelDataMapper mPostPublishedToModelDataMapper;
+
     /**
      * Default constructor
      *
@@ -59,13 +61,15 @@ public class PostModelDataMapper {
             PostFormModelDataMapper postFormModelDataMapper,
             PostCompletedStagesDataModelDataMapper postCompletedStagesDataModelDataMapper,
             AllowedPrivilegesModelDataMapper allowedPrivilegesModelDataMapper,
-            PostUserModelDataMapper postUserModelDataMapper) {
+            PostUserModelDataMapper postUserModelDataMapper,
+            PostPublishedToModelDataMapper postPublishedToModelDataMapper) {
         mTagModelDataMapper = tagModelDataMapper;
         mPostValueModelDataMapper = postValueModelDataMapper;
         mPostFormModelDataMapper = postFormModelDataMapper;
         mPostCompletedStagesDataModelDataMapper = postCompletedStagesDataModelDataMapper;
         mAllowedPrivilegesModelDataMapper = allowedPrivilegesModelDataMapper;
         mPostUserModelDataMapper = postUserModelDataMapper;
+        mPostPublishedToModelDataMapper = postPublishedToModelDataMapper;
     }
 
     /**

@@ -21,12 +21,10 @@ import com.ushahidi.android.domain.entity.PostPublishedTo;
 import com.ushahidi.android.presentation.model.PostPublishedToModel;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@Singleton
 public class PostPublishedToModelDataMapper {
 
     /**

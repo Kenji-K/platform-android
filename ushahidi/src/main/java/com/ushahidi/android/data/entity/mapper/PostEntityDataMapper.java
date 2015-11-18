@@ -106,7 +106,7 @@ public class PostEntityDataMapper {
             post.setAllowedPrivileges(mAllowedPrivilegesEntityDataMapper
                     .map(postEntity.getAllowedPrivileges()));
             post.setPostPublishedTo(
-                    mPostPublishedToEntityDataMapper.map(postEntity.getPublishedToEntity()));
+                    mPostPublishedToEntityDataMapper.map(postEntity.getPublishedTo()));
         }
         return post;
     }
@@ -148,7 +148,7 @@ public class PostEntityDataMapper {
                     post.getCompletedStages()));
             postEntity.setAllowedPrivilegesEntity(
                     mAllowedPrivilegesEntityDataMapper.map(post.getAllowedPrivileges()));
-            postEntity.setPublishedToEntity(
+            postEntity.setPublishedTo(
                     mPostPublishedToEntityDataMapper.map(post.getPostPublishedTo()));
         }
         return postEntity;

@@ -24,6 +24,7 @@ import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.service.RestfulService;
 import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
 import com.ushahidi.android.data.entity.PostCompletedStagesEntity;
+import com.ushahidi.android.data.entity.PostPublishedToEntity;
 import com.ushahidi.android.data.entity.PostValueEntity;
 import com.ushahidi.android.data.exception.RetrofitErrorHandler;
 import com.ushahidi.android.presentation.net.HttpClientWrap;
@@ -78,6 +79,7 @@ public class PlatformService {
                 new AllowedPrivilegesDeserializer());
         builder.registerTypeAdapter(PostCompletedStagesEntity.class,
                 new PostCompletedStagesDeserializer());
+        builder.registerTypeAdapter(PostPublishedToEntity.class, new PostPublishToDeserializer());
         Gson gson = builder.create();
         mGsonConverter = new GsonConverter(gson);
     }

@@ -43,6 +43,10 @@ public class AllowedPrivilegesModel implements Parcelable {
 
     private String mAllowedPrivileges;
 
+    public AllowedPrivilegesModel() {
+
+    }
+
     protected AllowedPrivilegesModel(Parcel in) {
         mAllowedPrivileges = in.readString();
     }
