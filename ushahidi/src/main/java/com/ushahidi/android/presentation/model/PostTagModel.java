@@ -50,6 +50,10 @@ public class PostTagModel extends Model implements Parcelable {
 
     private long mDeploymentId;
 
+    public PostTagModel() {
+
+    }
+
     /**
      * Constructs a {@link PostValueModel} with initialized value retried from the passed {@link
      * Parcel}

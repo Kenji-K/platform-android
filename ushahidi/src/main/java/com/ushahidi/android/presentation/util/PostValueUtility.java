@@ -28,11 +28,11 @@ import java.util.Map;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public final class PostValue {
+public final class PostValueUtility {
 
     private JSONObject mJSONObject = new JSONObject();
 
-    private PostValue(JSONObject jsonObject) {
+    private PostValueUtility(JSONObject jsonObject) {
         mJSONObject = jsonObject;
     }
 
@@ -77,8 +77,8 @@ public final class PostValue {
             return this;
         }
 
-        public PostValue build() {
-            return new PostValue(mJSONObject);
+        public PostValueUtility build() {
+            return new PostValueUtility(mJSONObject);
         }
     }
 }

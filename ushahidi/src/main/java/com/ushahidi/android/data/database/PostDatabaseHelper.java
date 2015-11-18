@@ -153,7 +153,8 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
      */
     public List<PostEntity> putFetchedPosts(Long deploymentId,
             List<TagEntity> tagEntities,
-            List<PostEntity> postEntities, GeoJsonEntity geoJsonEntity,
+            List<PostEntity> postEntities,
+            GeoJsonEntity geoJsonEntity,
             List<FormEntity> formEntities) {
         // Note: Saving other entity types apart from post because it was easier to save
         // all the different entity types fetched via the API request.

@@ -19,17 +19,20 @@ package com.ushahidi.android.presentation.view.ui.activity;
 import com.addhen.android.raiburari.presentation.di.HasComponent;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.PrefsFactory;
+import com.ushahidi.android.data.api.account.PlatformSession;
+import com.ushahidi.android.data.api.account.SessionManager;
 import com.ushahidi.android.presentation.di.components.post.AddPostComponent;
 import com.ushahidi.android.presentation.di.components.post.DaggerAddPostComponent;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.FormStageModel;
 import com.ushahidi.android.presentation.model.PostModel;
-import com.ushahidi.android.presentation.model.PostValueModel;
 import com.ushahidi.android.presentation.model.TagModel;
 import com.ushahidi.android.presentation.presenter.formattribute.ListFormAttributePresenter;
 import com.ushahidi.android.presentation.presenter.formstage.ListFormStagePresenter;
 import com.ushahidi.android.presentation.presenter.post.AddPostPresenter;
 import com.ushahidi.android.presentation.presenter.tags.ListTagPresenter;
+import com.ushahidi.android.presentation.util.ConfigurePostModelUtility;
+import com.ushahidi.android.presentation.util.PostValueUtility;
 import com.ushahidi.android.presentation.util.Utility;
 import com.ushahidi.android.presentation.view.formattribute.ListFormAttributeView;
 import com.ushahidi.android.presentation.view.formstage.ListFormStageView;
@@ -41,7 +44,7 @@ import com.ushahidi.android.presentation.view.ui.form.ui.widgets.Widget;
 import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
 import com.ushahidi.android.presentation.view.ui.form.wizard.ScreenModelCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.wizard.model.AbstractScreenModel;
-import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostFormModel;
+import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostFormWizardModel;
 import com.ushahidi.android.presentation.view.ui.form.wizard.model.PostItemModel;
 import com.ushahidi.android.presentation.view.ui.fragment.AddPostFragment;
 import com.ushahidi.android.presentation.view.ui.widget.ScrollConfigurableViewPager;
@@ -50,6 +53,8 @@ import com.ushahidi.android.presentation.view.ui.widget.TitlePageIndicator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
@@ -118,6 +123,8 @@ public class AddPostActivity extends BaseAppActivity
 
     @Inject
     PrefsFactory mPrefsFactory;
+
+    private SessionManager<PlatformSession> mSessionManager;
 
     private AddPostComponent mAddPostComponent;
 
@@ -206,6 +213,7 @@ public class AddPostActivity extends BaseAppActivity
                 .appComponent(getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
+        mSessionManager = getAppComponent().platformSessionManager();
         getComponent().inject(this);
     }
 
@@ -261,8 +269,6 @@ public class AddPostActivity extends BaseAppActivity
                 if (mAddPostViewPager.getCurrentItem() == mCurrentScreenSequence.size() - 1) {
                     ArrayList<PostItemModel> postItems = new ArrayList<PostItemModel>();
                     boolean isValid = true;
-                    PostValueModel postValueModel = new PostValueModel();
-                    postValueModel.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
                     for (int i = 0; i < mCurrentScreenSequence.size(); i++) {
                         Screen screen = mCurrentScreenSequence.get(i);
                         for (Widget widget : screen.getWidgets()) {
@@ -283,10 +289,33 @@ public class AddPostActivity extends BaseAppActivity
                     });
                     if (isValid) {
                         // TODO: Post item to the API
-                        PostModel postModel = new PostModel();
-                        postModel.setDeploymentId(mPrefsFactory.getActiveDeploymentId().get());
-                        postModel.setValues(postValueModel);
-                        postModel.setStatus(PostModel.Status.DRAFT);
+                        // Get form attributes and build post value
+                        ConfigurePostModelUtility.Builder configurePostModel
+                                = new ConfigurePostModelUtility.Builder(
+                                mPrefsFactory.getActiveDeploymentId().get(),
+                                "Title", "Content");
+                        PostValueUtility.Builder postBuilder = new PostValueUtility.Builder();
+                        for (PostItemModel postItemModel : postItems) {
+                            FormAttributeModel formAttributeModel = findFormAttribute(
+                                    postItemModel.getFieldKey());
+                            if (formAttributeModel != null) {
+                                // Process point and geometry differently. They should be returned
+                                // as object not array
+                                if (!formAttributeModel.getType()
+                                        .equals(FormAttributeModel.Type.POINT)
+                                        || !formAttributeModel.getType()
+                                        .equals(FormAttributeModel.Type.GEOMETRY)) {
+                                    List<String> values = new ArrayList<String>();
+                                    values.add(postItemModel.getDisplayValue());
+                                    postBuilder.withArray(postItemModel.getFieldKey(), values);
+                                }
+                            }
+                        }
+                        configurePostModel.postValue(postBuilder.build());
+                        configurePostModel.postFormId(mFormId);
+                        configurePostModel.postUserId(mSessionManager.getActiveSession().getId());
+                        PostModel postModel = configurePostModel.build().getPostModel();
+                        mAddPostPresenter.addPost(postModel);
                     }
                 } else {
                     mAddPostViewPager.setCurrentItem(mAddPostViewPager.getCurrentItem() + 1);
@@ -526,7 +555,7 @@ public class AddPostActivity extends BaseAppActivity
 
     private void setupPageView(List<FormStageModel> result) {
         mFormStages = result;
-        mScreenModel = new PostFormModel(this, mFormStages, mFormAttributeModels);
+        mScreenModel = new PostFormWizardModel(this, mFormStages, mFormAttributeModels);
         mScreenModel.registerListener(this);
         List<String> titles = new ArrayList<>();
         for (FormStageModel stage : mFormStages) {
@@ -537,5 +566,20 @@ public class AddPostActivity extends BaseAppActivity
                 getSupportFragmentManager(), mCurrentScreenSequence, titles);
         mAddPostViewPager.setAdapter(mAddPostFragmentStatePageAdapter);
         initView();
+    }
+
+    @Nullable
+    private FormAttributeModel findFormAttribute(@NonNull String formAttributeKey) {
+        if (Utility.isCollectionEmpty(mFormAttributeModels)) {
+            FormAttributeModel foundFormAttributeModel = null;
+            for (FormAttributeModel formAttributeModel : mFormAttributeModels) {
+                if (formAttributeModel.getKey().equals(formAttributeKey)) {
+                    foundFormAttributeModel = formAttributeModel;
+                    break;
+                }
+            }
+            return foundFormAttributeModel;
+        }
+        return null;
     }
 }

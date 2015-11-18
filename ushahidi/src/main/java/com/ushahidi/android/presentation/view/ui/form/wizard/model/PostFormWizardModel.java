@@ -29,13 +29,13 @@ import java.util.List;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostFormModel extends AbstractScreenModel {
+public class PostFormWizardModel extends AbstractScreenModel {
 
     private List<FormStageModel> mPages = new ArrayList<>();
 
     private List<FormAttributeModel> mFormAttributes = new ArrayList<>();
 
-    public PostFormModel(Context context, List<FormStageModel> stages,
+    public PostFormWizardModel(Context context, List<FormStageModel> stages,
             List<FormAttributeModel> formAttributes) {
         super(context);
         mPages = stages;

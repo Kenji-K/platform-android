@@ -50,7 +50,7 @@ public class PostValueTest {
         data.put("lon", 1);
         data.put("lat", 1);
 
-        PostValue postValue = new PostValue.Builder()
+        PostValueUtility postValue = new PostValueUtility.Builder()
                 .withArray("test_varchar", values)
                 .withObject("last_location_point", data)
                 .build();

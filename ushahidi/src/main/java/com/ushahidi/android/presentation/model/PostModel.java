@@ -97,7 +97,6 @@ public class PostModel extends Model implements Parcelable {
      * Default constructor
      */
     public PostModel() {
-
     }
 
     protected PostModel(Parcel in) {
@@ -179,6 +178,18 @@ public class PostModel extends Model implements Parcelable {
         dest.writeValue(mCompletedStages);
         dest.writeValue(mAllowedPrivileges);
         dest.writeValue(mPostUser);
+    }
+
+    public PostFormModel getPostForm() {
+        return mPostForm;
+    }
+
+    public void setPostForm(PostFormModel postForm) {
+        mPostForm = postForm;
+    }
+
+    public void setPostUser(PostUserModel postUser) {
+        mPostUser = postUser;
     }
 
     public Parent getParent() {
