@@ -16,14 +16,52 @@
 
 package com.ushahidi.android.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The post completed stages entity
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostCompletedStagesModel {
+public class PostCompletedStagesModel implements Parcelable {
+
+    /**
+     * Creates {@link Parcelable} object for {@link PostCompletedStagesModel}
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostCompletedStagesModel> CREATOR
+            = new Parcelable.Creator<PostCompletedStagesModel>() {
+        @Override
+        public PostCompletedStagesModel createFromParcel(Parcel in) {
+            return new PostCompletedStagesModel(in);
+        }
+
+        @Override
+        public PostCompletedStagesModel[] newArray(int size) {
+            return new PostCompletedStagesModel[size];
+        }
+    };
 
     private String mCompletedStep;
+
+    public PostCompletedStagesModel() {
+
+    }
+
+    protected PostCompletedStagesModel(Parcel in) {
+        mCompletedStep = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mCompletedStep);
+    }
 
     public String getCompletedStep() {
         return mCompletedStep;

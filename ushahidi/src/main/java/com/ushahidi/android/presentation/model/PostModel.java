@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 import com.addhen.android.raiburari.presentation.model.Model;
 import com.ushahidi.android.domain.entity.AllowedPrivileges;
 import com.ushahidi.android.domain.entity.PostCompletedStages;
-import com.ushahidi.android.domain.entity.PostForm;
 import com.ushahidi.android.domain.entity.PostPublishedTo;
 
 import android.os.Parcel;
@@ -105,7 +104,6 @@ public class PostModel extends Model implements Parcelable {
     protected PostModel(Parcel in) {
         parent = (Parent) in.readValue(Parent.class.getClassLoader());
         mParent = in.readByte() == 0x00 ? null : in.readLong();
-        mPostUser = (PostUserModel) in.readValue(UserProfileModel.class.getClassLoader());
         mType = (Type) in.readValue(Type.class.getClassLoader());
         mTitle = in.readString();
         mSlug = in.readString();
@@ -131,12 +129,13 @@ public class PostModel extends Model implements Parcelable {
         } else {
             mTags = null;
         }
-        mPostForm = (PostFormModel) in.readValue(PostForm.class.getClassLoader());
+        mPostForm = (PostFormModel) in.readValue(PostFormModel.class.getClassLoader());
         mCompletedStages = (PostCompletedStages) in
                 .readValue(PostCompletedStages.class.getClassLoader());
-        mAllowedPrivileges = (AllowedPrivileges) in
-                .readValue(AllowedPrivileges.class.getClassLoader());
+        mAllowedPrivileges = (AllowedPrivileges) in.readValue(
+                AllowedPrivileges.class.getClassLoader());
         mPostUser = (PostUserModel) in.readValue(PostUserModel.class.getClassLoader());
+        mPostPublishedTo = (PostPublishedTo) in.readValue(PostPublishedTo.class.getClassLoader());
     }
 
     @Override
@@ -153,7 +152,6 @@ public class PostModel extends Model implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeLong(mParent);
         }
-        dest.writeValue(mPostUser);
         dest.writeValue(mType);
         dest.writeString(mTitle);
         dest.writeString(mSlug);
@@ -181,6 +179,7 @@ public class PostModel extends Model implements Parcelable {
         dest.writeValue(mCompletedStages);
         dest.writeValue(mAllowedPrivileges);
         dest.writeValue(mPostUser);
+        dest.writeValue(mPostPublishedTo);
     }
 
     public PostFormModel getPostForm() {

@@ -16,12 +16,32 @@
 
 package com.ushahidi.android.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Holds the User attached to a post
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostUserModel {
+public class PostUserModel implements Parcelable {
+
+    /**
+     * Creates {@link Parcelable} object for {@link PostUserModel}
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostUserModel> CREATOR
+            = new Parcelable.Creator<PostUserModel>() {
+        @Override
+        public PostUserModel createFromParcel(Parcel in) {
+            return new PostUserModel(in);
+        }
+
+        @Override
+        public PostUserModel[] newArray(int size) {
+            return new PostUserModel[size];
+        }
+    };
 
     private Long mPostId;
 
@@ -60,5 +80,33 @@ public class PostUserModel {
                 + ", mUserId=" + mUserId
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
+    }
+
+    protected PostUserModel(Parcel in) {
+        mPostId = in.readByte() == 0x00 ? null : in.readLong();
+        mUserId = in.readByte() == 0x00 ? null : in.readLong();
+        mDeploymentId = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mPostId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mPostId);
+        }
+        if (mUserId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mUserId);
+        }
+        dest.writeLong(mDeploymentId);
     }
 }

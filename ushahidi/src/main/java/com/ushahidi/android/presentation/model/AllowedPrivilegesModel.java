@@ -16,12 +16,46 @@
 
 package com.ushahidi.android.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AllowedPrivilegesModel {
+public class AllowedPrivilegesModel implements Parcelable {
+
+    /**
+     * Creates {@link Parcelable} object for {@link AllowedPrivilegesModel}
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<AllowedPrivilegesModel> CREATOR
+            = new Parcelable.Creator<AllowedPrivilegesModel>() {
+        @Override
+        public AllowedPrivilegesModel createFromParcel(Parcel in) {
+            return new AllowedPrivilegesModel(in);
+        }
+
+        @Override
+        public AllowedPrivilegesModel[] newArray(int size) {
+            return new AllowedPrivilegesModel[size];
+        }
+    };
 
     private String mAllowedPrivileges;
+
+    protected AllowedPrivilegesModel(Parcel in) {
+        mAllowedPrivileges = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAllowedPrivileges);
+    }
 
     public String getAllowedPrivileges() {
         return mAllowedPrivileges;
@@ -37,4 +71,5 @@ public class AllowedPrivilegesModel {
                 + "mAllowedPrivileges='" + mAllowedPrivileges + '\''
                 + '}';
     }
+
 }

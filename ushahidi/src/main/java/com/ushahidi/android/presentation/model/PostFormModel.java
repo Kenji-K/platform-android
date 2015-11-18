@@ -18,12 +18,32 @@ package com.ushahidi.android.presentation.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * This is to hold form ID
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostFormModel {
+public class PostFormModel implements Parcelable {
+
+    /**
+     * Creates a {@link Parcelable} object for {@link PostFormModel}
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostFormModel> CREATOR
+            = new Parcelable.Creator<PostFormModel>() {
+        @Override
+        public PostFormModel createFromParcel(Parcel in) {
+            return new PostFormModel(in);
+        }
+
+        @Override
+        public PostFormModel[] newArray(int size) {
+            return new PostFormModel[size];
+        }
+    };
 
     private Long mPostId;
 
@@ -31,6 +51,38 @@ public class PostFormModel {
     private Long mFormId;
 
     private long mDeploymentId;
+
+    public PostFormModel() {
+
+    }
+
+    protected PostFormModel(Parcel in) {
+        mPostId = in.readByte() == 0x00 ? null : in.readLong();
+        mFormId = in.readByte() == 0x00 ? null : in.readLong();
+        mDeploymentId = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mPostId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mPostId);
+        }
+        if (mFormId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mFormId);
+        }
+        dest.writeLong(mDeploymentId);
+    }
 
     public Long getPostId() {
         return mPostId;

@@ -16,12 +16,46 @@
 
 package com.ushahidi.android.presentation.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class PostPublishedToModel {
+public class PostPublishedToModel implements Parcelable {
+
+    /**
+     * Creates a {@link Parcelable} object for {@link PostPublishedToModel}
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<PostPublishedToModel> CREATOR
+            = new Parcelable.Creator<PostPublishedToModel>() {
+        @Override
+        public PostPublishedToModel createFromParcel(Parcel in) {
+            return new PostPublishedToModel(in);
+        }
+
+        @Override
+        public PostPublishedToModel[] newArray(int size) {
+            return new PostPublishedToModel[size];
+        }
+    };
 
     private String mPublishedTo;
+
+    protected PostPublishedToModel(Parcel in) {
+        mPublishedTo = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mPublishedTo);
+    }
 
     public String getPublishedTo() {
         return mPublishedTo;
