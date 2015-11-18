@@ -23,6 +23,7 @@ import com.addhen.android.raiburari.presentation.model.Model;
 import com.ushahidi.android.domain.entity.AllowedPrivileges;
 import com.ushahidi.android.domain.entity.PostCompletedStages;
 import com.ushahidi.android.domain.entity.PostForm;
+import com.ushahidi.android.domain.entity.PostPublishedTo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -92,6 +93,8 @@ public class PostModel extends Model implements Parcelable {
     private AllowedPrivileges mAllowedPrivileges;
 
     private PostUserModel mPostUser;
+
+    private PostPublishedTo mPostPublishedTo;
 
     /**
      * Default constructor
@@ -341,6 +344,14 @@ public class PostModel extends Model implements Parcelable {
 
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+
+    public PostPublishedTo getPostPublishedTo() {
+        return mPostPublishedTo;
+    }
+
+    public void setPostPublishedTo(PostPublishedTo postPublishedTo) {
+        mPostPublishedTo = postPublishedTo;
     }
 
     public enum Status {

@@ -330,18 +330,23 @@ public class AddPostActivity extends BaseAppActivity
                         configurePostModel.postFormId(mFormId);
                         configurePostModel.postUserId(mSessionManager.getActiveSession().getId());
                         //TODO: Configure post tags and form stages
-                        PostModel postModel = configurePostModel.build().getPostModel();
                         new BottomSheet.Builder(AddPostActivity.this).sheet(R.menu.menu_publish_to)
                                 .listener(((dialog, which) -> {
+                                    PostModel postModel;
                                     switch (which) {
                                         case R.id.menu_publish_post_to_editors:
                                             //TODO configure publish to everyone
+                                            configurePostModel.postPublishTo("user");
+                                            postModel = configurePostModel.build().getPostModel();
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                         case R.id.menu_publish_post_to_admin:
+                                            configurePostModel.postPublishTo("admin");
+                                            postModel = configurePostModel.build().getPostModel();
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                         default:
+                                            postModel = configurePostModel.build().getPostModel();
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                     }

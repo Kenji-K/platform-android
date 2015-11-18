@@ -87,6 +87,34 @@ public class PostEntity extends Data {
     @SerializedName("allowed_privileges")
     private AllowedPrivilegesEntity mAllowedPrivileges;
 
+    @SerializedName("published_to")
+    private PostPublishedToEntity mPublishedToEntity;
+
+    public void setAllowedPrivileges(
+            AllowedPrivilegesEntity allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public PostPublishedToEntity getPublishedToEntity() {
+        return mPublishedToEntity;
+    }
+
+    public void setPublishedToEntity(PostPublishedToEntity publishedToEntity) {
+        mPublishedToEntity = publishedToEntity;
+    }
+
+    public PostFormEntity getPostForm() {
+        return mPostForm;
+    }
+
+    public PostUserEntity getUser() {
+        return mUser;
+    }
+
+    public void setUser(PostUserEntity user) {
+        mUser = user;
+    }
+
     public PostFormEntity getPostFormEntity() {
         return mPostForm;
     }
@@ -259,11 +287,12 @@ public class PostEntity extends Data {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mValues=" + mValues
-                + ", mPostFormEntity=" + mPostForm
+                + ", mPostForm=" + mPostForm
                 + ", mCompletedStages=" + mCompletedStages
                 + ", mPostTagEntityList=" + mPostTagEntityList
                 + ", mTags=" + mTags
-                + ", mAllowedPrivilegesEntity=" + mAllowedPrivileges
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mPublishedToEntity=" + mPublishedToEntity
                 + '}';
     }
 

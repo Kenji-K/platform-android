@@ -19,9 +19,6 @@ package com.ushahidi.android.presentation.model.mapper;
 import com.ushahidi.android.domain.entity.PostForm;
 import com.ushahidi.android.presentation.model.PostFormModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 /**
@@ -69,23 +66,5 @@ public class PostFormModelDataMapper {
             postFormModel.setFormId(postForm.getFormId());
         }
         return postFormModel;
-    }
-
-    /**
-     * Maps a list {@link PostFormModel} into a list of {@link PostForm}.
-     *
-     * @param postModelList List to be mapped.
-     * @return {@link PostForm}
-     */
-    public List<PostForm> map(List<PostFormModel> postModelList) {
-        List<PostForm> postFormList = new ArrayList<>();
-        PostForm post;
-        for (PostFormModel postFormModel : postModelList) {
-            post = map(postFormModel);
-            if (post != null) {
-                postFormList.add(post);
-            }
-        }
-        return postFormList;
     }
 }

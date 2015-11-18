@@ -59,11 +59,21 @@ public class Post extends Entity {
 
     private PostUser mPostUser;
 
+    private PostPublishedTo mPostPublishedTo;
+
     // Store the raw JSON for this field. This is a dynamic field
     // and can't predict its keys.
     private PostValue mValues;
 
     private List<Tag> mTags;
+
+    public PostPublishedTo getPostPublishedTo() {
+        return mPostPublishedTo;
+    }
+
+    public void setPostPublishedTo(PostPublishedTo postPublishedTo) {
+        mPostPublishedTo = postPublishedTo;
+    }
 
     public Long getParent() {
         return mParent;

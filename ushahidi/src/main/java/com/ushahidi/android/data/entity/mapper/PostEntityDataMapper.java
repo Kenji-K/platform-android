@@ -44,6 +44,8 @@ public class PostEntityDataMapper {
 
     private PostUserEntityDataMapper mPostUserEntityDataMapper;
 
+    private PostPublishedToEntityDataMapper mPostPublishedToEntityDataMapper;
+
 
     /**
      * Default constructor
@@ -54,13 +56,15 @@ public class PostEntityDataMapper {
             PostFormEntityDataMapper postFormEntityDataMapper,
             PostCompletedStagesDataEntityDataMapper postCompletedStagesDataEntityDataMapper,
             AllowedPrivilegesEntityDataMapper allowedPrivilegesEntityDataMapper,
-            PostUserEntityDataMapper postUserEntityDataMapper) {
+            PostUserEntityDataMapper postUserEntityDataMapper,
+            PostPublishedToEntityDataMapper postPublishedToEntityDataMapper) {
         mTagEntityMapper = tagEntityDataMapper;
         mPostValueEntityMapper = postValueEntityDataMapper;
         mPostFormEntityDataMapper = postFormEntityDataMapper;
         mPostCompletedStagesDataEntityDataMapper = postCompletedStagesDataEntityDataMapper;
         mAllowedPrivilegesEntityDataMapper = allowedPrivilegesEntityDataMapper;
         mPostUserEntityDataMapper = postUserEntityDataMapper;
+        mPostPublishedToEntityDataMapper = postPublishedToEntityDataMapper;
     }
 
     /**
@@ -101,6 +105,8 @@ public class PostEntityDataMapper {
             post.setPostForm(mPostFormEntityDataMapper.map(postEntity.getPostFormEntity()));
             post.setAllowedPrivileges(mAllowedPrivilegesEntityDataMapper
                     .map(postEntity.getAllowedPrivileges()));
+            post.setPostPublishedTo(
+                    mPostPublishedToEntityDataMapper.map(postEntity.getPublishedToEntity()));
         }
         return post;
     }
@@ -142,6 +148,8 @@ public class PostEntityDataMapper {
                     post.getCompletedStages()));
             postEntity.setAllowedPrivilegesEntity(
                     mAllowedPrivilegesEntityDataMapper.map(post.getAllowedPrivileges()));
+            postEntity.setPublishedToEntity(
+                    mPostPublishedToEntityDataMapper.map(post.getPostPublishedTo()));
         }
         return postEntity;
     }

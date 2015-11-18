@@ -16,6 +16,7 @@
 
 package com.ushahidi.android.presentation.util;
 
+import com.ushahidi.android.domain.entity.PostPublishedTo;
 import com.ushahidi.android.presentation.model.PostFormModel;
 import com.ushahidi.android.presentation.model.PostModel;
 import com.ushahidi.android.presentation.model.PostTagModel;
@@ -74,6 +75,13 @@ public final class ConfigurePostModelUtility {
             postFormModel.setDeploymentId(mDeploymentId);
             postFormModel.setFormId(formId);
             mPostModel.setFormModel(postFormModel);
+            return this;
+        }
+
+        public Builder postPublishTo(String to) {
+            PostPublishedTo postPublishedTo = new PostPublishedTo();
+            postPublishedTo.setPublishedTo(to);
+            mPostModel.setPostPublishedTo(postPublishedTo);
             return this;
         }
 

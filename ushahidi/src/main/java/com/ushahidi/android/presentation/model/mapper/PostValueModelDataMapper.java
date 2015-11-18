@@ -22,9 +22,6 @@ import com.ushahidi.android.presentation.model.PostValueModel;
 
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 /**
@@ -68,21 +65,4 @@ public class PostValueModelDataMapper {
         return postValue;
     }
 
-    /**
-     * Maps a list {@link PostValue} into a list of {@link PostValueModel}.
-     *
-     * @param postValueList List to be mapped.
-     * @return {@link PostValueModel}
-     */
-    public List<PostValueModel> map(@NonNull List<PostValue> postValueList) {
-        List<PostValueModel> postValueModelList = new ArrayList<>();
-        PostValueModel postModel;
-        for (PostValue postValue : postValueList) {
-            postModel = map(postValue);
-            if (postModel != null) {
-                postValueModelList.add(postModel);
-            }
-        }
-        return postValueModelList;
-    }
 }
