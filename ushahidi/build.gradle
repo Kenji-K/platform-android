@@ -103,7 +103,7 @@ dependencies {
     compile appDependencies.cocoaheroGeoJson
     compile appDependencies.heimdallDroid
     compile appDependencies.dialogplus
-    compile appDependencies.expandableview
+    compile appDependencies.bottomSheet
     provided appDependencies.javaxAnnotation
 
     testCompile appTestDependencies.junit

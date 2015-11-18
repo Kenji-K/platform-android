@@ -155,4 +155,7 @@
     <string name="prev">Previous</string>
     <string name="finish">Publish ></string>
     <string name="who_can_see">Who can see this?</string>
+    <string name="everyone">Everyone</string>
+    <string name="administrators">Administrators</string>
+    <string name="editors">Editors</string>
 </resources>

@@ -17,6 +17,7 @@
 package com.ushahidi.android.presentation.view.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
+import com.cocosw.bottomsheet.BottomSheet;
 import com.ushahidi.android.R;
 import com.ushahidi.android.data.PrefsFactory;
 import com.ushahidi.android.data.api.account.PlatformSession;
@@ -63,7 +64,9 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -308,14 +311,42 @@ public class AddPostActivity extends BaseAppActivity
                                     List<String> values = new ArrayList<String>();
                                     values.add(postItemModel.getDisplayValue());
                                     postBuilder.withArray(postItemModel.getFieldKey(), values);
+                                } else if (!formAttributeModel.getType()
+                                        .equals(FormAttributeModel.Type.POINT)) {
+                                    Map<String, String> data = new HashMap<>();
+                                    // The LocationWidget returns in values with a : separator
+                                    // Split by that to get the individual values
+                                    final String[] location = postItemModel.getDisplayValue()
+                                            .split(":");
+                                    data.put("location", location[0]);
+                                    data.put("lat", location[1]);
+                                    data.put("lon", location[2]);
+                                    postBuilder.withObject(postItemModel.getFieldKey(), data);
+                                    // TODO: Configure geometry
                                 }
                             }
                         }
                         configurePostModel.postValue(postBuilder.build());
                         configurePostModel.postFormId(mFormId);
                         configurePostModel.postUserId(mSessionManager.getActiveSession().getId());
+                        //TODO: Configure post tags and form stages
                         PostModel postModel = configurePostModel.build().getPostModel();
-                        mAddPostPresenter.addPost(postModel);
+                        new BottomSheet.Builder(AddPostActivity.this).sheet(R.menu.menu_publish_to)
+                                .listener(((dialog, which) -> {
+                                    switch (which) {
+                                        case R.id.menu_publish_post_to_editors:
+                                            //TODO configure publish to everyone
+                                            mAddPostPresenter.addPost(postModel);
+                                            break;
+                                        case R.id.menu_publish_post_to_admin:
+                                            mAddPostPresenter.addPost(postModel);
+                                            break;
+                                        default:
+                                            mAddPostPresenter.addPost(postModel);
+                                            break;
+                                    }
+                                }))
+                                .show();
                     }
                 } else {
                     mAddPostViewPager.setCurrentItem(mAddPostViewPager.getCurrentItem() + 1);
