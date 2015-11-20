@@ -1,0 +1,63 @@
+package com.ushahidi.platform.mobile.app.presentation.di.modules.post;
+
+import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.ushahidi.platform.mobile.app.domain.usecase.formattribute.ListFormAttributeUsecase;
+import com.ushahidi.platform.mobile.app.domain.usecase.formstages.ListFormStageUsecase;
+import com.ushahidi.platform.mobile.app.domain.usecase.post.AddPostUsecase;
+
+import javax.inject.Named;
+
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * Provides injectable modules scoped with {@link ActivityScope} to add post related classes
+ *
+ * @author Ushahidi Team <team@ushahidi.com>
+ */
+@Module
+public class AddPostModule {
+
+    /**
+     * Provides {@link AddPostUsecase} object annotated with the name "postList"
+     *
+     * @param addPostUsecase Add Post Usecase
+     * @return The add post Usecase
+     */
+    @Provides
+    @ActivityScope
+    @Named("postAdd")
+    AddPostUsecase provideAddPostUseCase(AddPostUsecase addPostUsecase) {
+        return addPostUsecase;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.platform.mobile.app.domain.usecase.formattribute.GetFormAttributeUsecase}
+     * object annotated with the name "formAttributeGet"
+     *
+     * @param listFormAttributeUsecase Get Form Attribute Usecase
+     * @return The get form attribute usecase
+     */
+    @Provides
+    @ActivityScope
+    @Named("formAttributeList")
+    ListFormAttributeUsecase provideListFormAttributeUsecase(
+            ListFormAttributeUsecase listFormAttributeUsecase) {
+        return listFormAttributeUsecase;
+    }
+
+    /**
+     * Provides {@link com.ushahidi.platform.mobile.app.domain.usecase.formattribute.GetFormAttributeUsecase}
+     * object annotated with the name "formAttributeGet"
+     *
+     * @param listFormStageUsecase Get Form Attribute Usecase
+     * @return The get form stage usecase
+     */
+    @Provides
+    @ActivityScope
+    @Named("formStageList")
+    ListFormStageUsecase provideListFormStageUsecase(
+            ListFormStageUsecase listFormStageUsecase) {
+        return listFormStageUsecase;
+    }
+}

@@ -16,9 +16,9 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ushahidi.android">
+          package="com.ushahidi.platform.mobile.app">
     <!-- User permissions -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -151,8 +151,8 @@
                     android:value=".presentation.view.ui.activity.PostActivity"/>
         </activity>
         <provider
-                android:name="com.ushahidi.android.data.database.PostContentProvider"
-                android:authorities="com.ushahidi.android.data.database.PostContentProvider"
+                android:name="com.ushahidi.platform.mobile.app.data.database.PostContentProvider"
+                android:authorities="com.ushahidi.platform.mobile.app.data.database.PostContentProvider"
                 android:exported="true"/>
         <meta-data
                 android:name="com.google.android.gms.version"
