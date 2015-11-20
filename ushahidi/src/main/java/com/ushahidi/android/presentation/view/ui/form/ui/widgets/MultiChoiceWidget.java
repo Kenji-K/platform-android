@@ -16,60 +16,94 @@
 
 package com.ushahidi.android.presentation.view.ui.form.ui.widgets;
 
+import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.view.ui.form.FormModelCallbacks;
-import com.ushahidi.android.presentation.view.ui.form.validator.validator.RequiredValidator;
-import com.ushahidi.android.presentation.view.ui.form.validator.validator.Validator;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class MultiChoiceWidget extends Widget {
 
-    private AppCompatTextView mTitle;
+    private AppCompatTextView mAppCompatTextView;
 
-    private AppCompatCheckBox mAppCompatCheckBox;
+    private ViewGroup mChoicesContainer;
+
+    private Map<String, String> mChoices;
+
+    private List<String> mValues;
+
+    private Map<String, AppCompatCheckBox> mChoicesView;
 
     protected MultiChoiceWidget(Context context, String name, String title,
             FormModelCallbacks callbacks) {
         super(context, name, title, callbacks);
-        mAppCompatCheckBox = new AppCompatCheckBox(context);
-        mAppCompatCheckBox.setLayoutParams(DEFAULT_LAYOUT_PARAMS);
-        mAppCompatCheckBox.setText(title);
-        addView(mAppCompatCheckBox);
+        mValues = new ArrayList<>();
+        mChoicesView = new HashMap<>();
+        initView();
+    }
+
+    private void initView() {
+        LayoutInflater inflater = (LayoutInflater) getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rootView = inflater.inflate(R.layout.widget_multi_choice, this);
+
+        mAppCompatTextView = (AppCompatTextView) rootView.findViewById(R.id.multi_choice_label);
+        mChoicesContainer = (ViewGroup) rootView.findViewById(R.id.multi_choice_container);
     }
 
     @Override
     public String getValue() {
-        return String.valueOf(mAppCompatCheckBox.isChecked());
+        return null;
+    }
+
+    public List<String> getChoicesValues() {
+        for (Map.Entry<String, AppCompatCheckBox> entry : mChoicesView.entrySet()) {
+            if (entry.getValue().isChecked()) {
+                mValues.add(entry.getKey());
+            }
+        }
+        return mValues;
+    }
+
+    public void setChoices(Map<String, String> choices) {
+        mChoicesContainer.removeAllViews();
+        for (Map.Entry<String, String> entry : choices.entrySet()) {
+            AppCompatCheckBox appCompatCheckBox = new AppCompatCheckBox(getContext());
+            appCompatCheckBox.setLayoutParams(DEFAULT_LAYOUT_PARAMS);
+            appCompatCheckBox.setTag(entry.getKey());
+            appCompatCheckBox.setText(entry.getValue());
+            mChoicesContainer.addView(appCompatCheckBox);
+            mChoicesView.put(entry.getKey(), appCompatCheckBox);
+        }
+        mChoices = choices;
     }
 
     @Override
     public void setValue(String value) {
-        mAppCompatCheckBox.setChecked(Boolean.valueOf(value));
+        // Do nothing
     }
 
     @Override
     public boolean validate() {
-        // Validate if required is set
         if (isRequired()) {
-            final String requiredMessage = null;
-            RequiredValidator requiredValidator = new RequiredValidator(requiredMessage);
-            if (!requiredValidator.isValid(this)) {
-                mAppCompatCheckBox.setError(requiredValidator.getErrorMessage());
-                return false;
+            if (!mValues.isEmpty()) {
+                return true;
             }
         }
-        for (Validator validator : mValidators) {
-            if (!validator.isValid(this)) {
-                mAppCompatCheckBox.setError(validator.getErrorMessage());
-                return false;
-            }
-        }
-        return true;
+        mAppCompatTextView.setError(getContext().getString(R.string.required_field_error));
+        return false;
     }
 
     @Override

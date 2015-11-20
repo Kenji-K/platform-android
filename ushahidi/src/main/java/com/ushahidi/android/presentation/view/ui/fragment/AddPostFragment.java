@@ -20,16 +20,20 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.model.FormAttributeModel;
 import com.ushahidi.android.presentation.model.TagModel;
+import com.ushahidi.android.presentation.view.ui.activity.AddPostActivity;
 import com.ushahidi.android.presentation.view.ui.form.FormModelCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.ScreenFragmentCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.ui.AddPostScreen;
 import com.ushahidi.android.presentation.view.ui.form.ui.widgets.EditTextWidget;
 import com.ushahidi.android.presentation.view.ui.form.ui.widgets.LocationWidget;
 import com.ushahidi.android.presentation.view.ui.form.ui.widgets.Widget;
+import com.ushahidi.android.presentation.view.ui.form.wizard.Screen;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -59,7 +63,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     AppCompatEditText mPostTitle;
 
     @Bind(R.id.add_post_description)
-    AppCompatEditText mAppCompatEditText;
+    AppCompatEditText mPostContent;
 
     private ScreenFragmentCallbacks mCallbacks;
 
@@ -72,6 +76,8 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     private List<TagModel> mTagModelList;
 
     private LocationWidget mLocationWidget;
+
+    private Screen mFirstScreen;
 
 
     /**
@@ -144,13 +150,13 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
         if (mScreen != null) {
             mFormAttributeViewGroup.removeAllViews();
             if (mScreen.isFirstScreen()) {
+                mFirstScreen = mScreen;
                 mPostTitle.setVisibility(View.VISIBLE);
-                mAppCompatEditText.setVisibility(View.VISIBLE);
+                mPostContent.setVisibility(View.VISIBLE);
                 mCategories.setVisibility(View.VISIBLE);
-
             } else {
                 mPostTitle.setVisibility(View.GONE);
-                mAppCompatEditText.setVisibility(View.GONE);
+                mPostContent.setVisibility(View.GONE);
                 mCategories.setVisibility(View.GONE);
             }
             mFormAttributeModelList = mScreen.getAttributes();
@@ -181,6 +187,56 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
                     // TODO: Check for other form widgets
                 }
             }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (mFirstScreen != null) {
+            mPostTitle.setVisibility(View.VISIBLE);
+            mPostTitle.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    mFirstScreen.getStaticViewData().putString(AddPostActivity.POST_TITLE_KEY,
+                            (editable != null) ? editable.toString() : null);
+                    mFirstScreen.notifyDataChanged();
+                }
+            });
+            mPostContent.setVisibility(View.VISIBLE);
+            mPostContent.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    mFirstScreen.getStaticViewData().putString(AddPostActivity.POST_CONTENT_KEY,
+                            (editable != null) ? editable.toString() : null);
+                    mFirstScreen.notifyDataChanged();
+                }
+            });
+            mCategories.setVisibility(View.VISIBLE);
+        } else {
+            mPostTitle.setVisibility(View.GONE);
+            mPostContent.setVisibility(View.GONE);
+            mCategories.setVisibility(View.GONE);
         }
     }
 

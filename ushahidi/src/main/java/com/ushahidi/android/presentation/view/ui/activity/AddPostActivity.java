@@ -80,6 +80,12 @@ import butterknife.Bind;
 public class AddPostActivity extends BaseAppActivity
         implements HasComponent<AddPostComponent>, ScreenFragmentCallbacks, ScreenModelCallbacks {
 
+    public static final String POST_TITLE_KEY = "post_title";
+
+    public static final String POST_CONTENT_KEY = "post_content";
+
+    public static final String POST_CATEGORIES = "post_categories";
+
     private static final String INTENT_EXTRA_PARAM_FORM_ID
             = "com.ushahidi.android.INTENT_PARAM_FORM_ID";
 
@@ -99,6 +105,7 @@ public class AddPostActivity extends BaseAppActivity
             = "com.ushahidi.android.STATE_PARAM_FORM_ATTRIBUTES";
 
     private static final String FRAG_TAG = "add_post";
+
 
     @Bind(R.id.add_post_view_pager)
     ScrollConfigurableViewPager mAddPostViewPager;
@@ -148,6 +155,8 @@ public class AddPostActivity extends BaseAppActivity
     private List<FormStageModel> mFormStages = new ArrayList<>();
 
     private List<FormAttributeModel> mFormAttributeModels = new ArrayList<>();
+
+    private Screen mFirstScreen;
 
     /**
      * Default constructor
@@ -273,6 +282,9 @@ public class AddPostActivity extends BaseAppActivity
                     boolean isValid = true;
                     for (int i = 0; i < mCurrentScreenSequence.size(); i++) {
                         Screen screen = mCurrentScreenSequence.get(i);
+                        if (screen.isFirstScreen()) {
+                            mFirstScreen = screen;
+                        }
                         for (Widget widget : screen.getWidgets()) {
                             if (!widget.validate()) {
                                 isValid = false;
@@ -288,13 +300,15 @@ public class AddPostActivity extends BaseAppActivity
                                     : a.getWeight() < b.getWeight() ? -1 : 0;
                         }
                     });
-                    if (isValid) {
+                    if (isValid && mFirstScreen != null) {
                         // TODO: Post item to the API
                         // Configure PostModel
+                        String title = mFirstScreen.getStaticViewData().getString(POST_TITLE_KEY);
+                        String content = mFirstScreen.getStaticViewData()
+                                .getString(POST_CONTENT_KEY);
                         ConfigurePostModelUtility.Builder configurePostModel
                                 = new ConfigurePostModelUtility.Builder(
-                                mPrefsFactory.getActiveDeploymentId().get(),
-                                "Title", "Content");
+                                mPrefsFactory.getActiveDeploymentId().get(), title, content);
                         // Use form attribute to build post model's value
                         PostValueUtility.Builder postBuilder = new PostValueUtility.Builder();
                         for (PostItemModel postItemModel : postItems) {

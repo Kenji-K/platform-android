@@ -52,6 +52,8 @@ public abstract class Screen implements ScreenTreeNode {
 
     protected boolean mFirstScreen = false;
 
+    protected Bundle mStaticViewData = new Bundle();
+
     protected Screen(ScreenModelCallbacks callbacks, String title, Long id, Long formId) {
         mCallbacks = callbacks;
         mTitle = title;
@@ -104,6 +106,15 @@ public abstract class Screen implements ScreenTreeNode {
     public void setDataBundle(Bundle data) {
         mData = data;
         notifyDataChanged();
+    }
+
+    public void setStaticViewData(Bundle data) {
+        mStaticViewData = data;
+        notifyDataChanged();
+    }
+
+    public Bundle getStaticViewData() {
+        return mStaticViewData;
     }
 
     public void setAttributeList(List<FormAttributeModel> attributes) {
