@@ -80,10 +80,13 @@ import butterknife.Bind;
 public class AddPostActivity extends BaseAppActivity
         implements HasComponent<AddPostComponent>, ScreenFragmentCallbacks, ScreenModelCallbacks {
 
+    /** Key to get post title */
     public static final String POST_TITLE_KEY = "post_title";
 
+    /** Key to get post content */
     public static final String POST_CONTENT_KEY = "post_content";
 
+    /** Key to get post tags */
     public static final String POST_CATEGORIES = "post_categories";
 
     private static final String INTENT_EXTRA_PARAM_FORM_ID
