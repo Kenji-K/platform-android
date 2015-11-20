@@ -2,6 +2,10 @@ package com.ushahidi.android.presentation.model;
 
 import com.addhen.android.raiburari.presentation.model.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +13,24 @@ import java.util.List;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FormAttributeModel extends Model {
+public class FormAttributeModel extends Model implements Parcelable {
+
+    /**
+     * Creates a {@link FormAttributeModel} parcelable object
+     */
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<FormAttributeModel> CREATOR
+            = new Parcelable.Creator<FormAttributeModel>() {
+        @Override
+        public FormAttributeModel createFromParcel(Parcel in) {
+            return new FormAttributeModel(in);
+        }
+
+        @Override
+        public FormAttributeModel[] newArray(int size) {
+            return new FormAttributeModel[size];
+        }
+    };
 
     private String mLabel;
 
@@ -32,6 +53,30 @@ public class FormAttributeModel extends Model {
     private Integer mCardinality;
 
     private Long mFormStageId;
+
+    public FormAttributeModel() {
+        // Do nothing
+    }
+
+    protected FormAttributeModel(Parcel in) {
+        mLabel = in.readString();
+        mKey = in.readString();
+        mInput = (Input) in.readValue(Input.class.getClassLoader());
+        mType = (Type) in.readValue(Type.class.getClassLoader());
+        byte mRequiredVal = in.readByte();
+        mRequired = mRequiredVal == 0x02 ? null : mRequiredVal != 0x00;
+        mPriority = in.readByte() == 0x00 ? null : in.readInt();
+        if (in.readByte() == 0x01) {
+            mOptions = new ArrayList<String>();
+            in.readList(mOptions, String.class.getClassLoader());
+        } else {
+            mOptions = null;
+        }
+        mDeploymentId = in.readByte() == 0x00 ? null : in.readLong();
+        mFormId = in.readByte() == 0x00 ? null : in.readLong();
+        mCardinality = in.readByte() == 0x00 ? null : in.readInt();
+        mFormStageId = in.readByte() == 0x00 ? null : in.readLong();
+    }
 
     public Long getFormStageId() {
         return mFormStageId;
@@ -254,4 +299,59 @@ public class FormAttributeModel extends Model {
                 + ", mCardinality=" + mCardinality
                 + '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mLabel);
+        dest.writeString(mKey);
+        dest.writeValue(mInput);
+        dest.writeValue(mType);
+        if (mRequired == null) {
+            dest.writeByte((byte) (0x02));
+        } else {
+            dest.writeByte((byte) (mRequired ? 0x01 : 0x00));
+        }
+        if (mPriority == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(mPriority);
+        }
+        if (mOptions == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(mOptions);
+        }
+        if (mDeploymentId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mDeploymentId);
+        }
+        if (mFormId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mFormId);
+        }
+        if (mCardinality == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(mCardinality);
+        }
+        if (mFormStageId == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(mFormStageId);
+        }
+    }
+
 }

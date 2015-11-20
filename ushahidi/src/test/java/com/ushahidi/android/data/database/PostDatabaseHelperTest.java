@@ -60,7 +60,7 @@ public class PostDatabaseHelperTest extends BaseTestCase {
         assertThat(postEntity.getDeploymentId()).isEqualTo(TestEntityFixtures.DEPLOYMENT_ID);
         assertThat(postEntity.getCreated()).isNotNull();
         assertThat(postEntity._id).isEqualTo(10681);
-        assertThat(postEntity.getUser()._id).isEqualTo(5);
+        assertThat(postEntity.getPostUser().getUserId()).isEqualTo(5);
         assertThat(postEntity.getContent()).isEqualTo("want 5 people, comment below");
         assertThat(postEntity.getAuthorEmail()).isNull();
         assertThat(postEntity.getAuthorRealname()).isNull();
@@ -79,7 +79,7 @@ public class PostDatabaseHelperTest extends BaseTestCase {
         assertThat(postEntity.getTags().get(0).getIcon()).isEqualTo("tag");
         assertThat(postEntity.getTags().get(0).getPriority()).isEqualTo(99);
         assertThat(postEntity.getTags().get(0).getType()).isEqualTo(TagEntity.Type.CATEGORY);
-
+        assertThat(postEntity.getPostFormEntity().getFormId()).isEqualTo(141);
     }
 
     @After

@@ -183,7 +183,17 @@ public abstract class Widget extends LinearLayout implements Form {
         /**
          * Checkbox input type
          */
-        CHECKBOX("checkbox");
+        CHECKBOX("checkbox"),
+
+        /**
+         * Multichoice input type
+         */
+        MULTICHOICE("multichoice"),
+
+        /**
+         * SINGLE CHOICE
+         */
+        SINGLECHOICE("singlechoice");
 
         private String value;
 

@@ -31,6 +31,8 @@ import nl.qbusict.cupboard.annotation.Ignore;
  */
 public class PostEntity extends Data {
 
+    private long mDeploymentId;
+
     @SerializedName("parent")
     @Ignore // Make cupboard ignore this field
     private Parent parent;
@@ -38,7 +40,7 @@ public class PostEntity extends Data {
     private transient Long mParent;
 
     @SerializedName("user")
-    private UserEntity mUser;
+    private PostUserEntity mUser;
 
     @SerializedName("type")
     private Type mType;
@@ -70,13 +72,57 @@ public class PostEntity extends Data {
     @SerializedName("values")
     private PostValueEntity mValues;
 
+    @SerializedName("form")
+    private PostFormEntity mPostForm;
+
+    @SerializedName("completed_stages")
+    private PostCompletedStagesEntity mCompletedStages;
+
     @SerializedName("tags")
     @Ignore
     private List<PostTagEntity> mPostTagEntityList;
 
-    private long mDeploymentId;
-
     private transient List<TagEntity> mTags;
+
+    @SerializedName("allowed_privileges")
+    private AllowedPrivilegesEntity mAllowedPrivileges;
+
+    @SerializedName("published_to")
+    private PostPublishedToEntity mPublishedTo;
+
+    public void setAllowedPrivileges(
+            AllowedPrivilegesEntity allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public PostPublishedToEntity getPublishedTo() {
+        return mPublishedTo;
+    }
+
+    public void setPublishedTo(PostPublishedToEntity publishedTo) {
+        mPublishedTo = publishedTo;
+    }
+
+    public PostFormEntity getPostForm() {
+        return mPostForm;
+    }
+
+    public PostUserEntity getUser() {
+        return mUser;
+    }
+
+    public void setUser(PostUserEntity user) {
+        mUser = user;
+    }
+
+    public PostFormEntity getPostFormEntity() {
+        return mPostForm;
+    }
+
+    public void setPostForm(PostFormEntity postFormEntity) {
+        mPostForm = postFormEntity;
+    }
+
 
     public Long getParent() {
         return mParent;
@@ -190,11 +236,45 @@ public class PostEntity extends Data {
         mDeploymentId = deploymentId;
     }
 
+    public PostUserEntity getPostUser() {
+        return mUser;
+    }
+
+    public void setPostUser(PostUserEntity user) {
+        mUser = user;
+    }
+
+    public PostCompletedStagesEntity getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(
+            PostCompletedStagesEntity completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public AllowedPrivilegesEntity getAllowedPrivileges() {
+        return mAllowedPrivileges;
+    }
+
+    public void setAllowedPrivilegesEntity(
+            AllowedPrivilegesEntity allowedPrivilegesEntity) {
+        mAllowedPrivileges = allowedPrivilegesEntity;
+    }
+
+    public void setDeploymentId(long deploymentId) {
+        mDeploymentId = deploymentId;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
+
     @Override
     public String toString() {
         return "PostEntity{"
-                + "id=" + _id
-                + "parent=" + parent
+                + "mDeploymentId=" + mDeploymentId
+                + ", parent=" + parent
                 + ", mParent=" + mParent
                 + ", mUser=" + mUser
                 + ", mType=" + mType
@@ -207,26 +287,13 @@ public class PostEntity extends Data {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mValues=" + mValues
+                + ", mPostForm=" + mPostForm
+                + ", mCompletedStages=" + mCompletedStages
                 + ", mPostTagEntityList=" + mPostTagEntityList
-                + ", mDeploymentId=" + mDeploymentId
                 + ", mTags=" + mTags
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mPublishedTo=" + mPublishedTo
                 + '}';
-    }
-
-    public UserEntity getUser() {
-        return mUser;
-    }
-
-    public void setUser(UserEntity user) {
-        mUser = user;
-    }
-
-    public void setDeploymentId(long deploymentId) {
-        mDeploymentId = deploymentId;
-    }
-
-    public void setParent(Parent parent) {
-        this.parent = parent;
     }
 
     public enum Status {

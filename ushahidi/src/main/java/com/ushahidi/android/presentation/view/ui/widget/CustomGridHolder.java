@@ -71,7 +71,6 @@ public class CustomGridHolder implements HolderAdapter, AdapterView.OnItemClickL
     @Override
     public View getView(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.form_grid, parent, false);
-        //View emptyView = inflater.inflate(R.layout.form_grid, parent, false);
         gridView = (GridView) view.findViewById(R.id.list);
         gridView.setEmptyView(view.findViewById(android.R.id.empty));
         gridView.setBackgroundColor(parent.getResources().getColor(getBackgroundColor()));

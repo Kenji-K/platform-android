@@ -29,17 +29,7 @@ public class PostTagEntity {
     @SerializedName("id")
     private Long mTagId;
 
-    private Long _id;
-
     private long mDeploymentId;
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setId(Long id) {
-        _id = id;
-    }
 
     public Long getPostId() {
         return mPostId;
@@ -70,7 +60,6 @@ public class PostTagEntity {
         return "PostTagModel{"
                 + "mPostId=" + mPostId
                 + ", mTagId=" + mTagId
-                + ", _id=" + _id
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
     }

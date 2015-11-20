@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2015 Ushahidi Inc
- *
+ * Copyright (c) 2015 Ushahidi.
  * This program is free software: you can redistribute it and/or modify it under
- *  the terms of the GNU Affero General Public License as published by the Free
- *  Software Foundation, either version 3 of the License, or (at your option)
- *  any later version.
+ * the terms of the GNU Affero General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
@@ -23,21 +22,24 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import com.ushahidi.android.data.entity.PostValueEntity;
+import com.ushahidi.android.data.entity.AllowedPrivilegesEntity;
 
 import java.lang.reflect.Type;
 
 /**
+ * Allowed privileges string
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class ValueDeserializer implements JsonDeserializer<PostValueEntity> {
+public class AllowedPrivilegesDeserializer
+        implements JsonDeserializer<AllowedPrivilegesEntity> {
 
     @Override
-    public PostValueEntity deserialize(JsonElement json, Type typeOfT,
+    public AllowedPrivilegesEntity deserialize(JsonElement json, Type typeOfT,
             JsonDeserializationContext context)
             throws JsonParseException {
-        PostValueEntity postValueEntity = new PostValueEntity();
-        postValueEntity.setValues(new Gson().toJson(json));
-        return postValueEntity;
+        AllowedPrivilegesEntity allowedPrivilegesEntity = new AllowedPrivilegesEntity();
+        allowedPrivilegesEntity.setAllowedPrivileges(new Gson().toJson(json));
+        return allowedPrivilegesEntity;
     }
 }

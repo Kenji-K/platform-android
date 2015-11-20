@@ -47,4 +47,13 @@
     <dimen name="tag_badge_color_size">12dp</dimen>
     <dimen name="tag_height">32dp</dimen>
     <dimen name="mapview_height">150dp</dimen>
+    <!-- ViewPager dimens -->
+    <dimen name="default_title_indicator_clip_padding">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_height">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen>
+    <dimen name="default_title_indicator_footer_padding">16dp</dimen>
+    <dimen name="default_title_indicator_text_size">16sp</dimen>
+    <dimen name="default_title_indicator_title_padding">8dp</dimen>
+    <dimen name="default_title_indicator_top_padding">16dp</dimen>
+    <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
 </resources>

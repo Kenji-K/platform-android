@@ -134,13 +134,13 @@ public class PostActivity extends BaseAppActivity implements PostView, ListFormV
     @Bind(R.id.post_tabs)
     TabLayout mTabLayout;
 
-    PostPresenter mPostPresenter;
+    private PostPresenter mPostPresenter;
 
-    ListFormPresenter mListFormPresenter;
+    private ListFormPresenter mListFormPresenter;
 
-    UshAccessTokenManager mUshAccessTokenManager;
+    private UshAccessTokenManager mUshAccessTokenManager;
 
-    SessionManager<PlatformSession> mSessionManager;
+    private SessionManager<PlatformSession> mSessionManager;
 
     private ListPostComponent mListPostComponent;
 

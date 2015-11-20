@@ -16,6 +16,7 @@
 
 package com.ushahidi.android.presentation.view.ui.form.ui.widgets;
 
+import com.ushahidi.android.R;
 import com.ushahidi.android.presentation.view.ui.form.FormModelCallbacks;
 import com.ushahidi.android.presentation.view.ui.form.validator.validator.RequiredValidator;
 import com.ushahidi.android.presentation.view.ui.form.validator.validator.Validator;
@@ -108,7 +109,7 @@ public class EditTextWidget extends Widget {
     public boolean validate() {
         // Validate if required is set
         if (isRequired()) {
-            final String requiredMessage = null;
+            final String requiredMessage = getContext().getString(R.string.required_field_error);
             RequiredValidator requiredValidator = new RequiredValidator(requiredMessage);
             if (!requiredValidator.isValid(this)) {
                 mInput.setError(requiredValidator.getErrorMessage());

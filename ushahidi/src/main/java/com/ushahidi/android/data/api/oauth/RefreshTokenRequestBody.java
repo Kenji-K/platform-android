@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 import com.ushahidi.android.data.api.qualifier.ClientId;
 import com.ushahidi.android.data.api.qualifier.ClientSecret;
 import com.ushahidi.android.data.api.qualifier.GrantType;
-import com.ushahidi.android.data.api.qualifier.Scope;
 
 import java.io.Serializable;
 
@@ -34,18 +33,16 @@ import java.io.Serializable;
 public class RefreshTokenRequestBody implements Serializable {
 
     @SerializedName("grant_type")
-    private final String grantType;
+    private final String mGrantType;
 
     @SerializedName("client_id")
-    private final String clientId;
+    private final String mClientId;
 
     @SerializedName("client_secret")
-    private final String clientSecret;
-
-    private final String scope;
+    private final String mClientSecret;
 
     @SerializedName("refresh_token")
-    private String refreshToken;
+    private String mRefreshToken;
 
     /**
      * Default constructor
@@ -54,50 +51,42 @@ public class RefreshTokenRequestBody implements Serializable {
      * @param grantType    The grant type
      * @param clientId     The client ID
      * @param clientSecret The client secret
-     * @param scope        The scope
      */
     public RefreshTokenRequestBody(String refreshToken, @GrantType String grantType,
-            @ClientId String clientId, @ClientSecret String clientSecret, @Scope String scope) {
-        this.refreshToken = refreshToken;
-        this.grantType = grantType;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.scope = scope;
+            @ClientId String clientId, @ClientSecret String clientSecret) {
+        mRefreshToken = refreshToken;
+        mGrantType = grantType;
+        mClientId = clientId;
+        mClientSecret = clientSecret;
     }
 
     public String getGrantType() {
-        return grantType;
+        return mGrantType;
     }
 
     public String getClientId() {
-        return clientId;
+        return mClientId;
     }
 
     public String getClientSecret() {
-        return clientSecret;
+        return mClientSecret;
     }
-
-    public String getScope() {
-        return scope;
-    }
-
 
     public String getRefreshToken() {
-        return refreshToken;
+        return mRefreshToken;
     }
 
     public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+        mRefreshToken = refreshToken;
     }
 
     @Override
     public String toString() {
         return "RefreshTokenRequestBody{"
-                + "grantType='" + grantType + '\''
-                + ", clientId='" + clientId + '\''
-                + ", clientSecret='" + clientSecret + '\''
-                + ", scope='" + scope + '\''
-                + ", refreshToken='" + refreshToken + '\''
+                + "grantType='" + mGrantType + '\''
+                + ", clientId='" + mClientId + '\''
+                + ", clientSecret='" + mClientSecret + '\''
+                + ", refreshToken='" + mRefreshToken + '\''
                 + '}';
     }
 }

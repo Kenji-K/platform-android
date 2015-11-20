@@ -36,13 +36,35 @@ public class PostEntityDataMapper {
 
     private PostValueEntityDataMapper mPostValueEntityMapper;
 
+    private PostFormEntityDataMapper mPostFormEntityDataMapper;
+
+    private PostCompletedStagesDataEntityDataMapper mPostCompletedStagesDataEntityDataMapper;
+
+    private AllowedPrivilegesEntityDataMapper mAllowedPrivilegesEntityDataMapper;
+
+    private PostUserEntityDataMapper mPostUserEntityDataMapper;
+
+    private PostPublishedToEntityDataMapper mPostPublishedToEntityDataMapper;
+
+
     /**
      * Default constructor
      */
     @Inject
-    public PostEntityDataMapper() {
-        mTagEntityMapper = new TagEntityDataMapper();
-        mPostValueEntityMapper = new PostValueEntityDataMapper();
+    public PostEntityDataMapper(TagEntityDataMapper tagEntityDataMapper,
+            PostValueEntityDataMapper postValueEntityDataMapper,
+            PostFormEntityDataMapper postFormEntityDataMapper,
+            PostCompletedStagesDataEntityDataMapper postCompletedStagesDataEntityDataMapper,
+            AllowedPrivilegesEntityDataMapper allowedPrivilegesEntityDataMapper,
+            PostUserEntityDataMapper postUserEntityDataMapper,
+            PostPublishedToEntityDataMapper postPublishedToEntityDataMapper) {
+        mTagEntityMapper = tagEntityDataMapper;
+        mPostValueEntityMapper = postValueEntityDataMapper;
+        mPostFormEntityDataMapper = postFormEntityDataMapper;
+        mPostCompletedStagesDataEntityDataMapper = postCompletedStagesDataEntityDataMapper;
+        mAllowedPrivilegesEntityDataMapper = allowedPrivilegesEntityDataMapper;
+        mPostUserEntityDataMapper = postUserEntityDataMapper;
+        mPostPublishedToEntityDataMapper = postPublishedToEntityDataMapper;
     }
 
     /**
@@ -77,7 +99,14 @@ public class PostEntityDataMapper {
             post.setContent(postEntity.getContent());
             post.setDeploymentId(postEntity.getDeploymentId());
             post.setParent(postEntity.getParent());
+            post.setCompletedStages(
+                    mPostCompletedStagesDataEntityDataMapper.map(postEntity.getCompletedStages()));
             post.setValues(mPostValueEntityMapper.map(postEntity.getValues()));
+            post.setPostForm(mPostFormEntityDataMapper.map(postEntity.getPostFormEntity()));
+            post.setAllowedPrivileges(mAllowedPrivilegesEntityDataMapper
+                    .map(postEntity.getAllowedPrivileges()));
+            post.setPostPublishedTo(
+                    mPostPublishedToEntityDataMapper.map(postEntity.getPublishedTo()));
         }
         return post;
     }
@@ -113,7 +142,14 @@ public class PostEntityDataMapper {
             postEntity.setContent(post.getContent());
             postEntity.setDeploymentId(post.getDeploymentId());
             postEntity.setParent(post.getParent());
+            postEntity.setPostForm(mPostFormEntityDataMapper.map(post.getPostForm()));
             postEntity.setValues(mPostValueEntityMapper.map(post.getValues()));
+            postEntity.setCompletedStages(mPostCompletedStagesDataEntityDataMapper.map(
+                    post.getCompletedStages()));
+            postEntity.setAllowedPrivilegesEntity(
+                    mAllowedPrivilegesEntityDataMapper.map(post.getAllowedPrivileges()));
+            postEntity.setPublishedTo(
+                    mPostPublishedToEntityDataMapper.map(post.getPostPublishedTo()));
         }
         return postEntity;
     }

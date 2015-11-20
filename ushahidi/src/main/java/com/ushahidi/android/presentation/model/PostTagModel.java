@@ -50,6 +50,10 @@ public class PostTagModel extends Model implements Parcelable {
 
     private long mDeploymentId;
 
+    public PostTagModel() {
+
+    }
+
     /**
      * Constructs a {@link PostValueModel} with initialized value retried from the passed {@link
      * Parcel}
@@ -91,7 +95,6 @@ public class PostTagModel extends Model implements Parcelable {
         return "PostTagModel{"
                 + "mPostId=" + mPostId
                 + ", mTagId=" + mTagId
-                + ", _id=" + _id
                 + ", mDeploymentId=" + mDeploymentId
                 + '}';
     }

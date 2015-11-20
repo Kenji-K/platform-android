@@ -70,15 +70,11 @@ public class FormAttributeModelDataMapper {
             formAttributeModel.setOptions(formAttribute.getOptions());
             formAttributeModel.setFormId(formAttribute.getFormId());
             formAttributeModel.setRequired(formAttribute.getRequired());
-            //if (formAttribute.getInput() != null) {
             formAttributeModel
                     .setInput(
                             FormAttributeModel.Input.valueOf(formAttribute.getInput().name()));
-            //}
-            //if (formAttribute.getType() != null) {
             formAttributeModel
                     .setType(FormAttributeModel.Type.valueOf(formAttribute.getType().name()));
-            //}
             formAttributeModel.setLabel(formAttribute.getLabel());
             formAttributeModel.setFormStageId(formAttribute.getFormStageId());
         }

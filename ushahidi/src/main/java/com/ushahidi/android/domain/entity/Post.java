@@ -51,11 +51,29 @@ public class Post extends Entity {
 
     private Long mDeploymentId;
 
+    private PostForm mPostForm;
+
+    private PostCompletedStages mCompletedStages;
+
+    private AllowedPrivileges mAllowedPrivileges;
+
+    private PostUser mPostUser;
+
+    private PostPublishedTo mPostPublishedTo;
+
     // Store the raw JSON for this field. This is a dynamic field
     // and can't predict its keys.
     private PostValue mValues;
 
     private List<Tag> mTags;
+
+    public PostPublishedTo getPostPublishedTo() {
+        return mPostPublishedTo;
+    }
+
+    public void setPostPublishedTo(PostPublishedTo postPublishedTo) {
+        mPostPublishedTo = postPublishedTo;
+    }
 
     public Long getParent() {
         return mParent;
@@ -161,6 +179,38 @@ public class Post extends Entity {
         mDeploymentId = deploymentId;
     }
 
+    public PostForm getPostForm() {
+        return mPostForm;
+    }
+
+    public void setPostForm(PostForm postForm) {
+        mPostForm = postForm;
+    }
+
+    public PostCompletedStages getCompletedStages() {
+        return mCompletedStages;
+    }
+
+    public void setCompletedStages(PostCompletedStages completedStages) {
+        mCompletedStages = completedStages;
+    }
+
+    public AllowedPrivileges getAllowedPrivileges() {
+        return mAllowedPrivileges;
+    }
+
+    public void setAllowedPrivileges(AllowedPrivileges allowedPrivileges) {
+        mAllowedPrivileges = allowedPrivileges;
+    }
+
+    public PostUser getPostUser() {
+        return mPostUser;
+    }
+
+    public void setPostUser(PostUser postUser) {
+        mPostUser = postUser;
+    }
+
     @Override
     public String toString() {
         return "Post{"
@@ -175,10 +225,15 @@ public class Post extends Entity {
                 + ", mCreated=" + mCreated
                 + ", mUpdated=" + mUpdated
                 + ", mDeploymentId=" + mDeploymentId
+                + ", mPostForm=" + mPostForm
+                + ", mCompletedStages=" + mCompletedStages
+                + ", mAllowedPrivileges=" + mAllowedPrivileges
+                + ", mPostUser=" + mPostUser
                 + ", mValues=" + mValues
                 + ", mTags=" + mTags
                 + '}';
     }
+
 
     public enum Status {
         /**
