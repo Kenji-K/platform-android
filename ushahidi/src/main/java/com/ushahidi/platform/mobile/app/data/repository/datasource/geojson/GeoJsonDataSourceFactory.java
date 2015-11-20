@@ -27,7 +27,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * For creating the object of the various data source for {@link com.ushahidi.platform.mobile.app.data.entity.GeoJsonEntity}
+ * For creating the object of the various data source for
+ * {@link com.ushahidi.platform.mobile.app.data.entity.GeoJsonEntity}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

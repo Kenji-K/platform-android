@@ -16,16 +16,17 @@
 
 package com.ushahidi.platform.mobile.app.data.repository.datasource.deployment;
 
-import android.support.annotation.NonNull;
-
 import com.ushahidi.platform.mobile.app.data.api.DeploymentApi;
 import com.ushahidi.platform.mobile.app.data.database.DeploymentDatabaseHelper;
+
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * A factory class for creating the different datasource for {@link com.ushahidi.platform.mobile.app.data.entity.DeploymentEntity}
+ * A factory class for creating the different datasource for
+ * {@link com.ushahidi.platform.mobile.app.data.entity.DeploymentEntity}
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */

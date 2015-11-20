@@ -45,14 +45,15 @@ public class FetchDeploymentUsecase extends Usecase {
      */
     @Inject
     protected FetchDeploymentUsecase(DeploymentRepository deploymentRepository,
-                                     ThreadExecutor threadExecutor,
-                                     PostExecutionThread postExecutionThread) {
+            ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         mDeploymentRepository = deploymentRepository;
     }
 
     /**
-     * Sets the deployment url to be used to fetch the {@link com.ushahidi.platform.mobile.app.data.entity.DeploymentEntity}
+     * Sets the deployment url to be used to fetch the
+     * {@link com.ushahidi.platform.mobile.app.data.entity.DeploymentEntity}
      *
      * @param url The url associated with the deployment
      */
@@ -63,9 +64,8 @@ public class FetchDeploymentUsecase extends Usecase {
     @Override
     protected Observable buildUseCaseObservable() {
         if (mUrl == null) {
-                throw new IllegalStateException("DeploymentUrl should be a non null value");
+            throw new IllegalStateException("DeploymentUrl should be a non null value");
         }
         return mDeploymentRepository.getDeploymentEntity(mUrl);
     }
-
 }
