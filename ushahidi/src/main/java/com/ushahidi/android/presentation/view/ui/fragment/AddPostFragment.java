@@ -73,6 +73,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
 
     private LocationWidget mLocationWidget;
 
+
     /**
      * Add Deployment  Fragment
      */
@@ -141,17 +142,18 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
     private void initializeFormAttributeView(Bundle savedInstanceState) {
         mScreen = (AddPostScreen) mCallbacks.onGetScreen(mKey);
         if (mScreen != null) {
+            mFormAttributeViewGroup.removeAllViews();
             if (mScreen.isFirstScreen()) {
                 mPostTitle.setVisibility(View.VISIBLE);
                 mAppCompatEditText.setVisibility(View.VISIBLE);
                 mCategories.setVisibility(View.VISIBLE);
+
             } else {
                 mPostTitle.setVisibility(View.GONE);
                 mAppCompatEditText.setVisibility(View.GONE);
                 mCategories.setVisibility(View.GONE);
             }
             mFormAttributeModelList = mScreen.getAttributes();
-            mFormAttributeViewGroup.removeAllViews();
             if ((mFormAttributeModelList != null) && (!mFormAttributeModelList.isEmpty())) {
                 Collections.sort(mFormAttributeModelList, new Priority());
                 for (FormAttributeModel formAttributeModel : mFormAttributeModelList) {
@@ -167,7 +169,7 @@ public class AddPostFragment extends BaseFragment implements FormModelCallbacks 
                         mFormAttributeViewGroup.addView(editTextWidget);
                     } else if (FormAttributeModel.Input.LOCATION
                             .equals(formAttributeModel.getInput())) {
-                        mLocationWidget = new LocationWidget(savedInstanceState, getContext(),
+                        mLocationWidget = new LocationWidget(getContext(),
                                 formAttributeModel.getKey(), formAttributeModel.getLabel(), this);
                         mLocationWidget.setRequired(formAttributeModel.getRequired());
                         final String value = mScreen.getDataBundle().getString(

@@ -25,7 +25,6 @@ import com.ushahidi.android.presentation.view.ui.form.validator.validator.Valida
 import android.content.Context;
 import android.location.Address;
 import android.location.Location;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
@@ -45,6 +44,9 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
+ * Location widget that users the phone's GPS or the network to find the current
+ * location of the user.
+ *
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class LocationWidget extends Widget {
@@ -61,18 +63,15 @@ public class LocationWidget extends Widget {
 
     private ProgressBar mProgressBar;
 
-    private Bundle mSavedBundle;
-
     private AppLocationManager mAppLocationManager;
 
     private Observable<Address> mAddressObservable;
 
     private Subscription mSubscription = Subscriptions.empty();
 
-    public LocationWidget(Bundle savedBundle, Context context, String name, String title,
+    public LocationWidget(Context context, String name, String title,
             FormModelCallbacks callbacks) {
         super(context, name, title, callbacks);
-        mSavedBundle = savedBundle;
         initView();
     }
 
@@ -178,9 +177,19 @@ public class LocationWidget extends Widget {
                 + mLocationLatitude.getText().toString();
     }
 
+    /**
+     * Sets the value for the location widget
+     *
+     * @param value The value should be in the format location name:latitude:longitude
+     */
     @Override
     public void setValue(String value) {
-        mLocationName.setText(value);
+        final String[] location = value.split(":");
+        if (location != null & location.length > 0) {
+            mLocationName.setText(location[0]);
+            mLocationLatitude.setText(location[1]);
+            mLocationLongitude.setText(location[2]);
+        }
     }
 
     @Override

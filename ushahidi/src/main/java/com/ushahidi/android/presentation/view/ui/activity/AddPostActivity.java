@@ -268,7 +268,6 @@ public class AddPostActivity extends BaseAppActivity
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mAddPostViewPager.getCurrentItem() == mCurrentScreenSequence.size() - 1) {
                     ArrayList<PostItemModel> postItems = new ArrayList<PostItemModel>();
                     boolean isValid = true;
@@ -279,7 +278,6 @@ public class AddPostActivity extends BaseAppActivity
                                 isValid = false;
                                 break;
                             }
-
                         }
                         screen.getPostItems(postItems);
                     }
@@ -292,11 +290,12 @@ public class AddPostActivity extends BaseAppActivity
                     });
                     if (isValid) {
                         // TODO: Post item to the API
-                        // Get form attributes and build post value
+                        // Configure PostModel
                         ConfigurePostModelUtility.Builder configurePostModel
                                 = new ConfigurePostModelUtility.Builder(
                                 mPrefsFactory.getActiveDeploymentId().get(),
                                 "Title", "Content");
+                        // Use form attribute to build post model's value
                         PostValueUtility.Builder postBuilder = new PostValueUtility.Builder();
                         for (PostItemModel postItemModel : postItems) {
                             FormAttributeModel formAttributeModel = findFormAttribute(
@@ -314,8 +313,9 @@ public class AddPostActivity extends BaseAppActivity
                                 } else if (!formAttributeModel.getType()
                                         .equals(FormAttributeModel.Type.POINT)) {
                                     Map<String, String> data = new HashMap<>();
-                                    // The LocationWidget returns in values with a : separator
-                                    // Split by that to get the individual values
+                                    // The LocationWidget returns it's values as string with
+                                    // a `:` separator in the form, location name:latitude:longitude
+                                    // Split by : to get the individual values
                                     final String[] location = postItemModel.getDisplayValue()
                                             .split(":");
                                     data.put("location", location[0]);
@@ -335,7 +335,6 @@ public class AddPostActivity extends BaseAppActivity
                                     PostModel postModel;
                                     switch (which) {
                                         case R.id.menu_publish_post_to_editors:
-                                            //TODO configure publish to everyone
                                             configurePostModel.postPublishTo("user");
                                             postModel = configurePostModel.build().getPostModel();
                                             mAddPostPresenter.addPost(postModel);
