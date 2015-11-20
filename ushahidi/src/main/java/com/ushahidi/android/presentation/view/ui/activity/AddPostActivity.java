@@ -71,7 +71,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import timber.log.Timber;
 
 /**
  * Renders {@link AddPostFragment}
@@ -355,18 +354,15 @@ public class AddPostActivity extends BaseAppActivity
                                         case R.id.menu_publish_post_to_editors:
                                             configurePostModel.postPublishTo("user");
                                             postModel = configurePostModel.build().getPostModel();
-                                            Timber.i("PostModel ", postModel.toString());
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                         case R.id.menu_publish_post_to_admin:
                                             configurePostModel.postPublishTo("admin");
                                             postModel = configurePostModel.build().getPostModel();
-                                            Timber.i("PostModel ", postModel.toString());
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                         default:
                                             postModel = configurePostModel.build().getPostModel();
-                                            Timber.i("PostModel ", postModel.toString());
                                             mAddPostPresenter.addPost(postModel);
                                             break;
                                     }
