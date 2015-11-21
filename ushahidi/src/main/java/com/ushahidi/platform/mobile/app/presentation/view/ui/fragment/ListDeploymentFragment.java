@@ -26,13 +26,13 @@ import com.ushahidi.platform.mobile.app.presentation.di.components.deployment.Li
 import com.ushahidi.platform.mobile.app.presentation.model.DeploymentModel;
 import com.ushahidi.platform.mobile.app.presentation.presenter.deployment.DeleteDeploymentPresenter;
 import com.ushahidi.platform.mobile.app.presentation.presenter.deployment.ListDeploymentPresenter;
+import com.ushahidi.platform.mobile.app.presentation.util.Utility;
+import com.ushahidi.platform.mobile.app.presentation.view.deployment.DeleteDeploymentView;
+import com.ushahidi.platform.mobile.app.presentation.view.deployment.ListDeploymentView;
 import com.ushahidi.platform.mobile.app.presentation.view.ui.activity.ListDeploymentActivity;
 import com.ushahidi.platform.mobile.app.presentation.view.ui.adapter.DeploymentAdapter;
 import com.ushahidi.platform.mobile.app.presentation.view.ui.navigation.Launcher;
 import com.ushahidi.platform.mobile.app.presentation.view.ui.widget.DeploymentRecyclerView;
-import com.ushahidi.platform.mobile.app.presentation.util.Utility;
-import com.ushahidi.platform.mobile.app.presentation.view.deployment.DeleteDeploymentView;
-import com.ushahidi.platform.mobile.app.presentation.view.deployment.ListDeploymentView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -256,12 +256,8 @@ public class ListDeploymentFragment
 
     @Override
     public void onItemClick(RecyclerView recyclerView, View view, int position) {
-        if (mDeploymentAdapter.getItemCount() > 0) {
-            DeploymentModel deploymentModel = mDeploymentAdapter.getItem(position);
-            if (mDeploymentListListener != null) {
-                mDeploymentListListener.onDeploymentClicked(deploymentModel);
-            }
-        }
+        // Do nothing. Disable ability to edit deployment since it can't be updated
+        // via the API
     }
 
     @Override
