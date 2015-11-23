@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'org.ajoberstar.release-opinion'  
+apply plugin: 'org.ajoberstar.release-opinion'
 apply plugin: 'com.github.triplet.play'
 apply from: '../common/quality.gradle'
 
@@ -32,6 +32,28 @@ def readGoogleMapsReleaseApiKey() {
     return project.hasProperty('googleMapsReleaseApiKey') ? googleMapsReleaseApiKey : ''
 }
 
+def getGooglePlaystoreServiceAccountEmail() {
+    return project.hasProperty('gPlaystoreServiceAccountEmailAddress') ?
+            gPlaystoreServiceAccountEmailAddress : ''
+}
+
+def getGooglePlaystoreServicepk12File() {
+    // Set to home directory if property not set because play plugin doesn't allow empty or null
+    // value for the pk file
+    return project.hasProperty('gPlaystorePKFile') ? gPlaystorePKFile : '~/'
+}
+
+def trackProperty() {
+    return project.hasProperty('uploadTrack') ? uploadTrack : 'alpha'
+}
+
+def readWhatsNewFile(filename) {
+    def path = 'ushahidi/src/main/play/en-US/'
+    File file = new File(path + filename);
+    return file.exists() ? file.text + '\n\n' :
+            new File(path + 'whatsnew').text;
+}
+
 android {
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
@@ -54,8 +76,10 @@ android {
 
         release {
             resValue "string", "google_maps_api_key", "\"${readGoogleMapsReleaseApiKey()}\""
+            zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseSign
         }
     }
 
@@ -94,6 +118,21 @@ play {
     pk12File = file(getGooglePlaystoreServicepk12File())
     uploadImages = true
     track = trackProperty()
+}
+
+// Configure gradle git release task
+release {
+    grgit = Grgit.open(dir: '.')
+
+    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+
+    versionStrategy Strategies.PRE_RELEASE_ALPHA_BETA
+
+    android.defaultConfig.versionName = project.version.toString()
+
+    tagStrategy {
+        generateMessage = { version -> "\n\nRelease of $version.version\n$tagMessage" }
+    }
 }
 
 tasks.release.dependsOn(['publishRelease'])
