@@ -19,6 +19,7 @@ package com.ushahidi.platform.mobile.app.data.database;
 
 import com.ushahidi.platform.mobile.app.data.entity.FormAttributeEntity;
 import com.ushahidi.platform.mobile.app.data.entity.FormEntity;
+import com.ushahidi.platform.mobile.app.data.entity.FormStageEntity;
 import com.ushahidi.platform.mobile.app.data.entity.GeoJsonEntity;
 import com.ushahidi.platform.mobile.app.data.entity.PostEntity;
 import com.ushahidi.platform.mobile.app.data.entity.PostFormEntity;
@@ -155,13 +156,17 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
             List<TagEntity> tagEntities,
             List<PostEntity> postEntities,
             GeoJsonEntity geoJsonEntity,
-            List<FormEntity> formEntities) {
+            List<FormEntity> formEntities,
+            List<FormStageEntity> formStageEntities,
+            List<FormAttributeEntity> formAttributeEntities) {
         // Note: Saving other entity types apart from post because it was easier to save
         // all the different entity types fetched via the API request.
         if (!isClosed()) {
             cupboard().withDatabase(getWritableDatabase()).put(tagEntities);
             cupboard().withDatabase(getWritableDatabase()).put(geoJsonEntity);
             cupboard().withDatabase(getWritableDatabase()).put(formEntities);
+            cupboard().withDatabase(getReadableDatabase()).put(formStageEntities);
+            cupboard().withDatabase(getReadableDatabase()).put(formAttributeEntities);
             for (PostEntity postEntity : postEntities) {
                 // Delete existing posttag entities.
                 // Lame way to avoid duplicates because the ID is auto generated upon insertion

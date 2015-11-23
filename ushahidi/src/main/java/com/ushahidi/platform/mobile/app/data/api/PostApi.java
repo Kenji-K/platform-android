@@ -20,6 +20,7 @@ package com.ushahidi.platform.mobile.app.data.api;
 import com.google.gson.JsonElement;
 
 import com.ushahidi.platform.mobile.app.data.api.model.FormAttributes;
+import com.ushahidi.platform.mobile.app.data.api.model.FormStages;
 import com.ushahidi.platform.mobile.app.data.api.model.Forms;
 import com.ushahidi.platform.mobile.app.data.api.model.Posts;
 import com.ushahidi.platform.mobile.app.data.api.model.Tags;
@@ -95,9 +96,15 @@ public class PostApi {
                         .getForms(authorizationHeader));
     }
 
-    public Observable<FormAttributes> getFormAttributes(Long formId) {
+    public Observable<FormAttributes> getFormAttributes() {
         return mUshAccessTokenManager.getValidAccessToken().concatMap(
                 authorizationHeader -> mUshAccessTokenManager.getRestfulService()
-                        .getFormAttributes(authorizationHeader, formId));
+                        .getFormAttributes(authorizationHeader));
+    }
+
+    public Observable<FormStages> getFormStages() {
+        return mUshAccessTokenManager.getValidAccessToken().concatMap(
+                authorizationHeader -> mUshAccessTokenManager.getRestfulService().getFormStages(
+                        authorizationHeader));
     }
 }
