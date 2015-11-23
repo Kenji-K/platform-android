@@ -95,6 +95,24 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def newName = outputFile.name.replace(outputFile.name,
+                        "platform-android-v" + defaultConfig.versionName + "-" +
+                                variant.buildType.name.toUpperCase() +
+                                ".apk");
+
+                output.outputFile = file("$project.buildDir/apk/" + newName);
+                if (output.zipAlign) {
+                    output.zipAlign.outputFile =
+                            file("$project.buildDir/apk/" + newName.replace("-unaligned", ""));
+                }
+            }
+        }
+    }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
