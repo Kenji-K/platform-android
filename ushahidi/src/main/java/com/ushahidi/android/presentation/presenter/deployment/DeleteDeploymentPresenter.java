@@ -1,17 +1,24 @@
 package com.ushahidi.android.presentation.presenter.deployment;
 
+import android.support.annotation.NonNull;
+
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.form.DeleteFormUsecase;
+import com.ushahidi.android.domain.usecase.geojson.DeleteGeoJsonUsecase;
+import com.ushahidi.android.domain.usecase.post.DeletePostUsecase;
+import com.ushahidi.android.domain.usecase.tag.DeleteTagUsecase;
+import com.ushahidi.android.domain.usecase.user.DeleteUserProfileUsecase;
 import com.ushahidi.android.presentation.exception.ErrorMessageFactory;
 import com.ushahidi.android.presentation.view.deployment.DeleteDeploymentView;
 
-import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import rx.Subscriber;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -20,7 +27,126 @@ public class DeleteDeploymentPresenter implements Presenter {
 
     private final DeleteDeploymentUsecase mDeleteDeploymentUsecase;
 
+    private final DeleteFormUsecase mDeleteFormUsecase;
+
+    private final DeleteGeoJsonUsecase mDeleteGeoJsonUsecase;
+
+    private final DeletePostUsecase mDeletePostUsecase;
+
+    private final DeleteTagUsecase mDeleteTagUsecase;
+
+    private final DeleteUserProfileUsecase mDeleteUserProfileUsecase;
+
     private DeleteDeploymentView mDeleteDeploymentView;
+
+    private Subscriber deleteDeploymentUseCaseSubscriber = new DefaultSubscriber<Long>() {
+        @Override
+        public void onCompleted() {
+            mDeleteFormUsecase.execute(deleteFormUseCaseSubscriber);
+            // TODO: Delete all saved items in the shared preferences
+        }
+
+        @Override
+        public void onNext(Long row) {
+            mDeleteDeploymentView.onDeploymentDeleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
+
+    private Subscriber deleteFormUseCaseSubscriber = new DefaultSubscriber<Boolean>() {
+        @Override
+        public void onCompleted() {
+            mDeleteGeoJsonUsecase.execute(deleteGeoJsonUseCaseSubscriber);
+        }
+
+        @Override
+        public void onNext(Boolean row) {
+            // Do nothing;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
+
+    private Subscriber deleteGeoJsonUseCaseSubscriber = new DefaultSubscriber<Boolean>() {
+        @Override
+        public void onCompleted() {
+            mDeletePostUsecase.execute(deletePostUseCaseSubscriber);
+        }
+
+        @Override
+        public void onNext(Boolean row) {
+            // Do nothing;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
+
+    private Subscriber deletePostUseCaseSubscriber = new DefaultSubscriber<Boolean>() {
+        @Override
+        public void onCompleted() {
+            mDeleteTagUsecase.execute(deleteTagUseCaseSubscriber);
+        }
+
+        @Override
+        public void onNext(Boolean row) {
+            // Do nothing;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
+
+    private Subscriber deleteTagUseCaseSubscriber = new DefaultSubscriber<Boolean>() {
+        @Override
+        public void onCompleted() {
+            mDeleteUserProfileUsecase.execute(deleteUserProfileUseCaseSubscriber);
+        }
+
+        @Override
+        public void onNext(Boolean row) {
+            // Do nothing;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
+
+    private Subscriber deleteUserProfileUseCaseSubscriber = new DefaultSubscriber<Boolean>() {
+        @Override
+        public void onCompleted() {
+            mDeleteDeploymentView.hideLoading();
+        }
+
+        @Override
+        public void onNext(Boolean row) {
+            // Do nothing;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mDeleteDeploymentView.hideLoading();
+            showErrorMessage(new DefaultErrorHandler((Exception) e));
+        }
+    };
 
     /**
      * Default constructor
@@ -28,9 +154,18 @@ public class DeleteDeploymentPresenter implements Presenter {
      * @param deleteDeploymentUsecase The delete deployment use case
      */
     @Inject
-    public DeleteDeploymentPresenter(
-            @Named("categoryDelete") DeleteDeploymentUsecase deleteDeploymentUsecase) {
+    public DeleteDeploymentPresenter(@Named("categoryDelete") DeleteDeploymentUsecase deleteDeploymentUsecase,
+            @Named("categoryDelete") DeleteFormUsecase deleteFormUsecase,
+            @Named("categoryDelete") DeleteGeoJsonUsecase deleteGeoJsonUsecase,
+            @Named("categoryDelete") DeletePostUsecase deletePostUsecase,
+            @Named("categoryDelete") DeleteTagUsecase deleteTagUsecase,
+            @Named("categoryDelete") DeleteUserProfileUsecase deleteUserProfileUsecase) {
         mDeleteDeploymentUsecase = deleteDeploymentUsecase;
+        mDeleteFormUsecase = deleteFormUsecase;
+        mDeleteGeoJsonUsecase = deleteGeoJsonUsecase;
+        mDeletePostUsecase = deletePostUsecase;
+        mDeleteTagUsecase = deleteTagUsecase;
+        mDeleteUserProfileUsecase = deleteUserProfileUsecase;
     }
 
     @Override
@@ -59,25 +194,12 @@ public class DeleteDeploymentPresenter implements Presenter {
      */
     public void deleteDeployment(Long deploymentId) {
         mDeleteDeploymentUsecase.setDeploymentId(deploymentId);
-        mDeleteDeploymentUsecase.execute(new DefaultSubscriber<Long>() {
-            @Override
-            public void onCompleted() {
-                mDeleteDeploymentView.hideLoading();
-                // TODO: Delete all saved items in the shared preferences
-            }
-
-            @Override
-            public void onNext(Long row) {
-                mDeleteDeploymentView.onDeploymentDeleted();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mDeleteDeploymentView.hideLoading();
-                showErrorMessage(new DefaultErrorHandler((Exception) e));
-            }
-        });
-
+        mDeleteFormUsecase.setDeploymentId(deploymentId);
+        mDeleteGeoJsonUsecase.setDeploymentId(deploymentId);
+        mDeletePostUsecase.setDeploymentId(deploymentId);
+        mDeleteTagUsecase.setDeploymentId(deploymentId);
+        mDeleteUserProfileUsecase.setDeploymentId(deploymentId);
+        mDeleteDeploymentUsecase.execute(deleteDeploymentUseCaseSubscriber);
     }
 
     private void showErrorMessage(ErrorHandler errorHandler) {

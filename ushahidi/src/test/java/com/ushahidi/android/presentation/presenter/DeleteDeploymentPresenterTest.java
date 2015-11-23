@@ -3,6 +3,12 @@ package com.ushahidi.android.presentation.presenter;
 import com.ushahidi.android.BuildConfig;
 import com.ushahidi.android.DefaultConfig;
 import com.ushahidi.android.domain.usecase.deployment.DeleteDeploymentUsecase;
+import com.ushahidi.android.domain.usecase.form.DeleteFormUsecase;
+import com.ushahidi.android.domain.usecase.geojson.DeleteGeoJsonUsecase;
+import com.ushahidi.android.domain.usecase.post.DeletePostUsecase;
+import com.ushahidi.android.domain.usecase.tag.DeleteTagUsecase;
+import com.ushahidi.android.domain.usecase.user.DeleteUserProfileUsecase;
+
 import com.ushahidi.android.presentation.model.mapper.DeploymentModelDataMapper;
 import com.ushahidi.android.presentation.presenter.deployment.DeleteDeploymentPresenter;
 import com.ushahidi.android.presentation.view.deployment.DeleteDeploymentView;
@@ -44,12 +50,29 @@ public class DeleteDeploymentPresenterTest {
     private DeleteDeploymentUsecase mMockDeleteDeploymentUsecase;
 
     @Mock
+    private DeleteFormUsecase mMockDeleteFormUsecase;
+
+    @Mock
+    private DeleteGeoJsonUsecase mMockDeleteGeoJsonUsecase;
+
+    @Mock
+    private DeletePostUsecase mMockDeletePostUsecase;
+
+    @Mock
+    private DeleteTagUsecase mMockDeleteTagUsecase;
+
+    @Mock
+    private DeleteUserProfileUsecase mMockDeleteUserProfileUsecase;
+
+    @Mock
     private DeploymentModelDataMapper mMockDeploymentDataMapper;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mDeleteDeploymentPresenter = new DeleteDeploymentPresenter(mMockDeleteDeploymentUsecase);
+        mDeleteDeploymentPresenter = new DeleteDeploymentPresenter(mMockDeleteDeploymentUsecase,
+                mMockDeleteFormUsecase, mMockDeleteGeoJsonUsecase, mMockDeletePostUsecase,
+                mMockDeleteTagUsecase, mMockDeleteUserProfileUsecase);
         mDeleteDeploymentPresenter.setView(mMockDeleteDeploymentView);
     }
 
