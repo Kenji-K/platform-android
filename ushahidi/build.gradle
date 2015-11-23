@@ -1,3 +1,6 @@
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+import org.ajoberstar.grgit.Grgit
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
@@ -6,8 +9,6 @@ apply plugin: 'com.github.triplet.play'
 apply from: '../common/quality.gradle'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
-
-def libVersion = globalConfiguration.getAt("androidVersionName")
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 
@@ -69,9 +70,15 @@ android {
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "FEEDBACK_EMAIL_ADDRESS", "\"${getFeedbackEmailAddress()}\""
     }
+    signingConfigs {
+        releaseSign
+    }
     buildTypes {
         debug {
             resValue "string", "google_maps_api_key", "\"${readGoogleMapsDebugApiKey()}\""
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-DEBUG"
+            debuggable true
         }
 
         release {
@@ -136,6 +143,21 @@ release {
 }
 
 tasks.release.dependsOn(['publishRelease'])
+
+if (project.hasProperty('releaseKeyStore') &&
+        project.hasProperty('releaseKeyPassword') &&
+        project.hasProperty('releaseKeyStorePassword') &&
+        project.hasProperty('releaseKeyAlias')) {
+    android.signingConfigs.releaseSign.keyAlias = releaseKeyAlias
+    android.signingConfigs.releaseSign.storeFile = file(releaseKeyStore)
+    android.signingConfigs.releaseSign.storePassword = releaseKeyStorePassword
+    android.signingConfigs.releaseSign.keyPassword = releaseKeyPassword
+} else {
+    android.signingConfigs.releaseSign.keyAlias ""
+    android.signingConfigs.releaseSign.storeFile null
+    android.signingConfigs.releaseSign.storePassword ""
+    android.signingConfigs.releaseSign.keyPassword ""
+}
 
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
