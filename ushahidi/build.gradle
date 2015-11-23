@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.ajoberstar.release-opinion'  
 apply plugin: 'com.github.triplet.play'
 apply from: '../common/quality.gradle'
 
