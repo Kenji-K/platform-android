@@ -1,11 +1,14 @@
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+import org.ajoberstar.grgit.Grgit
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.ajoberstar.release-opinion'
+apply plugin: 'com.github.triplet.play'
 apply from: '../common/quality.gradle'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
-
-def libVersion = globalConfiguration.getAt("androidVersionName")
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
 
@@ -30,6 +33,28 @@ def readGoogleMapsReleaseApiKey() {
     return project.hasProperty('googleMapsReleaseApiKey') ? googleMapsReleaseApiKey : ''
 }
 
+def getGooglePlaystoreServiceAccountEmail() {
+    return project.hasProperty('gPlaystoreServiceAccountEmailAddress') ?
+            gPlaystoreServiceAccountEmailAddress : ''
+}
+
+def getGooglePlaystoreServicepk12File() {
+    // Set to home directory if property not set because play plugin doesn't allow empty or null
+    // value for the pk file
+    return project.hasProperty('gPlaystorePKFile') ? gPlaystorePKFile : '~/'
+}
+
+def trackProperty() {
+    return project.hasProperty('uploadTrack') ? uploadTrack : 'alpha'
+}
+
+def readWhatsNewFile(filename) {
+    def path = 'ushahidi/src/main/play/en-US/'
+    File file = new File(path + filename);
+    return file.exists() ? file.text + '\n\n' :
+            new File(path + 'whatsnew').text;
+}
+
 android {
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
@@ -38,28 +63,53 @@ android {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
-        versionName = libVersion
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "FEEDBACK_EMAIL_ADDRESS", "\"${getFeedbackEmailAddress()}\""
     }
+    signingConfigs {
+        releaseSign
+    }
     buildTypes {
         debug {
             resValue "string", "google_maps_api_key", "\"${readGoogleMapsDebugApiKey()}\""
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-DEBUG"
+            debuggable true
         }
 
         release {
             resValue "string", "google_maps_api_key", "\"${readGoogleMapsReleaseApiKey()}\""
+            zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseSign
         }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def newName = outputFile.name.replace(outputFile.name,
+                        "platform-android-v" + defaultConfig.versionName + "-" +
+                                variant.buildType.name.toUpperCase() +
+                                ".apk");
+
+                output.outputFile = file("$project.buildDir/apk/" + newName);
+                if (output.zipAlign) {
+                    output.zipAlign.outputFile =
+                            file("$project.buildDir/apk/" + newName.replace("-unaligned", ""));
+                }
+            }
+        }
     }
 
     testOptions {
@@ -84,6 +134,46 @@ android {
 
 retrolambda {
     jvmArgs '-noverify'
+}
+
+// Google Play store publisher configuration
+play {
+    serviceAccountEmail = getGooglePlaystoreServiceAccountEmail()
+    pk12File = file(getGooglePlaystoreServicepk12File())
+    uploadImages = true
+    track = trackProperty()
+}
+
+// Configure gradle git release task
+release {
+    grgit = Grgit.open(dir: '.')
+
+    def tagMessage = readWhatsNewFile("whatsnew-${trackProperty()}");
+
+    versionStrategy Strategies.PRE_RELEASE_ALPHA_BETA
+
+    android.defaultConfig.versionName = project.version.toString()
+
+    tagStrategy {
+        generateMessage = { version -> "\n\nRelease of $version.version\n$tagMessage" }
+    }
+}
+
+tasks.release.dependsOn(['publishRelease'])
+
+if (project.hasProperty('releaseKeyStore') &&
+        project.hasProperty('releaseKeyPassword') &&
+        project.hasProperty('releaseKeyStorePassword') &&
+        project.hasProperty('releaseKeyAlias')) {
+    android.signingConfigs.releaseSign.keyAlias = releaseKeyAlias
+    android.signingConfigs.releaseSign.storeFile = file(releaseKeyStore)
+    android.signingConfigs.releaseSign.storePassword = releaseKeyStorePassword
+    android.signingConfigs.releaseSign.keyPassword = releaseKeyPassword
+} else {
+    android.signingConfigs.releaseSign.keyAlias ""
+    android.signingConfigs.releaseSign.storeFile null
+    android.signingConfigs.releaseSign.storePassword ""
+    android.signingConfigs.releaseSign.keyPassword ""
 }
 
 dependencies {
