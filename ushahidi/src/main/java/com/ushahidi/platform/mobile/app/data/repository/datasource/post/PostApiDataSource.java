@@ -21,12 +21,14 @@ import com.google.gson.JsonElement;
 
 import com.ushahidi.platform.mobile.app.data.api.PostApi;
 import com.ushahidi.platform.mobile.app.data.api.model.FormAttributes;
+import com.ushahidi.platform.mobile.app.data.api.model.FormStages;
 import com.ushahidi.platform.mobile.app.data.api.model.Forms;
 import com.ushahidi.platform.mobile.app.data.api.model.Posts;
 import com.ushahidi.platform.mobile.app.data.api.model.Tags;
 import com.ushahidi.platform.mobile.app.data.database.PostDatabaseHelper;
 import com.ushahidi.platform.mobile.app.data.entity.FormAttributeEntity;
 import com.ushahidi.platform.mobile.app.data.entity.FormEntity;
+import com.ushahidi.platform.mobile.app.data.entity.FormStageEntity;
 import com.ushahidi.platform.mobile.app.data.entity.GeoJsonEntity;
 import com.ushahidi.platform.mobile.app.data.entity.PostEntity;
 import com.ushahidi.platform.mobile.app.data.entity.TagEntity;
@@ -39,7 +41,9 @@ import java.util.List;
 import rx.Observable;
 
 /**
- * Data source for manipulating {@link com.ushahidi.platform.mobile.app.data.entity.PostEntity} data to and
+ * Data source for manipulating {@link com.ushahidi.platform.mobile.app.data.entity.PostEntity}
+ * data
+ * to and
  * from the API.
  *
  * @author Ushahidi Team <team@ushahidi.com>
@@ -77,12 +81,15 @@ public class PostApiDataSource implements PostDataSource {
     @Override
     public Observable<List<PostEntity>> getPostEntityList(Long deploymentId) {
         return Observable.zip(mPostApi.getTags(), mPostApi.getPostList(), mPostApi.getGeoJson(),
-                mPostApi.getForms(),
-                (tags, posts, geoJsons, forms) -> mPostDatabaseHelper.putFetchedPosts(deploymentId,
-                        setTag(tags, deploymentId),
-                        setPost(posts, deploymentId),
-                        setGeoJson(geoJsons, deploymentId),
-                        setForms(forms, deploymentId)));
+                mPostApi.getForms(), mPostApi.getFormStages(), mPostApi.getFormAttributes(),
+                (tags, posts, geoJsons, forms, formStages, formAttributes) -> mPostDatabaseHelper
+                        .putFetchedPosts(deploymentId,
+                                setTag(tags, deploymentId),
+                                setPost(posts, deploymentId),
+                                setGeoJson(geoJsons, deploymentId),
+                                setForms(forms, deploymentId),
+                                setFormStageEntity(formStages, deploymentId),
+                                setFormAttributes(formAttributes, deploymentId)));
     }
 
     @Override
@@ -162,5 +169,14 @@ public class PostApiDataSource implements PostDataSource {
             formAttributeEntities.add(formAttributeEntity);
         }
         return formAttributeEntities;
+    }
+
+    private List<FormStageEntity> setFormStageEntity(FormStages formStages, Long deploymentId) {
+        List<FormStageEntity> formStageEntities = new ArrayList<>();
+        for (FormStageEntity formStageEntity : formStages.getFormStages()) {
+            formStageEntity.setDeploymentId(deploymentId);
+            formStageEntities.add(formStageEntity);
+        }
+        return formStageEntities;
     }
 }

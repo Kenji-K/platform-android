@@ -148,6 +148,15 @@ public interface RestfulService {
             @Path("id") long id);
 
     /**
+     * Fetches form stages
+     *
+     * @param authorizationHeader The access token header
+     * @return FormStages
+     */
+    @GET(FORMS + STAGES + "?order=asc&orderby=priority")
+    Observable<FormStages> getFormStages(@Header("Authorization") String authorizationHeader);
+
+    /**
      * Fetches form attributes
      *
      * @param authorizationHeader The access token header
@@ -157,6 +166,15 @@ public interface RestfulService {
     FormAttributes getFormAttribute(
             @Header("Authorization") String authorizationHeader,
             @Path("id") long id);
+
+    /**
+     * Fetches from attributes
+     *
+     * @return From attributes
+     */
+    @GET(FORMS + ATTRIBUTES + "?order=asc&orderby=priority")
+    Observable<FormAttributes> getFormAttributes(
+            @Header("Authorization") String authorizationHeader);
 
     /**
      * This interface has the api for getting the site config information from API +

@@ -327,7 +327,7 @@ public class AddPostActivity extends BaseAppActivity
                                     List<String> values = new ArrayList<String>();
                                     values.add(postItemModel.getDisplayValue());
                                     postBuilder.withArray(postItemModel.getFieldKey(), values);
-                                } else if (!formAttributeModel.getType()
+                                } else if (formAttributeModel.getType()
                                         .equals(FormAttributeModel.Type.POINT)) {
                                     Map<String, String> data = new HashMap<>();
                                     // The LocationWidget returns it's values as string with
@@ -439,7 +439,7 @@ public class AddPostActivity extends BaseAppActivity
                 return getApplicationContext();
             }
         });
-        mListFormAttributePresenter.getFormOnline(mFormId);
+        mListFormAttributePresenter.getFormDb(mFormId);
     }
 
     private void initListFormStageView() {
@@ -479,7 +479,7 @@ public class AddPostActivity extends BaseAppActivity
                 setupPageView(formModels);
             }
         });
-        mListFormStagePresenter.getFormOnline(mFormId);
+        mListFormStagePresenter.getFormDb(mFormId);
     }
 
 
