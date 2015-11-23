@@ -63,7 +63,6 @@ android {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
-        versionName = libVersion
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
