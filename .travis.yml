@@ -14,7 +14,7 @@ android:
   - extra-android-m2repository
   - addon-google_apis-google-22
 script:
-- "./gradlew build -PdisablePreDex"
+- "./gradlew build -PdisablePreDex -x validateReleaseSignSigning"
 notifications:
   hipchat:
     template: '<a href="%{build_url}">%{repository}#%{build_number}</a> (%{branch} - <a href="%{compare_url}">%{commit}</a> : %{author}): %{message}'

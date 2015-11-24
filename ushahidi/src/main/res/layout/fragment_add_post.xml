@@ -1,114 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/view_spacing_normal"
-                android:animateLayoutChanges="true">
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_spacing_normal">
-
-                <EditText
-                        android:id="@+id/add_post_title"
-                        style="@style/EditText.Name"
-                        android:hint="@string/post_title"
-                        android:textAllCaps="true"
-                        android:imeOptions="actionNext"
-                        android:nextFocusDown="@+id/add_post_description"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_spacing_normal">
-
-                <EditText
-                        android:id="@+id/add_post_description"
-                        style="@style/EditText.Multiline"
-                        android:hint="@string/post_description"
-                        android:textAllCaps="true"
-                        android:imeOptions="actionDone"/>
-            </android.support.design.widget.TextInputLayout>
-            <LinearLayout
-                    android:id="@+id/categories"
-                    android:visibility="gone"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/view_spacing_large">
-                <TextView android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/post_categories_label"
-                          android:text="@string/categories"
-                          android:paddingBottom="@dimen/view_spacing_large"
-                          android:textAllCaps="true"/>
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/form_attributes"
-                    android:visibility="gone"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/view_spacing_large"
-                    android:paddingLeft="@dimen/view_spacing_large"
-                    android:paddingRight="@dimen/view_spacing_large"
-                    android:paddingEnd="@dimen/view_spacing_large">
-                <TextView android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/post_steps_label"
-                          android:text="@string/post_steps"
-                          android:textAllCaps="true"/>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/dividerVertical"/>
-
-    <RelativeLayout
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            style="?android:buttonBarStyle">
-
-        <Button
-                android:id="@+id/add_post_cancel"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:animateLayoutChanges="true">
+        <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/cancel"
-                android:textColor="@color/red"
-                style="?android:buttonBarButtonStyle"
-                android:layout_toStartOf="@+id/save_post"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/save_post"/>
-
-        <Button
-                android:id="@+id/save_post"
-                android:layout_width="wrap_content"
+                android:text="@string/step_complete"
+                android:layout_gravity="left"
+                android:layout_margin="@dimen/view_spacing_large"
+                android:id="@+id/step_complete_check_box"/>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:text="@string/save"
-                style="?android:buttonBarButtonStyle"/>
+                android:layout_marginTop="@dimen/view_spacing_normal">
 
-    </RelativeLayout>
-</LinearLayout>
+            <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/add_post_title"
+                    style="@style/EditText.Name"
+                    android:hint="@string/post_title"
+                    android:textAllCaps="true"
+                    android:imeOptions="actionNext"
+                    android:visibility="gone"
+                    android:nextFocusDown="@+id/add_post_description"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_spacing_normal">
+
+            <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/add_post_description"
+                    style="@style/EditText.Multiline"
+                    android:hint="@string/post_description"
+                    android:textAllCaps="true"
+                    android:visibility="gone"
+                    android:imeOptions="actionDone"/>
+        </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+                android:id="@+id/categories"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/view_spacing_large">
+            <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
+                                                         android:layout_height="wrap_content"
+                                                         android:id="@+id/post_categories_label"
+                                                         android:text="@string/categories"
+                                                         android:paddingBottom="@dimen/view_spacing_large"
+                                                         android:textAllCaps="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/form_attributes"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/view_spacing_large"
+                android:layout_marginLeft="@dimen/view_spacing_large"
+                android:layout_marginRight="@dimen/view_spacing_large"
+                android:layout_marginEnd="@dimen/view_spacing_large">
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
