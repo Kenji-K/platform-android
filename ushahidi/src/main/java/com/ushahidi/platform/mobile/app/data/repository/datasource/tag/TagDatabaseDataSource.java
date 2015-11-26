@@ -60,4 +60,9 @@ public class TagDatabaseDataSource implements TagDataSource {
     public Observable<Boolean> deleteTag(TagEntity tagEntity) {
         return mTagDatabaseHelper.deleteTag(tagEntity);
     }
+
+    @Override
+    public Observable<Boolean> deleteTagList(Long deploymentId) {
+        return mTagDatabaseHelper.deleteTags(deploymentId);
+    }
 }

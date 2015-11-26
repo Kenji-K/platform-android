@@ -66,4 +66,9 @@ public class UserProfileDatabaseSource implements UserProfileDataSource {
     public Observable<UserEntity> fetchUserProfile(Long deploymentId) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Observable<Boolean> deleteUserEntityList(Long deploymentId) {
+        return mUserDatabaseHelper.deleteUserProfiles(deploymentId);
+    }
 }

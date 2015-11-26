@@ -35,4 +35,13 @@ public interface FormDataSource {
      * @return The row affected
      */
     Observable<Long> putForm(FormEntity formEntity);
+
+    /**
+     * Delete all Form with the supplied deployment id.
+     *
+     * @param deploymentId The deployment ID.
+     * @return True upon successful deletion, otherwise false.
+     */
+    Observable<Boolean> deleteForms(Long deploymentId);
+
 }

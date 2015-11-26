@@ -44,4 +44,13 @@ public interface GeoJsonRepository {
      * @return The row affected
      */
     Observable<Long> putGeoJson(GeoJson geoJson);
+
+    /**
+     * Delete all GeoJson with the supplied deployment id.
+     *
+     * @param deploymentId The deployment ID.
+     * @return True upon successful deletion, otherwise false.
+     */
+    Observable<Boolean> deleteGeoJsonList(Long deploymentId);
+
 }

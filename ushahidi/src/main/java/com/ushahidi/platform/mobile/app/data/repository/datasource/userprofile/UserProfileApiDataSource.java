@@ -74,6 +74,11 @@ public class UserProfileApiDataSource implements UserProfileDataSource {
                 .put(setDeploymentId(deploymentId, userEntity)));
     }
 
+    @Override
+    public Observable<Boolean> deleteUserEntityList(Long deploymentId) {
+        throw new UnsupportedOperationException();
+    }
+
     private UserEntity setDeploymentId(Long deploymentId, UserEntity userEntity) {
         userEntity.setDeploymentId(deploymentId);
         return userEntity;

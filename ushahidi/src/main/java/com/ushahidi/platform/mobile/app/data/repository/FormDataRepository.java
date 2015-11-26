@@ -59,4 +59,10 @@ public class FormDataRepository implements FormRepository {
         final FormDataSource formDataSource = mFormDataSourceFactory.createDatabaseDataSource();
         return formDataSource.putForm(mFormEntityDataMapper.map(form));
     }
+
+    @Override
+    public Observable<Boolean> deleteForms(Long deploymentId) {
+        final FormDataSource formDataSource = mFormDataSourceFactory.createDatabaseDataSource();
+        return formDataSource.deleteForms(deploymentId);
+    }
 }

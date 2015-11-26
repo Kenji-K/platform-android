@@ -54,4 +54,13 @@ public interface TagRepository {
      * @return True if successfully deleted otherwise false
      */
     Observable<Boolean> deleteTag(Tag tag);
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True if successfully deleted otherwise false
+     */
+    Observable<Boolean> deleteTagList(Long deploymentId);
+
 }

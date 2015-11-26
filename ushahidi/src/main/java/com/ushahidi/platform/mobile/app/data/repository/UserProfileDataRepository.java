@@ -85,4 +85,11 @@ public class UserProfileDataRepository implements UserProfileRepository {
         return userProfileDataSource.fetchUserProfile(deploymentId)
                 .map(mUserProfileEntityDataMapper::map);
     }
+
+    @Override
+    public Observable<Boolean> deleteUserProfiles(Long deploymentId) {
+        final UserProfileDataSource userProfileDataSource = mUserProfileDataSourceFactory
+                .createDatabaseSource();
+        return userProfileDataSource.deleteUserEntityList(deploymentId);
+    }
 }

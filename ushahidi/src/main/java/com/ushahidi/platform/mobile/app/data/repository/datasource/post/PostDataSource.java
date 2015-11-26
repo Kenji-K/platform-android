@@ -77,4 +77,13 @@ public interface PostDataSource {
      * @return A list of post entities
      */
     Observable<List<PostEntity>> search(Long deploymentId, String query);
+
+    /**
+     * Deletes all posts with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    Observable<Boolean> deleteDeploymentPosts(Long deploymentId);
+
 }

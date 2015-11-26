@@ -75,4 +75,9 @@ public class PostDatabaseDataSource implements PostDataSource {
     public Observable<List<PostEntity>> search(Long deploymentId, String query) {
         return mPostDatabaseHelper.search(deploymentId, query);
     }
+
+    @Override
+    public Observable<Boolean> deleteDeploymentPosts(Long deploymentId) {
+        return mPostDatabaseHelper.deleteDeploymentPosts(deploymentId);
+    }
 }

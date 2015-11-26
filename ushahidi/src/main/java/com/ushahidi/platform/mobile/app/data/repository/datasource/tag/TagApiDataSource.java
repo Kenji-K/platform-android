@@ -70,6 +70,12 @@ public class TagApiDataSource implements TagDataSource {
         return null;
     }
 
+    @Override
+    public Observable<Boolean> deleteTagList(Long deploymentId) {
+        // Do nothing. For now we're not deleting tags via the API
+        return null;
+    }
+
     /**
      * Set the deployment ID for the TagModel since it's not set by the
      * API

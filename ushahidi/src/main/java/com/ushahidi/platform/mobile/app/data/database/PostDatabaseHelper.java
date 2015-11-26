@@ -17,6 +17,11 @@
 
 package com.ushahidi.platform.mobile.app.data.database;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
+
+import com.ushahidi.platform.mobile.app.data.entity.DeploymentEntity;
 import com.ushahidi.platform.mobile.app.data.entity.FormAttributeEntity;
 import com.ushahidi.platform.mobile.app.data.entity.FormEntity;
 import com.ushahidi.platform.mobile.app.data.entity.FormStageEntity;
@@ -28,10 +33,6 @@ import com.ushahidi.platform.mobile.app.data.entity.PostUserEntity;
 import com.ushahidi.platform.mobile.app.data.entity.TagEntity;
 import com.ushahidi.platform.mobile.app.data.exception.AddPostException;
 import com.ushahidi.platform.mobile.app.data.exception.PostNotFoundException;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -392,4 +393,33 @@ public class PostDatabaseHelper extends BaseDatabaseHelper {
     public void clearEntries() {
         cupboard().withDatabase(getWritableDatabase()).delete(PostEntity.class, null);
     }
+
+    /**
+     * Deletes all posts with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    public Observable<Boolean> deleteDeploymentPosts(Long deploymentId) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                int deleted = 0;
+                try {
+                    final String[] selectionArgs = {String.valueOf(deploymentId)};
+                    final String selection = "mDeploymentId = ?";
+                    deleted = cupboard().withDatabase(getWritableDatabase())
+                            .delete(DeploymentEntity.class, selection, selectionArgs);
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                if (deleted >= 0) {
+                    subscriber.onNext(true);
+                } else {
+                    subscriber.onError(new Exception());
+                }
+                subscriber.onCompleted();
+            }
+        });
+    }
+
 }

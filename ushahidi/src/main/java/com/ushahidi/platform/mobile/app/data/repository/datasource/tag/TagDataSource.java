@@ -53,4 +53,13 @@ public interface TagDataSource {
      * @return True if successfully deleted otherwise false
      */
     Observable<Boolean> deleteTag(TagEntity tagEntity);
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    Observable<Boolean> deleteTagList(Long deploymentId);
+
 }

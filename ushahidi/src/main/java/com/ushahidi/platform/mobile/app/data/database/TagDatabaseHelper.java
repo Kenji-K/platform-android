@@ -113,6 +113,35 @@ public class TagDatabaseHelper extends BaseDatabaseHelper {
         });
     }
 
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    public Observable<Boolean> deleteTags(Long deploymentId) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                int deleted = 0;
+                try {
+                    final String[] selectionArgs = {String.valueOf(deploymentId)};
+                    final String selection = "mDeploymentId = ?";
+                    deleted = cupboard().withDatabase(getWritableDatabase())
+                            .delete(TagEntity.class, selection, selectionArgs);
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                if (deleted >= 0) {
+                    subscriber.onNext(true);
+                } else {
+                    subscriber.onError(new Exception());
+                }
+                subscriber.onCompleted();
+            }
+        });
+    }
+
     /**
      * Clears all entries in the table
      */

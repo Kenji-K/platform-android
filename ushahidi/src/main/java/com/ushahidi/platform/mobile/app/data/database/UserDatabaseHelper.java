@@ -17,12 +17,12 @@
 
 package com.ushahidi.platform.mobile.app.data.database;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.ushahidi.platform.mobile.app.data.entity.UserEntity;
 import com.ushahidi.platform.mobile.app.data.exception.GeoJsonNotFoundException;
 import com.ushahidi.platform.mobile.app.data.exception.TagNotFoundException;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -148,6 +148,34 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Deletes all items with the supplied deployment id
+     *
+     * @param deploymentId The deployment id
+     * @return True upon successful deletion, otherwise false
+     */
+    public Observable<Boolean> deleteUserProfiles(Long deploymentId) {
+        return Observable.create(subscriber -> {
+            if (!isClosed()) {
+                int deleted = 0;
+                try {
+                    final String[] selectionArgs = {String.valueOf(deploymentId)};
+                    final String selection = "mDeployment = ?";
+                    deleted = cupboard().withDatabase(getWritableDatabase())
+                            .delete(UserEntity.class, selection, selectionArgs);
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                if (deleted >= 0) {
+                    subscriber.onNext(true);
+                } else {
+                    subscriber.onError(new Exception());
+                }
+                subscriber.onCompleted();
+            }
+        });
     }
 
     /**
