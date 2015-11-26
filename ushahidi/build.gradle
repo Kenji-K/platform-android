@@ -63,6 +63,7 @@ android {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName "1.0.0-alpha.1"
         testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
@@ -152,14 +153,14 @@ release {
 
     versionStrategy Strategies.PRE_RELEASE_ALPHA_BETA
 
-    android.defaultConfig.versionName = project.version.toString()
+    //android.defaultConfig.versionName = project.version.toString()
 
     tagStrategy {
         generateMessage = { version -> "\n\nRelease of $version.version\n$tagMessage" }
     }
 }
 
-tasks.release.dependsOn(['publishRelease'])
+//tasks.release.dependsOn(['publishRelease'])
 
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&
