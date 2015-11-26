@@ -59,7 +59,7 @@ android {
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
     defaultConfig {
-        applicationId "com.ushahidi.android"
+        applicationId "com.ushahidi.platform.mobile.app"
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode globalConfiguration.getAt("androidVersionCode")
@@ -122,7 +122,7 @@ android {
 
     productFlavors {
         internal {
-            applicationId 'com.ushahidi.android.internal'
+            applicationId 'com.ushahidi.platform.mobile.app.internal'
         }
     }
 
