@@ -159,7 +159,7 @@ release {
     }
 }
 
-tasks.release.dependsOn(['build'])
+tasks.release.dependsOn(['publishRelease'])
 
 if (project.hasProperty('releaseKeyStore') &&
         project.hasProperty('releaseKeyPassword') &&
