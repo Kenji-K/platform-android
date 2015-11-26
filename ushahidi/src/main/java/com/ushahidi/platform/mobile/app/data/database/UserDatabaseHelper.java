@@ -17,12 +17,12 @@
 
 package com.ushahidi.platform.mobile.app.data.database;
 
+import com.ushahidi.platform.mobile.app.data.entity.UserEntity;
+import com.ushahidi.platform.mobile.app.data.exception.TagNotFoundException;
+import com.ushahidi.platform.mobile.app.data.exception.UserNotFoundException;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
-
-import com.ushahidi.platform.mobile.app.data.entity.UserEntity;
-import com.ushahidi.platform.mobile.app.data.exception.GeoJsonNotFoundException;
-import com.ushahidi.platform.mobile.app.data.exception.TagNotFoundException;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class UserDatabaseHelper extends BaseDatabaseHelper {
                 subscriber.onNext(userEntity);
                 subscriber.onCompleted();
             } else {
-                subscriber.onError(new GeoJsonNotFoundException());
+                subscriber.onError(new UserNotFoundException());
             }
         });
     }
