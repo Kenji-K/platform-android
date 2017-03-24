@@ -31,16 +31,16 @@ of the Java 8 JDK.
 
 3. In the Android SDK Manager, ensure that the following are installed,
    and are updated to the latest available version:
-       - Tools -> Android SDK Platform-tools (rev 20 or above)
-       - Tools -> Android SDK Tools (rev 23.0.2 or above)
-       - Tools -> Android SDK Build-tools version 20
-       - Tools -> Android SDK Build-tools version 19.1
-       - Android 4.4 -> SDK Platform (API 19)
-       - Android L (API 20, L Preview)
-       - Extras -> Android Support Repository
-       - Extras -> Android Support Library
-       - Extras -> Google Play services
-       - Extras -> Google Repository
+      - Tools -> Android SDK Platform-tools (rev 20 or above)
+      - Tools -> Android SDK Tools (rev 23.0.2 or above)
+      - Tools -> Android SDK Build-tools version 20
+      - Tools -> Android SDK Build-tools version 19.1
+      - Android 4.4 -> SDK Platform (API 19)
+      - Android L (API 20, L Preview)
+      - Extras -> Android Support Repository
+      - Extras -> Android Support Library
+      - Extras -> Google Play services
+      - Extras -> Google Repository
 
 4. Create a file in the root of the project called local.properties. Enter the path to your Android SDK.
     Eg. `sdk.dir=/opt/android-studio/sdk`
